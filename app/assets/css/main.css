@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Barlow+Condensed:wght@500;600;700&display=swap");
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  --font-sans: "Barlow", sans-serif;
+  --font-brand-heading: "Barlow Condensed", sans-serif;
+
+  --color-green-50: #effdf5;
+  --color-green-100: #d9fbe8;
+  --color-green-200: #b3f5d1;
+  --color-green-300: #75edae;
+  --color-green-400: #00dc82;
+  --color-green-500: #00c16a;
+  --color-green-600: #00a155;
+  --color-green-700: #007f45;
+  --color-green-800: #016538;
+  --color-green-900: #0a5331;
+  --color-green-950: #052e16;
+}
+
+.bg-pastel-blue {
+  background-color: #d8edf7;
+}
+
+.bg-pastel-pink {
+  background-color: #f8d8c3;
+}
+
+.bg-pastel-green {
+  background-color: #dbeadf;
+}
+
+.bg-pastel-purple {
+  background-color: #dbe5f2;
+}
+
+.bg-pastel-yellow {
+  background-color: #f6e1bf;
+}
+
+.dark .bg-pastel-blue {
+  background-color: #123f61;
+}
+
+.dark .bg-pastel-pink {
+  background-color: #59321f;
+}
+
+.dark .bg-pastel-green {
+  background-color: #244535;
+}
+
+.dark .bg-pastel-purple {
+  background-color: #263f5f;
+}
+
+.dark .bg-pastel-yellow {
+  background-color: #5a4324;
+}
+
+.shadow-ambient {
+  box-shadow: 0 14px 30px rgba(8, 61, 122, 0.13);
+}
+
+.dark .shadow-ambient {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}

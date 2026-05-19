@@ -1,0 +1,125 @@
+{
+  "language": {
+    "spanish": "Spanish",
+    "english": "English"
+  },
+  "app": {
+    "siteName": "STRIVE Talk",
+    "brand": "STRIVE Talk",
+    "tagline": "AAC on the Go",
+    "madeWith": "STRIVE Physical Therapy",
+    "seo": {
+      "defaultTitle": "AAC assisted communication",
+      "defaultDescription": "Accessible AAC communication app with English and Spanish speech support.",
+      "ogImageAlt": "STRIVE Talk logo",
+      "keywords": "STRIVE Talk, AAC, augmentative alternative communication, assisted communication, text to speech, accessibility"
+    },
+    "aria": {
+      "deleteModeOn": "Enable delete mode",
+      "deleteModeOff": "Disable delete mode",
+      "changeTheme": "Toggle theme",
+      "github": "GitHub"
+    },
+    "nav": {
+      "about": "About",
+      "settings": "Settings",
+      "home": "Home",
+      "phrases": "Phrases"
+    }
+  },
+  "index": {
+    "seoTitle": "Home",
+    "seoDescription": "AAC word cards for fast assisted communication with speech synthesis.",
+    "addCardTitle": "New word",
+    "defaults": {
+      "yes": "Yes",
+      "no": "No",
+      "water": "Water",
+      "food": "Food",
+      "bathroom": "Bathroom",
+      "pain": "It hurts"
+    }
+  },
+  "phrases": {
+    "seoTitle": "Phrases",
+    "seoDescription": "Customizable AAC phrases to support daily assisted communication.",
+    "addCardTitle": "Add new phrase",
+    "editCardTitle": "Edit phrase",
+    "saveCardButton": "Save phrase",
+    "defaults": {
+      "cold": "I am cold",
+      "hot": "I am hot",
+      "painHere": "It hurts here",
+      "family": "I want to talk to my family"
+    }
+  },
+  "settings": {
+    "seoTitle": "General settings",
+    "seoDescription": "General STRIVE Talk configuration: voice language, pitch, speed, and usage preferences.",
+    "title": "General settings",
+    "intro": "Choose English or Spanish (Mexico), then tune the speaking voice for daily communication.",
+    "voiceLanguage": "Voice language",
+    "speechControls": "Pitch and speed",
+    "resetDefaults": "Restore defaults",
+    "pitch": "Pitch",
+    "pitchHint": "Low ← → High",
+    "rate": "Speed (rate)",
+    "rateHint": "Slow ← → Fast",
+    "testVoice": "Test voice",
+    "testVoiceHint": "Tap the card to hear the voice with the current language, pitch, and speed.",
+    "speechLanguages": {
+      "esMX": "Spanish (Mexico)",
+      "enUS": "English (US)"
+    },
+    "demoText": {
+      "esMX": "Hola. Necesito ayuda.",
+      "enUS": "Hello. I need help."
+    }
+  },
+  "about": {
+    "seoTitle": "About this project",
+    "seoDescription": "Accessible AAC app for assisted communication, with PWA support, offline mode, and speech synthesis for speech rehabilitation.",
+    "title": "About this project",
+    "subtitle": "STRIVE Talk - AAC (Augmentative and Alternative Communication)",
+    "p1": "STRIVE Talk is an accessible web app to support communication for people with speech difficulties. It allows selecting word and phrase cards to express daily needs using speech synthesis.",
+    "p2": "It also works as a Progressive Web App (PWA), so it can be installed on mobile and desktop, work offline, and stay automatically updated after each deployment.",
+    "goalsTitle": "Key goals",
+    "goalsText": "Immediate communication, maximum accessibility, and full availability with an installable experience and offline support.",
+    "featuresTitle": "Main features",
+    "featuresText": "Customizable cards, speech synthesis, colors and emojis per card, safe delete mode, and auto-updating PWA.",
+    "techTitle": "Technologies used",
+    "techText": "Nuxt 4, Vue 3, Nuxt UI, Tailwind CSS 4, {'@'}vite-pwa/nuxt (Workbox), VueUse, TypeScript, ESLint, and Vitest."
+  },
+  "addCard": {
+    "add": "Add",
+    "ariaAdd": "Add new card",
+    "newCard": "New card",
+    "textLabel": "Card text",
+    "wordHint": "Words can include short multi-word needs. Letters, spaces, apostrophes, and hyphens are allowed.",
+    "placeholderWord": "Example: go home",
+    "placeholderText": "Write here...",
+    "colorLabel": "Card color",
+    "emojiLabel": "Emoji",
+    "selected": "Selected",
+    "notSelected": "Not selected",
+    "cancel": "Cancel",
+    "addCardButton": "Add card",
+    "colors": {
+      "blue": "Blue",
+      "pink": "Pink",
+      "green": "Green",
+      "purple": "Purple",
+      "yellow": "Yellow"
+    },
+    "errors": {
+      "empty": "Text cannot be empty.",
+      "emoji": "Please select an emoji.",
+      "singleWord": "Only one word is allowed (letters including accents, no spaces or symbols).",
+      "wordText": "Use letters, spaces, apostrophes, or hyphens only."
+    }
+  },
+  "voiceCard": {
+    "deleteAria": "Delete card",
+    "editAria": "Edit card"
+  }
+}

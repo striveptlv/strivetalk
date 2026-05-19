@@ -1,0 +1,125 @@
+{
+  "language": {
+    "spanish": "Español",
+    "english": "Inglés"
+  },
+  "app": {
+    "siteName": "STRIVE Talk",
+    "brand": "STRIVE Talk",
+    "tagline": "AAC on the Go",
+    "madeWith": "STRIVE Physical Therapy",
+    "seo": {
+      "defaultTitle": "Comunicación asistida AAC",
+      "defaultDescription": "Aplicación AAC accesible con soporte de voz en inglés y español.",
+      "ogImageAlt": "Logo de STRIVE Talk",
+      "keywords": "STRIVE Talk, AAC, comunicación aumentativa alternativa, comunicación asistida, text to speech, accesibilidad"
+    },
+    "aria": {
+      "deleteModeOn": "Activar modo eliminar",
+      "deleteModeOff": "Desactivar modo eliminar",
+      "changeTheme": "Cambiar tema",
+      "github": "GitHub"
+    },
+    "nav": {
+      "about": "Acerca de",
+      "settings": "Ajustes",
+      "home": "Inicio",
+      "phrases": "Frases"
+    }
+  },
+  "index": {
+    "seoTitle": "Inicio",
+    "seoDescription": "Tarjetas AAC de palabras para comunicación asistida rápida con síntesis de voz.",
+    "addCardTitle": "Nueva palabra",
+    "defaults": {
+      "yes": "Sí",
+      "no": "No",
+      "water": "Agua",
+      "food": "Comida",
+      "bathroom": "Baño",
+      "pain": "Me duele"
+    }
+  },
+  "phrases": {
+    "seoTitle": "Frases",
+    "seoDescription": "Frases AAC personalizables para facilitar comunicación cotidiana con voz asistida.",
+    "addCardTitle": "Agregar nueva frase",
+    "editCardTitle": "Editar frase",
+    "saveCardButton": "Guardar frase",
+    "defaults": {
+      "cold": "Tengo frío",
+      "hot": "Tengo calor",
+      "painHere": "Me duele aquí",
+      "family": "Quiero hablar con mi familia"
+    }
+  },
+  "settings": {
+    "seoTitle": "Ajustes generales",
+    "seoDescription": "Configuración general de STRIVE Talk: idioma de voz, tono, velocidad y preferencias de uso.",
+    "title": "Ajustes generales",
+    "intro": "Elige inglés o español (México), y ajusta la voz para la comunicación diaria.",
+    "voiceLanguage": "Idioma de voz",
+    "speechControls": "Tono y velocidad",
+    "resetDefaults": "Restaurar predeterminados",
+    "pitch": "Tono (pitch)",
+    "pitchHint": "Grave ← → Agudo",
+    "rate": "Velocidad (rate)",
+    "rateHint": "Lento ← → Rápido",
+    "testVoice": "Probar voz",
+    "testVoiceHint": "Toca la tarjeta para escuchar la voz con el idioma, tono y velocidad actuales.",
+    "speechLanguages": {
+      "esMX": "Español (México)",
+      "enUS": "English (US)"
+    },
+    "demoText": {
+      "esMX": "Hola. Necesito ayuda.",
+      "enUS": "Hello. I need help."
+    }
+  },
+  "about": {
+    "seoTitle": "Acerca del proyecto",
+    "seoDescription": "Aplicación AAC accesible para comunicación asistida, con soporte PWA, modo offline y síntesis de voz para rehabilitación del habla.",
+    "title": "Acerca del proyecto",
+    "subtitle": "STRIVE Talk - AAC (Comunicación Aumentativa y Alternativa)",
+    "p1": "STRIVE Talk es una aplicación web accesible para apoyar la comunicación de personas con dificultades del habla. Permite seleccionar tarjetas de palabras y frases para expresar necesidades cotidianas mediante síntesis de voz.",
+    "p2": "También funciona como Progressive Web App (PWA), por lo que puede instalarse en móvil y escritorio, trabajar offline y mantenerse actualizada automáticamente tras cada despliegue.",
+    "goalsTitle": "Objetivos clave",
+    "goalsText": "Comunicación inmediata, accesibilidad máxima y disponibilidad total con experiencia instalable y soporte sin conexión.",
+    "featuresTitle": "Características principales",
+    "featuresText": "Tarjetas personalizables, síntesis de voz, colores y emojis por tarjeta, modo eliminar seguro y PWA con auto-update.",
+    "techTitle": "Tecnologías usadas",
+    "techText": "Nuxt 4, Vue 3, Nuxt UI, Tailwind CSS 4, {'@'}vite-pwa/nuxt (Workbox), VueUse, TypeScript, ESLint y Vitest."
+  },
+  "addCard": {
+    "add": "Agregar",
+    "ariaAdd": "Agregar nueva tarjeta",
+    "newCard": "Nueva tarjeta",
+    "textLabel": "Texto de la tarjeta",
+    "wordHint": "Las palabras pueden incluir necesidades cortas de varias palabras. Se permiten letras, espacios, apóstrofes y guiones.",
+    "placeholderWord": "Ejemplo: ir a casa",
+    "placeholderText": "Escribe aquí...",
+    "colorLabel": "Color de tarjeta",
+    "emojiLabel": "Emoji",
+    "selected": "Seleccionado",
+    "notSelected": "Sin elegir",
+    "cancel": "Cancelar",
+    "addCardButton": "Agregar tarjeta",
+    "colors": {
+      "blue": "Azul",
+      "pink": "Rosa",
+      "green": "Verde",
+      "purple": "Morado",
+      "yellow": "Amarillo"
+    },
+    "errors": {
+      "empty": "El texto no puede estar vacío.",
+      "emoji": "Por favor, selecciona un emoji.",
+      "singleWord": "Solo se permite una palabra (letras, incluyendo acentos, sin espacios ni símbolos).",
+      "wordText": "Usa solo letras, espacios, apóstrofes o guiones."
+    }
+  },
+  "voiceCard": {
+    "deleteAria": "Eliminar tarjeta",
+    "editAria": "Editar tarjeta"
+  }
+}

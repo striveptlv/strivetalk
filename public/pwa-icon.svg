@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Stroke Speech icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
+  <path d="M256 122c-56 0-102 46-102 102v56c0 56 46 102 102 102s102-46 102-102v-56c0-56-46-102-102-102z" fill="#f8fafc" opacity="0.92"/>
+  <path d="M256 178c-25 0-46 21-46 46v56c0 25 21 46 46 46s46-21 46-46v-56c0-25-21-46-46-46z" fill="#1e293b"/>
+  <path d="M143 316c19 53 62 89 113 89s94-36 113-89" fill="none" stroke="#38bdf8" stroke-width="26" stroke-linecap="round"/>
+  <circle cx="378" cy="166" r="44" fill="#22d3ee"/>
+  <path d="M358 166h40M378 146v40" stroke="#0f172a" stroke-width="16" stroke-linecap="round"/>
+</svg>
