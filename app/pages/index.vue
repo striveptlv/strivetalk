@@ -22,6 +22,33 @@ type Word = {
   toneClass: string
 }
 
+type Category = {
+  title: string
+  count: number
+}
+
+const priorityButtonCount = 8
+
+const englishCategories: Category[] = [
+  { title: 'Social / Conversational', count: 2 },
+  { title: 'Basic Needs & Requests', count: 11 },
+  { title: 'Feelings & Status', count: 6 },
+  { title: 'Medical & Safety', count: 6 },
+  { title: 'People & Places', count: 6 },
+  { title: 'Everyday Activities', count: 6 },
+  { title: 'Conversation Repair', count: 6 }
+]
+
+const spanishCategories: Category[] = [
+  { title: 'Social / Conversación', count: 2 },
+  { title: 'Necesidades básicas y pedidos', count: 11 },
+  { title: 'Sentimientos y estado', count: 6 },
+  { title: 'Médico y seguridad', count: 6 },
+  { title: 'Personas y lugares', count: 6 },
+  { title: 'Actividades diarias', count: 6 },
+  { title: 'Reparar la conversación', count: 6 }
+]
+
 const englishCoreWords: Word[] = [
   {
     text: 'Yes',
@@ -565,6 +592,36 @@ const activeWords = computed({
   }
 })
 
+const activeCategories = computed(() =>
+  activeLocale.value === 'en' ? englishCategories : spanishCategories
+)
+
+const priorityWords = computed(() =>
+  activeWords.value.slice(0, priorityButtonCount)
+)
+
+const groupedWords = computed(() => {
+  let start = priorityButtonCount
+  const groups = activeCategories.value.map((category) => {
+    const words = activeWords.value.slice(start, start + category.count)
+    start += category.count
+    return {
+      title: category.title,
+      words
+    }
+  })
+
+  const customWords = activeWords.value.slice(start)
+  if (customWords.length) {
+    groups.push({
+      title: activeLocale.value === 'en' ? 'Custom' : 'Personalizadas',
+      words: customWords
+    })
+  }
+
+  return groups
+})
+
 const onCardSelect = (text: string) => {
   speak(text)
 }
@@ -597,37 +654,73 @@ onMounted(() => {
     class="min-h-screen bg-[#f7f4ef] text-[#0e2f5d] dark:bg-[#111113] dark:text-[#f4f4f5]"
   >
     <main class="mx-auto w-full max-w-7xl px-6 py-8 pb-32">
-      <div
-        class="grid gap-stack-gap w-full gap-2"
-        style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr))"
-      >
-        <template v-if="isStorageReady">
-          <VoiceCard
-            v-for="(card, index) in activeWords"
-            :key="`${card.text}-${index}`"
-            :text="card.text"
-            :emoji="card.emoji"
-            :tone-class="card.toneClass"
-            :delete-aria-label="t('voiceCard.deleteAria')"
-            @select="onCardSelect"
-            @delete="onCardDelete(index)"
-          />
+      <template v-if="isStorageReady">
+        <section class="mb-8">
+          <div
+            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
+          >
+            <VoiceCard
+              v-for="card in priorityWords"
+              :key="card.text"
+              :text="card.text"
+              :emoji="card.emoji"
+              :tone-class="card.toneClass"
+              :delete-aria-label="t('voiceCard.deleteAria')"
+              @select="onCardSelect"
+              @delete="onCardDelete(activeWords.indexOf(card))"
+            />
+          </div>
+        </section>
 
+        <section
+          v-for="group in groupedWords"
+          :key="group.title"
+          class="mb-8"
+        >
+          <h2
+            class="mb-3 font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#083d7a] dark:text-[#8ecae6]"
+          >
+            {{ group.title }}
+          </h2>
+
+          <div
+            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
+          >
+            <VoiceCard
+              v-for="card in group.words"
+              :key="card.text"
+              :text="card.text"
+              :emoji="card.emoji"
+              :tone-class="card.toneClass"
+              :delete-aria-label="t('voiceCard.deleteAria')"
+              @select="onCardSelect"
+              @delete="onCardDelete(activeWords.indexOf(card))"
+            />
+          </div>
+        </section>
+
+        <div
+          class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
+        >
           <AddCard
             :title="t('index.addCardTitle')"
             has-emoji
             is-word
             @adding="onAdding"
           />
-        </template>
+        </div>
+      </template>
 
-        <template v-else>
+      <template v-else>
+        <div
+          class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
+        >
           <VoiceCardSkeleton
             v-for="index in 6"
             :key="index"
           />
-        </template>
-      </div>
+        </div>
+      </template>
     </main>
   </div>
 </template>

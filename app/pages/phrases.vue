@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import type { AddNewItem } from '~/typos'
-
 const { t, locale } = useI18n()
 
 useSeoMeta({
-  title: () => t('phrases.seoTitle'),
-  description: () => t('phrases.seoDescription')
+  title: () => t('information.seoTitle'),
+  description: () => t('information.seoDescription')
 })
 
 const speechLang = useLocalStorage<string>('speech-lang', 'en-US')
@@ -13,161 +11,245 @@ const pitch = useLocalStorage<number>('speech-pitch', 1)
 const rate = useLocalStorage<number>('speech-rate', 1)
 const { speak } = useAacSpeech(speechLang, pitch, rate)
 const isStorageReady = ref(false)
+const isEditOpen = ref(false)
 const editingIndex = ref<number | null>(null)
-const editingText = ref('')
+const editingLabel = ref('')
+const editingValue = ref('')
 const editingToneClass = ref('bg-pastel-blue')
 const editingError = ref('')
 
 type AppLocale = 'en' | 'es'
 
-type Phrase = {
-  text: string
+type InfoItem = {
+  label: string
+  value: string
   toneClass: string
+}
+
+type InfoGroup = {
+  title: string
+  count: number
 }
 
 const toneOptions = computed(
   () =>
     [
-      {
-        label: t('addCard.colors.blue'),
-        value: 'bg-pastel-blue'
-      },
-      {
-        label: t('addCard.colors.pink'),
-        value: 'bg-pastel-pink'
-      },
-      {
-        label: t('addCard.colors.green'),
-        value: 'bg-pastel-green'
-      },
-      {
-        label: t('addCard.colors.purple'),
-        value: 'bg-pastel-purple'
-      },
-      {
-        label: t('addCard.colors.yellow'),
-        value: 'bg-pastel-yellow'
-      }
+      { label: t('addCard.colors.blue'), value: 'bg-pastel-blue' },
+      { label: t('addCard.colors.pink'), value: 'bg-pastel-pink' },
+      { label: t('addCard.colors.green'), value: 'bg-pastel-green' },
+      { label: t('addCard.colors.purple'), value: 'bg-pastel-purple' },
+      { label: t('addCard.colors.yellow'), value: 'bg-pastel-yellow' }
     ] as const
 )
 
-const spanishPhrases = useLocalStorage<Phrase[]>('phrases-es', [
-  {
-    text: 'Tengo frío',
-    toneClass: 'bg-pastel-blue'
-  },
-  {
-    text: 'Tengo calor',
-    toneClass: 'bg-pastel-blue'
-  },
-  {
-    text: 'Me duele aquí',
-    toneClass: 'bg-pastel-blue'
-  },
-  {
-    text: 'Quiero hablar con mi familia',
-    toneClass: 'bg-pastel-blue'
-  }
-])
+const englishGroups: InfoGroup[] = [
+  { title: 'Essential Identity Info', count: 5 },
+  { title: 'Emergency Contacts', count: 5 },
+  { title: 'Medical Information', count: 7 },
+  { title: 'Communication Preferences', count: 5 },
+  { title: 'Personal Context', count: 5 }
+]
 
-const englishPhrases = useLocalStorage<Phrase[]>('phrases-en', [
+const spanishGroups: InfoGroup[] = [
+  { title: 'Identidad esencial', count: 5 },
+  { title: 'Contactos de emergencia', count: 5 },
+  { title: 'Información médica', count: 7 },
+  { title: 'Preferencias de comunicación', count: 5 },
+  { title: 'Contexto personal', count: 5 }
+]
+
+const englishInfoDefaults: InfoItem[] = [
+  { label: 'Full name', value: '', toneClass: 'bg-pastel-blue' },
+  { label: 'Preferred name', value: '', toneClass: 'bg-pastel-blue' },
+  { label: 'Date of birth', value: '', toneClass: 'bg-pastel-blue' },
+  { label: 'Home address', value: '', toneClass: 'bg-pastel-blue' },
+  { label: 'Phone number', value: '', toneClass: 'bg-pastel-blue' },
+  { label: 'Primary contact', value: '', toneClass: 'bg-pastel-yellow' },
+  { label: 'Primary contact phone', value: '', toneClass: 'bg-pastel-yellow' },
+  { label: 'Secondary contact', value: '', toneClass: 'bg-pastel-yellow' },
+  { label: 'Primary care doctor', value: '', toneClass: 'bg-pastel-pink' },
+  { label: 'Doctor phone / clinic', value: '', toneClass: 'bg-pastel-pink' },
+  { label: 'Primary diagnosis', value: '', toneClass: 'bg-pastel-pink' },
   {
-    text: 'I am cold',
-    toneClass: 'bg-pastel-blue'
+    label: 'Aphasia statement',
+    value: 'I have aphasia. I understand more than I can say.',
+    toneClass: 'bg-pastel-yellow'
+  },
+  { label: 'Current medications', value: '', toneClass: 'bg-pastel-yellow' },
+  { label: 'Known allergies', value: '', toneClass: 'bg-pastel-pink' },
+  { label: 'Blood type', value: '', toneClass: 'bg-pastel-pink' },
+  { label: 'Insurance provider / ID', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'Hospital preference', value: '', toneClass: 'bg-pastel-purple' },
+  {
+    label: 'Speak slowly',
+    value: 'Please speak slowly and use simple sentences.',
+    toneClass: 'bg-pastel-green'
   },
   {
-    text: 'I am hot',
-    toneClass: 'bg-pastel-blue'
+    label: 'Give me time',
+    value: 'Give me time to respond. Please do not finish my sentences.',
+    toneClass: 'bg-pastel-green'
   },
   {
-    text: 'It hurts here',
-    toneClass: 'bg-pastel-blue'
+    label: 'Yes/no questions',
+    value: 'Yes/no questions work best for me.',
+    toneClass: 'bg-pastel-green'
+  },
+  { label: 'Best time to communicate', value: '', toneClass: 'bg-pastel-green' },
+  { label: 'Preferred communication method', value: '', toneClass: 'bg-pastel-green' },
+  { label: 'Occupation / former career', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'City originally from', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'Languages spoken', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'Religion / cultural needs', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'Living situation', value: '', toneClass: 'bg-pastel-purple' }
+]
+
+const spanishInfoDefaults: InfoItem[] = [
+  { label: 'Nombre completo', value: '', toneClass: 'bg-pastel-blue' },
+  { label: 'Nombre preferido', value: '', toneClass: 'bg-pastel-blue' },
+  { label: 'Fecha de nacimiento', value: '', toneClass: 'bg-pastel-blue' },
+  { label: 'Dirección de casa', value: '', toneClass: 'bg-pastel-blue' },
+  { label: 'Número de teléfono', value: '', toneClass: 'bg-pastel-blue' },
+  { label: 'Contacto principal', value: '', toneClass: 'bg-pastel-yellow' },
+  { label: 'Teléfono del contacto principal', value: '', toneClass: 'bg-pastel-yellow' },
+  { label: 'Contacto secundario', value: '', toneClass: 'bg-pastel-yellow' },
+  { label: 'Doctor principal', value: '', toneClass: 'bg-pastel-pink' },
+  { label: 'Teléfono del doctor / clínica', value: '', toneClass: 'bg-pastel-pink' },
+  { label: 'Diagnóstico principal', value: '', toneClass: 'bg-pastel-pink' },
+  {
+    label: 'Mensaje de afasia',
+    value: 'Tengo afasia. Entiendo más de lo que puedo decir.',
+    toneClass: 'bg-pastel-yellow'
+  },
+  { label: 'Medicamentos actuales', value: '', toneClass: 'bg-pastel-yellow' },
+  { label: 'Alergias conocidas', value: '', toneClass: 'bg-pastel-pink' },
+  { label: 'Tipo de sangre', value: '', toneClass: 'bg-pastel-pink' },
+  { label: 'Seguro / número de miembro', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'Hospital preferido', value: '', toneClass: 'bg-pastel-purple' },
+  {
+    label: 'Hable despacio',
+    value: 'Por favor hable despacio y use frases simples.',
+    toneClass: 'bg-pastel-green'
   },
   {
-    text: 'I want to talk to my family',
-    toneClass: 'bg-pastel-blue'
-  }
-])
+    label: 'Deme tiempo',
+    value: 'Deme tiempo para responder. Por favor no termine mis frases.',
+    toneClass: 'bg-pastel-green'
+  },
+  {
+    label: 'Preguntas sí/no',
+    value: 'Las preguntas de sí o no funcionan mejor para mí.',
+    toneClass: 'bg-pastel-green'
+  },
+  { label: 'Mejor hora para comunicarme', value: '', toneClass: 'bg-pastel-green' },
+  { label: 'Método de comunicación preferido', value: '', toneClass: 'bg-pastel-green' },
+  { label: 'Ocupación / carrera anterior', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'Ciudad de origen', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'Idiomas que habla', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'Religión / necesidades culturales', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'Situación de vivienda', value: '', toneClass: 'bg-pastel-purple' }
+]
+
+const englishInfo = useLocalStorage<InfoItem[]>('info-en-v1', englishInfoDefaults)
+const spanishInfo = useLocalStorage<InfoItem[]>('info-es-v1', spanishInfoDefaults)
 
 const activeLocale = computed<AppLocale>(() =>
   locale.value === 'en' ? 'en' : 'es'
 )
 
-const activePhrases = computed({
-  get: () =>
-    activeLocale.value === 'en' ? englishPhrases.value : spanishPhrases.value,
-  set: (value: Phrase[]) => {
+const activeInfo = computed({
+  get: () => (activeLocale.value === 'en' ? englishInfo.value : spanishInfo.value),
+  set: (value: InfoItem[]) => {
     if (activeLocale.value === 'en') {
-      englishPhrases.value = value
+      englishInfo.value = value
       return
     }
 
-    spanishPhrases.value = value
+    spanishInfo.value = value
   }
 })
 
-const onCardSelect = (text: string) => {
-  speak(text)
+const activeGroups = computed(() =>
+  activeLocale.value === 'en' ? englishGroups : spanishGroups
+)
+
+const groupedInfo = computed(() => {
+  let start = 0
+  const groups = activeGroups.value.map((group) => {
+    const items = activeInfo.value.slice(start, start + group.count)
+    start += group.count
+    return { title: group.title, items }
+  })
+
+  const customItems = activeInfo.value.slice(start)
+  if (customItems.length) {
+    groups.push({
+      title: activeLocale.value === 'en' ? 'Additional Information' : 'Información adicional',
+      items: customItems
+    })
+  }
+
+  return groups
+})
+
+const getSpokenText = (item: InfoItem) => {
+  const value = item.value.trim()
+  return value ? `${item.label}: ${value}` : item.label
+}
+
+const onCardSelect = (item: InfoItem) => {
+  speak(getSpokenText(item))
 }
 
 const onCardDelete = (index: number) => {
-  activePhrases.value = activePhrases.value.filter(
-    (_, cardIndex) => cardIndex !== index
-  )
+  activeInfo.value = activeInfo.value.filter((_, cardIndex) => cardIndex !== index)
 }
 
-const onCardEdit = (index: number) => {
-  const phrase = activePhrases.value[index]
-  if (!phrase) {
-    return
-  }
-
+const onCardEdit = (index: number | null) => {
   editingIndex.value = index
-  editingText.value = phrase.text
-  editingToneClass.value = phrase.toneClass
+  const item = index === null ? null : activeInfo.value[index]
+
+  editingLabel.value = item?.label ?? ''
+  editingValue.value = item?.value ?? ''
+  editingToneClass.value = item?.toneClass ?? 'bg-pastel-blue'
   editingError.value = ''
+  isEditOpen.value = true
 }
 
 const onEditClose = () => {
+  isEditOpen.value = false
   editingIndex.value = null
-  editingText.value = ''
+  editingLabel.value = ''
+  editingValue.value = ''
   editingToneClass.value = 'bg-pastel-blue'
   editingError.value = ''
 }
 
 const onEditSave = () => {
-  const phraseIndex = editingIndex.value
-  const normalizedText = editingText.value.trim().normalize('NFC')
+  const normalizedLabel = editingLabel.value.trim().normalize('NFC')
+  const normalizedValue = editingValue.value.trim().normalize('NFC')
 
-  if (phraseIndex === null) {
+  if (normalizedLabel === '') {
+    editingError.value = t('information.errors.labelRequired')
     return
   }
 
-  if (normalizedText === '') {
-    editingError.value = t('addCard.errors.empty')
+  const nextItem = {
+    label: normalizedLabel,
+    value: normalizedValue,
+    toneClass: editingToneClass.value
+  }
+
+  if (editingIndex.value === null) {
+    activeInfo.value = [...activeInfo.value, nextItem]
+    onEditClose()
     return
   }
 
-  activePhrases.value = activePhrases.value.map((phrase, index) =>
-    index === phraseIndex
-      ? {
-          text: normalizedText,
-          toneClass: editingToneClass.value
-        }
-      : phrase
+  activeInfo.value = activeInfo.value.map((item, index) =>
+    index === editingIndex.value ? nextItem : item
   )
   onEditClose()
-}
-
-const onAdding = (item: string) => {
-  const newItem: Omit<AddNewItem, 'emoji'> = JSON.parse(item)
-  activePhrases.value = [
-    ...activePhrases.value,
-    {
-      text: newItem.text,
-      toneClass: newItem.toneClass ?? 'bg-pastel-blue'
-    }
-  ]
 }
 
 onMounted(() => {
@@ -180,65 +262,125 @@ onMounted(() => {
     class="min-h-screen bg-[#f7f4ef] text-[#0e2f5d] dark:bg-[#111113] dark:text-[#f4f4f5]"
   >
     <main class="mx-auto w-full max-w-7xl px-6 py-8 pb-32">
-      <div
-        class="grid gap-stack-gap w-full gap-2"
-        style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr))"
-      >
-        <template v-if="isStorageReady">
-          <VoiceCard
-            v-for="(card, index) in activePhrases"
-            :key="`${card.text}-${index}`"
-            :text="card.text"
-            :tone-class="card.toneClass"
-            editable
-            :delete-aria-label="t('voiceCard.deleteAria')"
-            :edit-aria-label="t('voiceCard.editAria')"
-            @select="onCardSelect"
-            @edit="onCardEdit(index)"
-            @delete="onCardDelete(index)"
-          />
+      <template v-if="isStorageReady">
+        <section
+          v-for="group in groupedInfo"
+          :key="group.title"
+          class="mb-8"
+        >
+          <h2
+            class="mb-3 font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#083d7a] dark:text-[#8ecae6]"
+          >
+            {{ group.title }}
+          </h2>
 
-          <AddCard
-            :title="t('phrases.addCardTitle')"
-            @adding="onAdding"
-          />
-        </template>
+          <div
+            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]"
+          >
+            <div
+              v-for="item in group.items"
+              :key="`${item.label}-${activeInfo.indexOf(item)}`"
+              class="relative rounded-2xl shadow-ambient min-h-[180px] border-2 border-transparent"
+              :class="item.toneClass"
+            >
+              <button
+                type="button"
+                :aria-label="getSpokenText(item)"
+                class="w-full h-full min-h-[180px] rounded-2xl flex flex-col items-start justify-center gap-3 p-5 text-left transition-all duration-150 active:scale-95 active:brightness-90 cursor-pointer"
+                @click="onCardSelect(item)"
+              >
+                <span class="text-xs font-bold uppercase tracking-[0.12em] text-[#24548d] dark:text-[#8ecae6]">
+                  {{ item.label }}
+                </span>
+                <span class="text-xl font-semibold leading-snug text-[#083d7a] dark:text-[#F0F0F0]">
+                  {{ item.value || t('information.emptyValue') }}
+                </span>
+              </button>
 
-        <template v-else>
+              <button
+                type="button"
+                :aria-label="t('voiceCard.editAria')"
+                class="absolute top-2 left-2 h-9 rounded-full bg-white/90 dark:bg-[#22242b]/90 border border-[#d8dee9] dark:border-[#3f4450] px-3 text-xs font-semibold uppercase tracking-wide text-[#083d7a] dark:text-[#8ecae6] flex items-center justify-center hover:brightness-95 transition"
+                @click.stop="onCardEdit(activeInfo.indexOf(item))"
+              >
+                {{ t('voiceCard.edit') }}
+              </button>
+
+              <button
+                type="button"
+                :aria-label="t('voiceCard.deleteAria')"
+                class="absolute top-2 right-2 h-9 w-9 rounded-full bg-white/90 dark:bg-[#22242b]/90 border border-[#d8dee9] dark:border-[#3f4450] text-[#9b1c1c] dark:text-[#fca5a5] text-xl leading-none flex items-center justify-center hover:brightness-95 transition"
+                @click.stop="onCardDelete(activeInfo.indexOf(item))"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <button
+          type="button"
+          :aria-label="t('information.addCardTitle')"
+          class="rounded-2xl min-h-[150px] w-full flex flex-col items-center justify-center gap-3 p-4 border-4 border-dashed border-[#CBD5E1] dark:border-[#3f4450] text-[#64748B] dark:text-[#6b7280] hover:border-[#94A3B8] dark:hover:border-[#6b7280] hover:bg-[#f0eded] dark:hover:bg-[#1e2028] hover:text-[#475569] dark:hover:text-[#9ca3af] transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#94A3B8]"
+          @click="onCardEdit(null)"
+        >
+          <span class="text-5xl leading-none font-light select-none">+</span>
+          <span class="text-sm font-medium">{{ t('information.addCardTitle') }}</span>
+        </button>
+      </template>
+
+      <template v-else>
+        <div
+          class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
+        >
           <VoiceCardSkeleton
             v-for="index in 6"
             :key="index"
           />
-        </template>
-      </div>
+        </div>
+      </template>
     </main>
 
     <UModal
-      :open="editingIndex !== null"
-      :title="t('phrases.editCardTitle')"
+      :open="isEditOpen"
+      :title="editingIndex === null ? t('information.addCardTitle') : t('information.editCardTitle')"
       @update:open="(value) => !value && onEditClose()"
     >
       <template #body>
         <div class="flex flex-col gap-4 pt-1">
           <div class="flex flex-col gap-1.5">
             <label class="text-sm font-medium text-[#374151] dark:text-[#d1d5db]">
-              {{ t("addCard.textLabel") }}
+              {{ t('information.labelField') }}
             </label>
             <UInput
-              v-model.trim="editingText"
+              v-model.trim="editingLabel"
               color="neutral"
               highlight
               size="lg"
-              :placeholder="t('addCard.placeholderText')"
+              :placeholder="t('information.labelPlaceholder')"
               :ui="{ base: 'w-full' }"
               @input="editingError = ''"
-              @keydown.enter="onEditSave"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="text-sm font-medium text-[#374151] dark:text-[#d1d5db]">
+              {{ t('information.valueField') }}
+            </label>
+            <UTextarea
+              v-model.trim="editingValue"
+              color="neutral"
+              highlight
+              :rows="4"
+              :placeholder="t('information.valuePlaceholder')"
+              :ui="{ base: 'w-full' }"
+              @input="editingError = ''"
             />
           </div>
 
           <div class="flex flex-col gap-2">
             <label class="text-sm font-medium text-[#374151] dark:text-[#d1d5db]">
-              {{ t("addCard.colorLabel") }}
+              {{ t('addCard.colorLabel') }}
             </label>
             <div class="flex flex-wrap gap-2">
               <label
@@ -254,7 +396,7 @@ onMounted(() => {
                 <input
                   v-model="editingToneClass"
                   type="radio"
-                  name="phrase-card-tone"
+                  name="info-card-tone"
                   class="sr-only"
                   :value="tone.value"
                 >
@@ -286,13 +428,13 @@ onMounted(() => {
               class="flex-1 justify-center"
               @click="onEditClose"
             >
-              {{ t("addCard.cancel") }}
+              {{ t('addCard.cancel') }}
             </UButton>
             <UButton
               class="flex-1 justify-center"
               @click="onEditSave"
             >
-              {{ t("phrases.saveCardButton") }}
+              {{ t('information.saveCardButton') }}
             </UButton>
           </div>
         </div>

@@ -24,7 +24,7 @@
       "about": "Acerca de",
       "settings": "Ajustes",
       "home": "Inicio",
-      "phrases": "Frases"
+      "phrases": "Información"
     }
   },
   "index": {
@@ -51,6 +51,21 @@
       "hot": "Tengo calor",
       "painHere": "Me duele aquí",
       "family": "Quiero hablar con mi familia"
+    }
+  },
+  "information": {
+    "seoTitle": "Información",
+    "seoDescription": "Tarjetas editables de información personal, emergencia, médica y comunicación.",
+    "addCardTitle": "Agregar información",
+    "editCardTitle": "Editar información",
+    "saveCardButton": "Guardar información",
+    "labelField": "Etiqueta",
+    "valueField": "Información",
+    "labelPlaceholder": "Ejemplo: Nombre completo",
+    "valuePlaceholder": "Escribe la información de la persona...",
+    "emptyValue": "Toca Editar para agregar",
+    "errors": {
+      "labelRequired": "La etiqueta no puede estar vacía."
     }
   },
   "settings": {
@@ -120,6 +135,7 @@
   },
   "voiceCard": {
     "deleteAria": "Eliminar tarjeta",
-    "editAria": "Editar tarjeta"
+    "editAria": "Editar tarjeta",
+    "edit": "Editar"
   }
 }

@@ -24,7 +24,7 @@
       "about": "About",
       "settings": "Settings",
       "home": "Home",
-      "phrases": "Phrases"
+      "phrases": "Information"
     }
   },
   "index": {
@@ -51,6 +51,21 @@
       "hot": "I am hot",
       "painHere": "It hurts here",
       "family": "I want to talk to my family"
+    }
+  },
+  "information": {
+    "seoTitle": "Information",
+    "seoDescription": "Editable personal, emergency, medical, and communication information cards.",
+    "addCardTitle": "Add information",
+    "editCardTitle": "Edit information",
+    "saveCardButton": "Save information",
+    "labelField": "Label",
+    "valueField": "Information",
+    "labelPlaceholder": "Example: Full name",
+    "valuePlaceholder": "Enter the person's information...",
+    "emptyValue": "Tap Edit to add",
+    "errors": {
+      "labelRequired": "Label cannot be empty."
     }
   },
   "settings": {
@@ -120,6 +135,7 @@
   },
   "voiceCard": {
     "deleteAria": "Delete card",
-    "editAria": "Edit card"
+    "editAria": "Edit card",
+    "edit": "Edit"
   }
 }
