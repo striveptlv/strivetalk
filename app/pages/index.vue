@@ -27,7 +27,14 @@ type Category = {
   count: number
 }
 
+type RequestStarter = {
+  label: string
+  phrase: string
+}
+
 const priorityButtonCount = 8
+
+const selectedRequestStarter = ref<RequestStarter | null>(null)
 
 const englishCategories: Category[] = [
   { title: 'Social / Conversational', count: 2 },
@@ -596,6 +603,22 @@ const activeCategories = computed(() =>
   activeLocale.value === 'en' ? englishCategories : spanishCategories
 )
 
+const requestStarters = computed<RequestStarter[]>(() =>
+  activeLocale.value === 'en'
+    ? [
+        { label: 'I want', phrase: 'I want' },
+        { label: 'I need', phrase: 'I need' },
+        { label: 'I am', phrase: 'I am' },
+        { label: 'I feel', phrase: 'I feel' }
+      ]
+    : [
+        { label: 'Quiero', phrase: 'Quiero' },
+        { label: 'Necesito', phrase: 'Necesito' },
+        { label: 'Estoy', phrase: 'Estoy' },
+        { label: 'Me siento', phrase: 'Me siento' }
+      ]
+)
+
 const priorityWords = computed(() =>
   activeWords.value.slice(0, priorityButtonCount)
 )
@@ -622,8 +645,54 @@ const groupedWords = computed(() => {
   return groups
 })
 
+const requestPreview = computed(() =>
+  selectedRequestStarter.value
+    ? `${selectedRequestStarter.value.phrase}...`
+    : activeLocale.value === 'en'
+      ? 'Choose a starter'
+      : 'Elige un inicio'
+)
+
+const requestHelperText = computed(() =>
+  selectedRequestStarter.value
+    ? activeLocale.value === 'en'
+      ? 'Now tap another button to speak the phrase.'
+      : 'Ahora toca otro botón para decir la frase.'
+    : activeLocale.value === 'en'
+      ? 'Tap one button here, then tap any word card.'
+      : 'Toca un botón aquí, luego toca una tarjeta.'
+)
+
+const normalizeRequestObject = (text: string) => {
+  const [firstOption = text] = text.split('/')
+  const trimmed = firstOption.trim()
+  if (!trimmed) {
+    return ''
+  }
+
+  return trimmed.charAt(0).toLocaleLowerCase() + trimmed.slice(1)
+}
+
+const getRequestPhrase = (starter: RequestStarter, text: string) =>
+  `${starter.phrase} ${normalizeRequestObject(text)}`.trim()
+
+const onRequestStarterSelect = (starter: RequestStarter) => {
+  selectedRequestStarter.value = starter
+}
+
+const onRequestClear = () => {
+  selectedRequestStarter.value = null
+}
+
 const onCardSelect = (text: string) => {
-  speak(text)
+  const starter = selectedRequestStarter.value
+  if (!starter) {
+    speak(text)
+    return
+  }
+
+  speak(getRequestPhrase(starter, text))
+  selectedRequestStarter.value = null
 }
 
 const onCardDelete = (index: number) => {
@@ -655,6 +724,48 @@ onMounted(() => {
   >
     <main class="mx-auto w-full max-w-7xl px-6 py-8 pb-32">
       <template v-if="isStorageReady">
+        <section
+          class="mb-8 rounded-2xl border-2 border-[#d8e3d3] bg-white/70 p-4 shadow-ambient dark:border-[#2f4638] dark:bg-[#1a1c20]"
+        >
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#083d7a] dark:text-[#8ecae6]">
+                Request
+              </p>
+              <p class="mt-1 text-lg font-semibold text-[#0e2f5d] dark:text-[#f4f4f5]">
+                {{ requestPreview }}
+              </p>
+              <p class="text-sm text-[#48617d] dark:text-[#b8c2cc]">
+                {{ requestHelperText }}
+              </p>
+            </div>
+
+            <button
+              v-if="selectedRequestStarter"
+              type="button"
+              class="self-start rounded-full border border-[#cbd5e1] bg-white px-4 py-2 text-sm font-semibold text-[#083d7a] transition hover:bg-[#f3f7fb] dark:border-[#3f4450] dark:bg-[#22242b] dark:text-[#8ecae6] dark:hover:bg-[#2b2f39]"
+              @click="onRequestClear"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <button
+              v-for="starter in requestStarters"
+              :key="starter.phrase"
+              type="button"
+              class="min-h-[86px] rounded-2xl border-2 p-3 text-center text-xl font-bold text-[#083d7a] shadow-sm transition active:scale-95 dark:text-[#F0F0F0]"
+              :class="selectedRequestStarter?.phrase === starter.phrase
+                ? 'border-[#083d7a] bg-pastel-green ring-2 ring-[#083d7a]/20 dark:border-[#8ecae6] dark:ring-[#8ecae6]/30'
+                : 'border-transparent bg-pastel-blue hover:brightness-95'"
+              @click="onRequestStarterSelect(starter)"
+            >
+              {{ starter.label }}
+            </button>
+          </div>
+        </section>
+
         <section class="mb-8">
           <div
             class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
