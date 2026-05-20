@@ -27,14 +27,14 @@ type Category = {
   count: number
 }
 
-type RequestStarter = {
-  label: string
+type PhraseStarter = Word & {
   phrase: string
+  suffix?: string
 }
 
 const priorityButtonCount = 8
 
-const selectedRequestStarter = ref<RequestStarter | null>(null)
+const selectedPhraseStarter = ref<PhraseStarter | null>(null)
 
 const englishCategories: Category[] = [
   { title: 'Social / Conversational', count: 2 },
@@ -603,21 +603,145 @@ const activeCategories = computed(() =>
   activeLocale.value === 'en' ? englishCategories : spanishCategories
 )
 
-const requestStarters = computed<RequestStarter[]>(() =>
+const requestStarters = computed<PhraseStarter[]>(() =>
   activeLocale.value === 'en'
     ? [
-        { label: 'I want', phrase: 'I want' },
-        { label: 'I need', phrase: 'I need' },
-        { label: 'I am', phrase: 'I am' },
-        { label: 'I feel', phrase: 'I feel' }
+        {
+          text: 'I want',
+          phrase: 'I want',
+          emoji: '🙋',
+          toneClass: 'bg-pastel-green'
+        },
+        {
+          text: 'I need',
+          phrase: 'I need',
+          emoji: '🆘',
+          toneClass: 'bg-pastel-yellow'
+        },
+        {
+          text: 'I am',
+          phrase: 'I am',
+          emoji: '🙂',
+          toneClass: 'bg-pastel-blue'
+        },
+        {
+          text: 'I feel',
+          phrase: 'I feel',
+          emoji: '💭',
+          toneClass: 'bg-pastel-purple'
+        }
       ]
     : [
-        { label: 'Quiero', phrase: 'Quiero' },
-        { label: 'Necesito', phrase: 'Necesito' },
-        { label: 'Estoy', phrase: 'Estoy' },
-        { label: 'Me siento', phrase: 'Me siento' }
+        {
+          text: 'Quiero',
+          phrase: 'Quiero',
+          emoji: '🙋',
+          toneClass: 'bg-pastel-green'
+        },
+        {
+          text: 'Necesito',
+          phrase: 'Necesito',
+          emoji: '🆘',
+          toneClass: 'bg-pastel-yellow'
+        },
+        {
+          text: 'Estoy',
+          phrase: 'Estoy',
+          emoji: '🙂',
+          toneClass: 'bg-pastel-blue'
+        },
+        {
+          text: 'Me siento',
+          phrase: 'Me siento',
+          emoji: '💭',
+          toneClass: 'bg-pastel-purple'
+        }
       ]
 )
+
+const questionStarters = computed<PhraseStarter[]>(() =>
+  activeLocale.value === 'en'
+    ? [
+        {
+          text: 'What',
+          phrase: 'What',
+          suffix: '?',
+          emoji: '❓',
+          toneClass: 'bg-pastel-purple'
+        },
+        {
+          text: 'Where',
+          phrase: 'Where',
+          suffix: '?',
+          emoji: '📍',
+          toneClass: 'bg-pastel-blue'
+        },
+        {
+          text: 'Why',
+          phrase: 'Why',
+          suffix: '?',
+          emoji: '🤔',
+          toneClass: 'bg-pastel-yellow'
+        },
+        {
+          text: 'Who',
+          phrase: 'Who',
+          suffix: '?',
+          emoji: '👤',
+          toneClass: 'bg-pastel-green'
+        },
+        {
+          text: 'When',
+          phrase: 'When',
+          suffix: '?',
+          emoji: '🕒',
+          toneClass: 'bg-pastel-blue'
+        }
+      ]
+    : [
+        {
+          text: 'Qué',
+          phrase: 'Qué',
+          suffix: '?',
+          emoji: '❓',
+          toneClass: 'bg-pastel-purple'
+        },
+        {
+          text: 'Dónde',
+          phrase: 'Dónde',
+          suffix: '?',
+          emoji: '📍',
+          toneClass: 'bg-pastel-blue'
+        },
+        {
+          text: 'Por qué',
+          phrase: 'Por qué',
+          suffix: '?',
+          emoji: '🤔',
+          toneClass: 'bg-pastel-yellow'
+        },
+        {
+          text: 'Quién',
+          phrase: 'Quién',
+          suffix: '?',
+          emoji: '👤',
+          toneClass: 'bg-pastel-green'
+        },
+        {
+          text: 'Cuándo',
+          phrase: 'Cuándo',
+          suffix: '?',
+          emoji: '🕒',
+          toneClass: 'bg-pastel-blue'
+        }
+      ]
+)
+
+const questionEnder = computed<Word>(() => ({
+  text: '?',
+  emoji: '❔',
+  toneClass: 'bg-pastel-pink'
+}))
 
 const priorityWords = computed(() =>
   activeWords.value.slice(0, priorityButtonCount)
@@ -646,15 +770,17 @@ const groupedWords = computed(() => {
 })
 
 const requestPreview = computed(() =>
-  selectedRequestStarter.value
-    ? `${selectedRequestStarter.value.phrase}...`
+  selectedPhraseStarter.value
+    ? selectedPhraseStarter.value.suffix
+      ? `${selectedPhraseStarter.value.phrase}...${selectedPhraseStarter.value.suffix}`
+      : `${selectedPhraseStarter.value.phrase}...`
     : activeLocale.value === 'en'
       ? 'Choose a starter'
       : 'Elige un inicio'
 )
 
 const requestHelperText = computed(() =>
-  selectedRequestStarter.value
+  selectedPhraseStarter.value
     ? activeLocale.value === 'en'
       ? 'Now tap another button to speak the phrase.'
       : 'Ahora toca otro botón para decir la frase.'
@@ -673,26 +799,44 @@ const normalizeRequestObject = (text: string) => {
   return trimmed.charAt(0).toLocaleLowerCase() + trimmed.slice(1)
 }
 
-const getRequestPhrase = (starter: RequestStarter, text: string) =>
-  `${starter.phrase} ${normalizeRequestObject(text)}`.trim()
-
-const onRequestStarterSelect = (starter: RequestStarter) => {
-  selectedRequestStarter.value = starter
+const getPhrase = (starter: PhraseStarter, text: string) => {
+  const phrase = `${starter.phrase} ${normalizeRequestObject(text)}`.trim()
+  return starter.suffix ? `${phrase}${starter.suffix}` : phrase
 }
 
-const onRequestClear = () => {
-  selectedRequestStarter.value = null
+const getStarterToneClass = (starter: PhraseStarter) =>
+  selectedPhraseStarter.value?.phrase === starter.phrase
+    ? `${starter.toneClass} border-[#083d7a] ring-2 ring-[#083d7a]/20 dark:border-[#8ecae6] dark:ring-[#8ecae6]/30`
+    : starter.toneClass
+
+const onStarterSelect = (starter: PhraseStarter) => {
+  selectedPhraseStarter.value = starter
+}
+
+const onStarterClear = () => {
+  selectedPhraseStarter.value = null
+}
+
+const onQuestionEnderSelect = () => {
+  const starter = selectedPhraseStarter.value
+  if (!starter) {
+    speak(questionEnder.value.text)
+    return
+  }
+
+  speak(`${starter.phrase}${starter.suffix ?? ''}`)
+  selectedPhraseStarter.value = null
 }
 
 const onCardSelect = (text: string) => {
-  const starter = selectedRequestStarter.value
+  const starter = selectedPhraseStarter.value
   if (!starter) {
     speak(text)
     return
   }
 
-  speak(getRequestPhrase(starter, text))
-  selectedRequestStarter.value = null
+  speak(getPhrase(starter, text))
+  selectedPhraseStarter.value = null
 }
 
 const onCardDelete = (index: number) => {
@@ -724,13 +868,11 @@ onMounted(() => {
   >
     <main class="mx-auto w-full max-w-7xl px-6 py-8 pb-32">
       <template v-if="isStorageReady">
-        <section
-          class="mb-8 rounded-2xl border-2 border-[#d8e3d3] bg-white/70 p-4 shadow-ambient dark:border-[#2f4638] dark:bg-[#1a1c20]"
-        >
+        <section class="mb-8">
           <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p class="font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#083d7a] dark:text-[#8ecae6]">
-                Request
+                Requests
               </p>
               <p class="mt-1 text-lg font-semibold text-[#0e2f5d] dark:text-[#f4f4f5]">
                 {{ requestPreview }}
@@ -741,28 +883,57 @@ onMounted(() => {
             </div>
 
             <button
-              v-if="selectedRequestStarter"
+              v-if="selectedPhraseStarter"
               type="button"
               class="self-start rounded-full border border-[#cbd5e1] bg-white px-4 py-2 text-sm font-semibold text-[#083d7a] transition hover:bg-[#f3f7fb] dark:border-[#3f4450] dark:bg-[#22242b] dark:text-[#8ecae6] dark:hover:bg-[#2b2f39]"
-              @click="onRequestClear"
+              @click="onStarterClear"
             >
               Clear
             </button>
           </div>
 
-          <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <button
+          <div
+            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
+          >
+            <VoiceCard
               v-for="starter in requestStarters"
               :key="starter.phrase"
-              type="button"
-              class="min-h-[86px] rounded-2xl border-2 p-3 text-center text-xl font-bold text-[#083d7a] shadow-sm transition active:scale-95 dark:text-[#F0F0F0]"
-              :class="selectedRequestStarter?.phrase === starter.phrase
-                ? 'border-[#083d7a] bg-pastel-green ring-2 ring-[#083d7a]/20 dark:border-[#8ecae6] dark:ring-[#8ecae6]/30'
-                : 'border-transparent bg-pastel-blue hover:brightness-95'"
-              @click="onRequestStarterSelect(starter)"
-            >
-              {{ starter.label }}
-            </button>
+              :text="starter.text"
+              :emoji="starter.emoji"
+              :tone-class="getStarterToneClass(starter)"
+              :delete-aria-label="t('voiceCard.deleteAria')"
+              @select="onStarterSelect(starter)"
+            />
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2
+            class="mb-3 font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#083d7a] dark:text-[#8ecae6]"
+          >
+            Questions
+          </h2>
+
+          <div
+            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
+          >
+            <VoiceCard
+              v-for="starter in questionStarters"
+              :key="starter.phrase"
+              :text="starter.text"
+              :emoji="starter.emoji"
+              :tone-class="getStarterToneClass(starter)"
+              :delete-aria-label="t('voiceCard.deleteAria')"
+              @select="onStarterSelect(starter)"
+            />
+
+            <VoiceCard
+              :text="questionEnder.text"
+              :emoji="questionEnder.emoji"
+              :tone-class="questionEnder.toneClass"
+              :delete-aria-label="t('voiceCard.deleteAria')"
+              @select="onQuestionEnderSelect"
+            />
           </div>
         </section>
 
