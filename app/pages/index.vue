@@ -20,6 +20,7 @@ type Word = {
   text: string
   emoji: string
   toneClass: string
+  hidden?: boolean
 }
 
 type Category = {
@@ -736,13 +737,15 @@ const questionEnder = computed<Word>(() => ({
 }))
 
 const priorityWords = computed(() =>
-  activeWords.value.slice(0, priorityButtonCount)
+  activeWords.value.slice(0, priorityButtonCount).filter(card => !card.hidden)
 )
 
 const groupedWords = computed(() => {
   let start = priorityButtonCount
   const groups = activeCategories.value.map((category) => {
-    const words = activeWords.value.slice(start, start + category.count)
+    const words = activeWords.value
+      .slice(start, start + category.count)
+      .filter(card => !card.hidden)
     start += category.count
     return {
       title: category.title,
@@ -750,7 +753,9 @@ const groupedWords = computed(() => {
     }
   })
 
-  const customWords = activeWords.value.slice(start)
+  const customWords = activeWords.value
+    .slice(start)
+    .filter(card => !card.hidden)
   if (customWords.length) {
     groups.push({
       title: activeLocale.value === 'en' ? 'Custom' : 'Personalizadas',
@@ -763,7 +768,9 @@ const groupedWords = computed(() => {
 
 const socialGroup = computed(() => groupedWords.value[0])
 
-const remainingGroups = computed(() => groupedWords.value.slice(1))
+const remainingGroups = computed(() =>
+  groupedWords.value.slice(1).filter(group => group.words.length > 0)
+)
 
 const requestPreview = computed(() =>
   selectedPhraseStarter.value
@@ -848,8 +855,13 @@ const onCardSelect = (text: string) => {
 }
 
 const onCardDelete = (index: number) => {
-  activeWords.value = activeWords.value.filter(
-    (_, cardIndex) => cardIndex !== index
+  activeWords.value = activeWords.value.map((card, cardIndex) =>
+    cardIndex === index
+      ? {
+          ...card,
+          hidden: true
+        }
+      : card
   )
 }
 
@@ -860,7 +872,8 @@ const onAdding = (item: string) => {
     {
       text: newItem.text,
       emoji: newItem.emoji ?? '',
-      toneClass: newItem.toneClass ?? 'bg-pastel-blue'
+      toneClass: newItem.toneClass ?? 'bg-pastel-blue',
+      hidden: false
     }
   ]
 }
@@ -896,7 +909,8 @@ onMounted(() => {
               :text="card.text"
               :emoji="card.emoji"
               :tone-class="getPriorityToneClass(card, index)"
-              :delete-aria-label="t('voiceCard.deleteAria')"
+              :delete-aria-label="t('voiceCard.hideAria')"
+              delete-icon="hide"
               @select="onCardSelect"
               @delete="onCardDelete(activeWords.indexOf(card))"
             />
@@ -936,7 +950,7 @@ onMounted(() => {
               :text="starter.text"
               :emoji="starter.emoji"
               :tone-class="getStarterToneClass(starter)"
-              :delete-aria-label="t('voiceCard.deleteAria')"
+              :show-delete="false"
               @select="onStarterSelect(starter)"
             />
           </div>
@@ -961,7 +975,8 @@ onMounted(() => {
               :text="card.text"
               :emoji="card.emoji"
               :tone-class="card.toneClass"
-              :delete-aria-label="t('voiceCard.deleteAria')"
+              :delete-aria-label="t('voiceCard.hideAria')"
+              delete-icon="hide"
               @select="onCardSelect"
               @delete="onCardDelete(activeWords.indexOf(card))"
             />
@@ -984,7 +999,7 @@ onMounted(() => {
               :text="starter.text"
               :emoji="starter.emoji"
               :tone-class="getStarterToneClass(starter)"
-              :delete-aria-label="t('voiceCard.deleteAria')"
+              :show-delete="false"
               @select="onStarterSelect(starter)"
             />
 
@@ -992,7 +1007,7 @@ onMounted(() => {
               :text="questionEnder.text"
               :emoji="questionEnder.emoji"
               :tone-class="questionEnder.toneClass"
-              :delete-aria-label="t('voiceCard.deleteAria')"
+              :show-delete="false"
               @select="onQuestionEnderSelect"
             />
           </div>
@@ -1018,7 +1033,8 @@ onMounted(() => {
               :text="card.text"
               :emoji="card.emoji"
               :tone-class="card.toneClass"
-              :delete-aria-label="t('voiceCard.deleteAria')"
+              :delete-aria-label="t('voiceCard.hideAria')"
+              delete-icon="hide"
               @select="onCardSelect"
               @delete="onCardDelete(activeWords.indexOf(card))"
             />

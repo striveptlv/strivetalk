@@ -9,14 +9,18 @@ const props = withDefaults(
     text: string
     toneClass?: string
     editable?: boolean
+    showDelete?: boolean
     deleteAriaLabel?: string
+    deleteIcon?: string
     editAriaLabel?: string
   }>(),
   {
     title: undefined,
     toneClass: 'bg-pastel-blue',
     editable: false,
+    showDelete: true,
     deleteAriaLabel: 'Eliminar tarjeta',
+    deleteIcon: undefined,
     editAriaLabel: 'Editar tarjeta'
   }
 )
@@ -68,13 +72,25 @@ const { isDeleteMode } = useDeleteMode()
     </button>
 
     <button
-      v-if="isDeleteMode"
+      v-if="isDeleteMode && showDelete"
       type="button"
       :aria-label="deleteAriaLabel"
       class="absolute top-2 right-2 h-9 w-9 rounded-full bg-white/90 dark:bg-[#22242b]/90 border border-[#d8dee9] dark:border-[#3f4450] text-[#9b1c1c] dark:text-[#fca5a5] text-xl leading-none flex items-center justify-center hover:brightness-95 transition"
       @click.stop="onDelete"
     >
-      ×
+      <span
+        v-if="deleteIcon === 'hide'"
+        aria-hidden="true"
+        class="relative block h-4 w-6 rounded-full border-2 border-current"
+      >
+        <span
+          class="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-current"
+        />
+        <span
+          class="absolute left-1/2 top-1/2 h-0.5 w-7 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-full bg-current"
+        />
+      </span>
+      <span v-else>{{ deleteIcon || '×' }}</span>
     </button>
 
     <button
