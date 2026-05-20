@@ -215,7 +215,7 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-pink'
   },
   {
-    text: 'I take medication',
+    text: 'Pain',
     emoji: '💊',
     toneClass: 'bg-pastel-yellow'
   },
@@ -582,6 +582,7 @@ const defaultCardTextReplacements = new Map([
   ['Water / Drink', 'Water'],
   ['Food / Hungry', 'Food'],
   ['Medicine / Pain', 'Medicine'],
+  ['I take medication', 'Pain'],
   ['Stop / Finished', 'Stop'],
   ['Frustrated / Upset', 'Frustrated'],
   ['Doctor / Hospital', 'Doctor'],
@@ -998,6 +999,33 @@ onMounted(() => {
           </div>
         </section>
 
+        <section
+          v-if="socialGroup"
+          class="mb-8"
+        >
+          <h2
+            class="mb-3 font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#083d7a] dark:text-[#8ecae6]"
+          >
+            {{ socialGroup.title }}
+          </h2>
+
+          <div
+            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
+          >
+            <VoiceCard
+              v-for="card in socialGroup.words"
+              :key="card.text"
+              :text="card.text"
+              :emoji="card.emoji"
+              :tone-class="card.toneClass"
+              :hidden="card.hidden"
+              :delete-aria-label="getCardVisibilityAria(card)"
+              @select="onCardSelect"
+              @delete="onCardDelete(activeWords.indexOf(card))"
+            />
+          </div>
+        </section>
+
         <div
           v-if="selectedPhraseStarter"
           class="sticky top-3 z-40 mb-6 flex items-center justify-between gap-3 rounded-2xl border-2 border-[#083d7a] bg-[#fff9e8] px-4 py-3 shadow-ambient dark:border-[#8ecae6] dark:bg-[#1f2937]"
@@ -1006,8 +1034,14 @@ onMounted(() => {
             <p class="text-sm font-semibold uppercase tracking-[0.08em] text-[#48617d] dark:text-[#b8c2cc]">
               {{ stickyStarterLabel }}
             </p>
-            <p class="text-2xl font-bold leading-tight text-[#083d7a] dark:text-[#f4f4f5]">
-              {{ stickyStarterText }}
+            <p class="flex items-center gap-2 text-2xl font-bold leading-tight text-[#083d7a] dark:text-[#f4f4f5]">
+              <span
+                aria-hidden="true"
+                class="text-2xl"
+              >
+                {{ selectedPhraseStarter.emoji }}
+              </span>
+              <span>{{ stickyStarterText }}</span>
             </p>
           </div>
 
@@ -1055,33 +1089,6 @@ onMounted(() => {
               :tone-class="getStarterToneClass(starter)"
               :show-delete="false"
               @select="onStarterSelect(starter)"
-            />
-          </div>
-        </section>
-
-        <section
-          v-if="socialGroup"
-          class="mb-8"
-        >
-          <h2
-            class="mb-3 font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#083d7a] dark:text-[#8ecae6]"
-          >
-            {{ socialGroup.title }}
-          </h2>
-
-          <div
-            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
-          >
-            <VoiceCard
-              v-for="card in socialGroup.words"
-              :key="card.text"
-              :text="card.text"
-              :emoji="card.emoji"
-              :tone-class="card.toneClass"
-              :hidden="card.hidden"
-              :delete-aria-label="getCardVisibilityAria(card)"
-              @select="onCardSelect"
-              @delete="onCardDelete(activeWords.indexOf(card))"
             />
           </div>
         </section>

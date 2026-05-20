@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const repositoryName = process.env.GITHUB_REPOSITORY?.split('/')[1]
 const isGitHubActions = process.env.GITHUB_ACTIONS === 'true'
-const baseURL ='/'
+const baseURL = isGitHubActions && repositoryName ? `/${repositoryName}/` : '/'
 
 export default defineNuxtConfig({
   modules: [
@@ -37,6 +37,11 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+
+  colorMode: {
+    preference: 'system',
+    fallback: 'light'
+  },
 
   routeRules: {
     '/': { prerender: true }
