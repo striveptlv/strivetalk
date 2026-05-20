@@ -70,7 +70,7 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-traffic-red'
   },
   {
-    text: 'Hello / Hi',
+    text: 'Hello',
     emoji: '👋',
     toneClass: 'bg-pastel-blue'
   },
@@ -100,7 +100,7 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-purple'
   },
   {
-    text: 'Wait / One moment',
+    text: 'Wait',
     emoji: '✋',
     toneClass: 'bg-pastel-yellow'
   },
@@ -110,12 +110,12 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-green'
   },
   {
-    text: 'Water / Drink',
+    text: 'Water',
     emoji: '💧',
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'Food / Hungry',
+    text: 'Food',
     emoji: '🍽️',
     toneClass: 'bg-pastel-green'
   },
@@ -140,7 +140,7 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-yellow'
   },
   {
-    text: 'Medicine / Pain',
+    text: 'Medicine',
     emoji: '💊',
     toneClass: 'bg-pastel-yellow'
   },
@@ -155,7 +155,7 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-green'
   },
   {
-    text: 'Stop / Finished',
+    text: 'Stop',
     emoji: '🛑',
     toneClass: 'bg-pastel-pink'
   },
@@ -175,7 +175,7 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'Frustrated / Upset',
+    text: 'Frustrated',
     emoji: '😣',
     toneClass: 'bg-pastel-pink'
   },
@@ -210,7 +210,7 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-yellow'
   },
   {
-    text: 'Doctor / Hospital',
+    text: 'Doctor',
     emoji: '🏥',
     toneClass: 'bg-pastel-pink'
   },
@@ -225,7 +225,7 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'My husband / wife / partner',
+    text: 'My partner',
     emoji: '💞',
     toneClass: 'bg-pastel-purple'
   },
@@ -240,12 +240,12 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-pink'
   },
   {
-    text: 'Work / Job',
+    text: 'Work',
     emoji: '💼',
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'Outside / Go out',
+    text: 'Outside',
     emoji: '🌳',
     toneClass: 'bg-pastel-green'
   },
@@ -255,7 +255,7 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'TV / Watch something',
+    text: 'TV',
     emoji: '📺',
     toneClass: 'bg-pastel-purple'
   },
@@ -265,22 +265,22 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-purple'
   },
   {
-    text: 'Eat / Restaurant',
+    text: 'Eat',
     emoji: '🍽️',
     toneClass: 'bg-pastel-green'
   },
   {
-    text: 'Sleep / Rest',
+    text: 'Sleep',
     emoji: '🛌',
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'Walk / Exercise',
+    text: 'Walk',
     emoji: '🚶',
     toneClass: 'bg-pastel-green'
   },
   {
-    text: 'Say it again / Repeat',
+    text: 'Repeat',
     emoji: '🔁',
     toneClass: 'bg-pastel-purple'
   },
@@ -295,12 +295,12 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-yellow'
   },
   {
-    text: 'Almost right / Not quite',
+    text: 'Almost right',
     emoji: '↔️',
     toneClass: 'bg-pastel-yellow'
   },
   {
-    text: 'Show me / Point to it',
+    text: 'Show me',
     emoji: '👉',
     toneClass: 'bg-pastel-green'
   },
@@ -353,7 +353,7 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-purple'
   },
   {
-    text: 'Espera / Un momento',
+    text: 'Espera',
     emoji: '✋',
     toneClass: 'bg-pastel-yellow'
   },
@@ -363,12 +363,12 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-green'
   },
   {
-    text: 'Agua / Bebida',
+    text: 'Agua',
     emoji: '💧',
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'Comida / Tengo hambre',
+    text: 'Comida',
     emoji: '🍽️',
     toneClass: 'bg-pastel-green'
   },
@@ -393,7 +393,7 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-yellow'
   },
   {
-    text: 'Medicina / Dolor',
+    text: 'Medicina',
     emoji: '💊',
     toneClass: 'bg-pastel-yellow'
   },
@@ -408,7 +408,7 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-green'
   },
   {
-    text: 'Alto / Terminé',
+    text: 'Alto',
     emoji: '🛑',
     toneClass: 'bg-pastel-pink'
   },
@@ -428,7 +428,7 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'Frustrado / Molesto',
+    text: 'Frustrado',
     emoji: '😣',
     toneClass: 'bg-pastel-pink'
   },
@@ -463,7 +463,7 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-yellow'
   },
   {
-    text: 'Doctor / Hospital',
+    text: 'Doctor',
     emoji: '🏥',
     toneClass: 'bg-pastel-pink'
   },
@@ -478,7 +478,7 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'Mi esposo / esposa / pareja',
+    text: 'Mi pareja',
     emoji: '💞',
     toneClass: 'bg-pastel-purple'
   },
@@ -498,7 +498,7 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'Afuera / Salir',
+    text: 'Afuera',
     emoji: '🌳',
     toneClass: 'bg-pastel-green'
   },
@@ -508,7 +508,7 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'TV / Ver algo',
+    text: 'TV',
     emoji: '📺',
     toneClass: 'bg-pastel-purple'
   },
@@ -518,17 +518,17 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-purple'
   },
   {
-    text: 'Comer / Restaurante',
+    text: 'Comer',
     emoji: '🍽️',
     toneClass: 'bg-pastel-green'
   },
   {
-    text: 'Dormir / Descansar',
+    text: 'Dormir',
     emoji: '🛌',
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'Caminar / Ejercicio',
+    text: 'Caminar',
     emoji: '🚶',
     toneClass: 'bg-pastel-green'
   },
@@ -548,12 +548,12 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-yellow'
   },
   {
-    text: 'Casi correcto / No exactamente',
+    text: 'Casi correcto',
     emoji: '↔️',
     toneClass: 'bg-pastel-yellow'
   },
   {
-    text: 'Muéstrame / Señálalo',
+    text: 'Muéstrame',
     emoji: '👉',
     toneClass: 'bg-pastel-green'
   },
@@ -575,6 +575,41 @@ const englishWords = useLocalStorage<Word[]>(
 )
 
 const deprecatedDefaultCards = new Set(['I want / I need', 'Quiero / Necesito'])
+
+const defaultCardTextReplacements = new Map([
+  ['Hello / Hi', 'Hello'],
+  ['Wait / One moment', 'Wait'],
+  ['Water / Drink', 'Water'],
+  ['Food / Hungry', 'Food'],
+  ['Medicine / Pain', 'Medicine'],
+  ['Stop / Finished', 'Stop'],
+  ['Frustrated / Upset', 'Frustrated'],
+  ['Doctor / Hospital', 'Doctor'],
+  ['My husband / wife / partner', 'My partner'],
+  ['Work / Job', 'Work'],
+  ['Outside / Go out', 'Outside'],
+  ['TV / Watch something', 'TV'],
+  ['Eat / Restaurant', 'Eat'],
+  ['Sleep / Rest', 'Sleep'],
+  ['Walk / Exercise', 'Walk'],
+  ['Say it again / Repeat', 'Repeat'],
+  ['Almost right / Not quite', 'Almost right'],
+  ['Show me / Point to it', 'Show me'],
+  ['Espera / Un momento', 'Espera'],
+  ['Agua / Bebida', 'Agua'],
+  ['Comida / Tengo hambre', 'Comida'],
+  ['Medicina / Dolor', 'Medicina'],
+  ['Alto / Terminé', 'Alto'],
+  ['Frustrado / Molesto', 'Frustrado'],
+  ['Mi esposo / esposa / pareja', 'Mi pareja'],
+  ['Afuera / Salir', 'Afuera'],
+  ['TV / Ver algo', 'TV'],
+  ['Comer / Restaurante', 'Comer'],
+  ['Dormir / Descansar', 'Dormir'],
+  ['Caminar / Ejercicio', 'Caminar'],
+  ['Casi correcto / No exactamente', 'Casi correcto'],
+  ['Muéstrame / Señálalo', 'Muéstrame']
+])
 
 const activeLocale = computed<AppLocale>(() =>
   locale.value === 'en' ? 'en' : 'es'
@@ -795,6 +830,18 @@ const requestHelperText = computed(() =>
       : 'Toca un botón aquí, luego toca una tarjeta.'
 )
 
+const stickyStarterText = computed(() =>
+  selectedPhraseStarter.value
+    ? selectedPhraseStarter.value.suffix
+      ? `${selectedPhraseStarter.value.phrase} ... ${selectedPhraseStarter.value.suffix}`
+      : `${selectedPhraseStarter.value.phrase} ...`
+    : ''
+)
+
+const stickyStarterLabel = computed(() =>
+  activeLocale.value === 'en' ? 'Selected' : 'Seleccionado'
+)
+
 const normalizeRequestObject = (text: string) => {
   const [firstOption = text] = text.split('/')
   const trimmed = firstOption.trim()
@@ -897,10 +944,28 @@ const removeDeprecatedDefaultCards = () => {
   )
 
   englishWords.value = englishWords.value.map((card, index) =>
-    index < priorityButtonCount ? { ...card, hidden: false } : card
+    index < priorityButtonCount
+      ? {
+          ...card,
+          text: defaultCardTextReplacements.get(card.text) ?? card.text,
+          hidden: false
+        }
+      : {
+          ...card,
+          text: defaultCardTextReplacements.get(card.text) ?? card.text
+        }
   )
   spanishWords.value = spanishWords.value.map((card, index) =>
-    index < priorityButtonCount ? { ...card, hidden: false } : card
+    index < priorityButtonCount
+      ? {
+          ...card,
+          text: defaultCardTextReplacements.get(card.text) ?? card.text,
+          hidden: false
+        }
+      : {
+          ...card,
+          text: defaultCardTextReplacements.get(card.text) ?? card.text
+        }
   )
 }
 
@@ -932,6 +997,28 @@ onMounted(() => {
             />
           </div>
         </section>
+
+        <div
+          v-if="selectedPhraseStarter"
+          class="sticky top-3 z-40 mb-6 flex items-center justify-between gap-3 rounded-2xl border-2 border-[#083d7a] bg-[#fff9e8] px-4 py-3 shadow-ambient dark:border-[#8ecae6] dark:bg-[#1f2937]"
+        >
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.08em] text-[#48617d] dark:text-[#b8c2cc]">
+              {{ stickyStarterLabel }}
+            </p>
+            <p class="text-2xl font-bold leading-tight text-[#083d7a] dark:text-[#f4f4f5]">
+              {{ stickyStarterText }}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="rounded-full border border-[#083d7a]/30 bg-white px-4 py-2 text-base font-semibold text-[#083d7a] transition hover:bg-[#f3f7fb] dark:border-[#8ecae6]/40 dark:bg-[#22242b] dark:text-[#8ecae6]"
+            @click="onStarterClear"
+          >
+            Clear
+          </button>
+        </div>
 
         <section class="mb-8">
           <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

@@ -54,7 +54,7 @@ const { isDeleteMode } = useDeleteMode()
 
 <template>
   <div
-    class="relative rounded-2xl shadow-ambient min-h-[180px] border-2 border-transparent transition-opacity"
+    class="relative rounded-2xl shadow-ambient min-h-[180px] border-2 border-[#083d7a]/25 transition-opacity dark:border-white/10"
     :class="[toneClass, hidden ? 'opacity-50' : 'opacity-100']"
   >
     <button
@@ -70,7 +70,7 @@ const { isDeleteMode } = useDeleteMode()
         class="text-6xl"
       >{{ emoji }}</span>
       <span
-        class="font-button-text text-button-text"
+        class="text-xl font-semibold leading-tight sm:text-2xl"
         :class="isStrongTone ? 'text-white' : 'text-[#083d7a] dark:text-[#F0F0F0]'"
       >
         {{ title || text }}
