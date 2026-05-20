@@ -73,20 +73,7 @@ useSeoMeta({
   twitterImageAlt: () => t('app.seo.ogImageAlt')
 })
 
-const uiLocaleOptions = computed(() => [
-  { label: t('language.spanish'), value: 'es' },
-  { label: t('language.english'), value: 'en' }
-])
 const speechLang = useLocalStorage('speech-lang', 'en-US')
-
-const onUiLocaleChange = (value) => {
-  if (value === locale.value) {
-    return
-  }
-
-  speechLang.value = value === 'en' ? 'en-US' : 'es-MX'
-  setLocale(value)
-}
 
 watch(
   speechLang,
@@ -127,9 +114,10 @@ watch(
       <div
         class="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6"
       >
-        <NuxtLink
-          to="/"
+        <a
+          href="https://striveptlv.com"
           class="flex items-center gap-3 no-underline"
+          aria-label="STRIVE Physical Therapy website"
         >
           <img
             src="/strive-talk-logo.png"
@@ -148,22 +136,12 @@ watch(
               {{ t("app.tagline") }}
             </span>
           </span>
-        </NuxtLink>
+        </a>
 
         <div class="flex items-center gap-2">
-          <USelect
-            :model-value="locale"
-            :items="uiLocaleOptions"
-            value-key="value"
-            label-key="label"
-            size="xs"
-            class="w-32"
-            @update:model-value="onUiLocaleChange"
-          />
-
           <UButton
-            :icon="isDeleteMode ? 'i-lucide-trash-2' : 'i-lucide-trash'"
-            :color="isDeleteMode ? 'error' : 'neutral'"
+            icon="i-lucide-pencil"
+            :color="isDeleteMode ? 'primary' : 'neutral'"
             variant="ghost"
             :aria-label="
               isDeleteMode
@@ -224,7 +202,7 @@ watch(
       class="fixed inset-x-0 bottom-0 z-50 border-t border-default bg-default/95 backdrop-blur supports-backdrop-filter:bg-default/80"
     >
       <nav
-        class="mx-auto flex max-w-lg items-center justify-center gap-2 px-4 py-3"
+        class="mx-auto flex max-w-lg items-center justify-center gap-3 px-4 py-4"
       >
         <UButton
           to="/"
@@ -232,7 +210,8 @@ watch(
           icon="i-lucide-house"
           variant="ghost"
           :color="route.path === '/' ? 'primary' : 'neutral'"
-          class="flex-1 justify-center"
+          size="xl"
+          class="flex-1 justify-center text-lg font-semibold"
         />
         <UButton
           to="/phrases"
@@ -240,7 +219,8 @@ watch(
           icon="i-lucide-message-square"
           variant="ghost"
           :color="route.path.startsWith('/phrases') ? 'primary' : 'neutral'"
-          class="flex-1 justify-center"
+          size="xl"
+          class="flex-1 justify-center text-lg font-semibold"
         />
       </nav>
     </footer>

@@ -39,6 +39,14 @@
   background-color: #f6e1bf;
 }
 
+.bg-traffic-green {
+  background-color: #26c95a;
+}
+
+.bg-traffic-red {
+  background-color: #e53935;
+}
+
 .dark .bg-pastel-blue {
   background-color: #123f61;
 }
@@ -57,6 +65,14 @@
 
 .dark .bg-pastel-yellow {
   background-color: #5a4324;
+}
+
+.dark .bg-traffic-green {
+  background-color: #0f8f3e;
+}
+
+.dark .bg-traffic-red {
+  background-color: #b91c1c;
 }
 
 .shadow-ambient {

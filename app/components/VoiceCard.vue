@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useDeleteMode } from '../composables/useDeleteMode'
 
 const props = withDefaults(
@@ -38,6 +39,8 @@ const onEdit = () => {
   emit('edit')
 }
 
+const isStrongTone = computed(() => props.toneClass.includes('bg-traffic-'))
+
 const { isDeleteMode } = useDeleteMode()
 </script>
 
@@ -57,7 +60,8 @@ const { isDeleteMode } = useDeleteMode()
         class="text-6xl"
       >{{ emoji }}</span>
       <span
-        class="font-button-text text-button-text text-[#083d7a] dark:text-[#F0F0F0]"
+        class="font-button-text text-button-text"
+        :class="isStrongTone ? 'text-white' : 'text-[#083d7a] dark:text-[#F0F0F0]'"
       >
         {{ title || text }}
       </span>

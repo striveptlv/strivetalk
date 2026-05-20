@@ -60,12 +60,12 @@ const englishCoreWords: Word[] = [
   {
     text: 'Yes',
     emoji: '👍',
-    toneClass: 'bg-pastel-blue'
+    toneClass: 'bg-traffic-green'
   },
   {
     text: 'No',
     emoji: '👎',
-    toneClass: 'bg-pastel-pink'
+    toneClass: 'bg-traffic-red'
   },
   {
     text: 'Hello / Hi',
@@ -313,12 +313,12 @@ const spanishCoreWords: Word[] = [
   {
     text: 'Sí',
     emoji: '👍',
-    toneClass: 'bg-pastel-blue'
+    toneClass: 'bg-traffic-green'
   },
   {
     text: 'No',
     emoji: '👎',
-    toneClass: 'bg-pastel-pink'
+    toneClass: 'bg-traffic-red'
   },
   {
     text: 'Hola',
@@ -572,6 +572,8 @@ const englishWords = useLocalStorage<Word[]>(
   englishCoreWords
 )
 
+const deprecatedDefaultCards = new Set(['I want / I need', 'Quiero / Necesito'])
+
 const activeLocale = computed<AppLocale>(() =>
   locale.value === 'en' ? 'en' : 'es'
 )
@@ -803,6 +805,18 @@ const getStarterToneClass = (starter: PhraseStarter) =>
     ? `${starter.toneClass} border-[#083d7a] ring-2 ring-[#083d7a]/20 dark:border-[#8ecae6] dark:ring-[#8ecae6]/30`
     : starter.toneClass
 
+const getPriorityToneClass = (card: Word, index: number) => {
+  if (index === 0) {
+    return 'bg-traffic-green'
+  }
+
+  if (index === 1) {
+    return 'bg-traffic-red'
+  }
+
+  return card.toneClass
+}
+
 const onStarterSelect = (starter: PhraseStarter) => {
   selectedPhraseStarter.value = starter
 }
@@ -851,7 +865,17 @@ const onAdding = (item: string) => {
   ]
 }
 
+const removeDeprecatedDefaultCards = () => {
+  englishWords.value = englishWords.value.filter(
+    card => !deprecatedDefaultCards.has(card.text)
+  )
+  spanishWords.value = spanishWords.value.filter(
+    card => !deprecatedDefaultCards.has(card.text)
+  )
+}
+
 onMounted(() => {
+  removeDeprecatedDefaultCards()
   isStorageReady.value = true
 })
 </script>
@@ -862,6 +886,23 @@ onMounted(() => {
   >
     <main class="mx-auto w-full max-w-7xl px-6 py-8 pb-32">
       <template v-if="isStorageReady">
+        <section class="mb-8">
+          <div
+            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
+          >
+            <VoiceCard
+              v-for="(card, index) in priorityWords"
+              :key="card.text"
+              :text="card.text"
+              :emoji="card.emoji"
+              :tone-class="getPriorityToneClass(card, index)"
+              :delete-aria-label="t('voiceCard.deleteAria')"
+              @select="onCardSelect"
+              @delete="onCardDelete(activeWords.indexOf(card))"
+            />
+          </div>
+        </section>
+
         <section class="mb-8">
           <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -897,23 +938,6 @@ onMounted(() => {
               :tone-class="getStarterToneClass(starter)"
               :delete-aria-label="t('voiceCard.deleteAria')"
               @select="onStarterSelect(starter)"
-            />
-          </div>
-        </section>
-
-        <section class="mb-8">
-          <div
-            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
-          >
-            <VoiceCard
-              v-for="card in priorityWords"
-              :key="card.text"
-              :text="card.text"
-              :emoji="card.emoji"
-              :tone-class="card.toneClass"
-              :delete-aria-label="t('voiceCard.deleteAria')"
-              @select="onCardSelect"
-              @delete="onCardDelete(activeWords.indexOf(card))"
             />
           </div>
         </section>
