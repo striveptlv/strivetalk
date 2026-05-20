@@ -32,13 +32,13 @@ type PhraseStarter = Word & {
   suffix?: string
 }
 
-const priorityButtonCount = 8
+const priorityButtonCount = 2
 
 const selectedPhraseStarter = ref<PhraseStarter | null>(null)
 
 const englishCategories: Category[] = [
-  { title: 'Social / Conversational', count: 2 },
-  { title: 'Basic Needs & Requests', count: 11 },
+  { title: 'Social / Conversational', count: 8 },
+  { title: 'Basic Needs & Requests', count: 10 },
   { title: 'Feelings & Status', count: 6 },
   { title: 'Medical & Safety', count: 6 },
   { title: 'People & Places', count: 6 },
@@ -47,8 +47,8 @@ const englishCategories: Category[] = [
 ]
 
 const spanishCategories: Category[] = [
-  { title: 'Social / Conversación', count: 2 },
-  { title: 'Necesidades básicas y pedidos', count: 11 },
+  { title: 'Social / Conversación', count: 8 },
+  { title: 'Necesidades básicas y pedidos', count: 10 },
   { title: 'Sentimientos y estado', count: 6 },
   { title: 'Médico y seguridad', count: 6 },
   { title: 'Personas y lugares', count: 6 },
@@ -105,11 +105,6 @@ const englishCoreWords: Word[] = [
   {
     text: 'I understand',
     emoji: '✅',
-    toneClass: 'bg-pastel-green'
-  },
-  {
-    text: 'I want / I need',
-    emoji: '🙋',
     toneClass: 'bg-pastel-green'
   },
   {
@@ -366,11 +361,6 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-green'
   },
   {
-    text: 'Quiero / Necesito',
-    emoji: '🙋',
-    toneClass: 'bg-pastel-green'
-  },
-  {
     text: 'Agua / Bebida',
     emoji: '💧',
     toneClass: 'bg-pastel-blue'
@@ -615,7 +605,7 @@ const requestStarters = computed<PhraseStarter[]>(() =>
         {
           text: 'I need',
           phrase: 'I need',
-          emoji: '🆘',
+          emoji: '💬',
           toneClass: 'bg-pastel-yellow'
         },
         {
@@ -641,7 +631,7 @@ const requestStarters = computed<PhraseStarter[]>(() =>
         {
           text: 'Necesito',
           phrase: 'Necesito',
-          emoji: '🆘',
+          emoji: '💬',
           toneClass: 'bg-pastel-yellow'
         },
         {
@@ -768,6 +758,10 @@ const groupedWords = computed(() => {
 
   return groups
 })
+
+const socialGroup = computed(() => groupedWords.value[0])
+
+const remainingGroups = computed(() => groupedWords.value.slice(1))
 
 const requestPreview = computed(() =>
   selectedPhraseStarter.value
@@ -908,6 +902,49 @@ onMounted(() => {
         </section>
 
         <section class="mb-8">
+          <div
+            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
+          >
+            <VoiceCard
+              v-for="card in priorityWords"
+              :key="card.text"
+              :text="card.text"
+              :emoji="card.emoji"
+              :tone-class="card.toneClass"
+              :delete-aria-label="t('voiceCard.deleteAria')"
+              @select="onCardSelect"
+              @delete="onCardDelete(activeWords.indexOf(card))"
+            />
+          </div>
+        </section>
+
+        <section
+          v-if="socialGroup"
+          class="mb-8"
+        >
+          <h2
+            class="mb-3 font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#083d7a] dark:text-[#8ecae6]"
+          >
+            {{ socialGroup.title }}
+          </h2>
+
+          <div
+            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
+          >
+            <VoiceCard
+              v-for="card in socialGroup.words"
+              :key="card.text"
+              :text="card.text"
+              :emoji="card.emoji"
+              :tone-class="card.toneClass"
+              :delete-aria-label="t('voiceCard.deleteAria')"
+              @select="onCardSelect"
+              @delete="onCardDelete(activeWords.indexOf(card))"
+            />
+          </div>
+        </section>
+
+        <section class="mb-8">
           <h2
             class="mb-3 font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#083d7a] dark:text-[#8ecae6]"
           >
@@ -937,25 +974,8 @@ onMounted(() => {
           </div>
         </section>
 
-        <section class="mb-8">
-          <div
-            class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
-          >
-            <VoiceCard
-              v-for="card in priorityWords"
-              :key="card.text"
-              :text="card.text"
-              :emoji="card.emoji"
-              :tone-class="card.toneClass"
-              :delete-aria-label="t('voiceCard.deleteAria')"
-              @select="onCardSelect"
-              @delete="onCardDelete(activeWords.indexOf(card))"
-            />
-          </div>
-        </section>
-
         <section
-          v-for="group in groupedWords"
+          v-for="group in remainingGroups"
           :key="group.title"
           class="mb-8"
         >
