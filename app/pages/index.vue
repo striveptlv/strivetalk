@@ -12,6 +12,7 @@ const userLang = useLocalStorage<string>('speech-lang', 'en-US')
 const pitch = useLocalStorage<number>('speech-pitch', 1)
 const rate = useLocalStorage<number>('speech-rate', 1)
 const { speak } = useAacSpeech(userLang, pitch, rate)
+const { isDeleteMode } = useDeleteMode()
 const isStorageReady = ref(false)
 
 type AppLocale = 'en' | 'es'
@@ -736,8 +737,10 @@ const questionEnder = computed<Word>(() => ({
   toneClass: 'bg-pastel-pink'
 }))
 
+const shouldShowCard = (card: Word) => isDeleteMode.value || !card.hidden
+
 const priorityWords = computed(() =>
-  activeWords.value.slice(0, priorityButtonCount).filter(card => !card.hidden)
+  activeWords.value.slice(0, priorityButtonCount).filter(shouldShowCard)
 )
 
 const groupedWords = computed(() => {
@@ -745,7 +748,7 @@ const groupedWords = computed(() => {
   const groups = activeCategories.value.map((category) => {
     const words = activeWords.value
       .slice(start, start + category.count)
-      .filter(card => !card.hidden)
+      .filter(shouldShowCard)
     start += category.count
     return {
       title: category.title,
@@ -755,7 +758,7 @@ const groupedWords = computed(() => {
 
   const customWords = activeWords.value
     .slice(start)
-    .filter(card => !card.hidden)
+    .filter(shouldShowCard)
   if (customWords.length) {
     groups.push({
       title: activeLocale.value === 'en' ? 'Custom' : 'Personalizadas',
@@ -854,12 +857,19 @@ const onCardSelect = (text: string) => {
   selectedPhraseStarter.value = null
 }
 
+const getCardVisibilityAria = (card: Word) =>
+  card.hidden ? t('voiceCard.showAria') : t('voiceCard.hideAria')
+
 const onCardDelete = (index: number) => {
+  if (index < priorityButtonCount) {
+    return
+  }
+
   activeWords.value = activeWords.value.map((card, cardIndex) =>
     cardIndex === index
       ? {
           ...card,
-          hidden: true
+          hidden: !card.hidden
         }
       : card
   )
@@ -885,6 +895,13 @@ const removeDeprecatedDefaultCards = () => {
   spanishWords.value = spanishWords.value.filter(
     card => !deprecatedDefaultCards.has(card.text)
   )
+
+  englishWords.value = englishWords.value.map((card, index) =>
+    index < priorityButtonCount ? { ...card, hidden: false } : card
+  )
+  spanishWords.value = spanishWords.value.map((card, index) =>
+    index < priorityButtonCount ? { ...card, hidden: false } : card
+  )
 }
 
 onMounted(() => {
@@ -909,10 +926,9 @@ onMounted(() => {
               :text="card.text"
               :emoji="card.emoji"
               :tone-class="getPriorityToneClass(card, index)"
-              :delete-aria-label="t('voiceCard.hideAria')"
-              delete-icon="hide"
+              :hidden="card.hidden"
+              :show-delete="false"
               @select="onCardSelect"
-              @delete="onCardDelete(activeWords.indexOf(card))"
             />
           </div>
         </section>
@@ -975,8 +991,8 @@ onMounted(() => {
               :text="card.text"
               :emoji="card.emoji"
               :tone-class="card.toneClass"
-              :delete-aria-label="t('voiceCard.hideAria')"
-              delete-icon="hide"
+              :hidden="card.hidden"
+              :delete-aria-label="getCardVisibilityAria(card)"
               @select="onCardSelect"
               @delete="onCardDelete(activeWords.indexOf(card))"
             />
@@ -1033,8 +1049,8 @@ onMounted(() => {
               :text="card.text"
               :emoji="card.emoji"
               :tone-class="card.toneClass"
-              :delete-aria-label="t('voiceCard.hideAria')"
-              delete-icon="hide"
+              :hidden="card.hidden"
+              :delete-aria-label="getCardVisibilityAria(card)"
               @select="onCardSelect"
               @delete="onCardDelete(activeWords.indexOf(card))"
             />

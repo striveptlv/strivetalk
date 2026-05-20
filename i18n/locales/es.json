@@ -136,6 +136,7 @@
   "voiceCard": {
     "deleteAria": "Eliminar tarjeta",
     "hideAria": "Ocultar tarjeta",
+    "showAria": "Mostrar tarjeta",
     "editAria": "Editar tarjeta",
     "edit": "Editar"
   }
