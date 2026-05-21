@@ -2,7 +2,7 @@
 const { t, locale, setLocale } = useI18n()
 
 const siteName = 'STRIVE Talk'
-const siteUrl = 'https://striveptlv.com'
+const siteUrl = 'https://talk.striveptlv.com'
 
 const defaultTitle = computed(() => t('app.seo.defaultTitle'))
 const defaultDescription = computed(() => t('app.seo.defaultDescription'))
