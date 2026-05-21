@@ -25,6 +25,7 @@ type InfoItem = {
   label: string
   value: string
   toneClass: string
+  hidden?: boolean
 }
 
 type InfoGroup = {
@@ -153,6 +154,7 @@ const spanishInfoDefaults: InfoItem[] = [
 
 const englishInfo = useLocalStorage<InfoItem[]>('info-en-v1', englishInfoDefaults)
 const spanishInfo = useLocalStorage<InfoItem[]>('info-es-v1', spanishInfoDefaults)
+const defaultInfoCount = englishInfoDefaults.length
 
 const activeLocale = computed<AppLocale>(() =>
   locale.value === 'en' ? 'en' : 'es'
@@ -174,15 +176,29 @@ const activeGroups = computed(() =>
   activeLocale.value === 'en' ? englishGroups : spanishGroups
 )
 
+const shouldShowCard = (item: InfoItem) => isDeleteMode.value || !item.hidden
+
 const groupedInfo = computed(() => {
   let start = 0
   const groups = activeGroups.value.map((group) => {
-    const items = activeInfo.value.slice(start, start + group.count)
+    const items = activeInfo.value
+      .slice(start, start + group.count)
+      .map((item, offset) => ({
+        item,
+        index: start + offset
+      }))
+      .filter(({ item }) => shouldShowCard(item))
     start += group.count
     return { title: group.title, items }
-  })
+  }).filter(group => group.items.length > 0)
 
-  const customItems = activeInfo.value.slice(start)
+  const customItems = activeInfo.value
+    .slice(start)
+    .map((item, offset) => ({
+      item,
+      index: start + offset
+    }))
+    .filter(({ item }) => shouldShowCard(item))
   if (customItems.length) {
     groups.push({
       title: activeLocale.value === 'en' ? 'Additional Information' : 'Información adicional',
@@ -195,7 +211,7 @@ const groupedInfo = computed(() => {
 
 const getSpokenText = (item: InfoItem) => {
   const value = item.value.trim()
-  return value ? `${item.label}: ${value}` : item.label
+  return value
 }
 
 const onCardSelect = (item: InfoItem) => {
@@ -203,8 +219,21 @@ const onCardSelect = (item: InfoItem) => {
 }
 
 const onCardDelete = (index: number) => {
-  activeInfo.value = activeInfo.value.filter((_, cardIndex) => cardIndex !== index)
+  activeInfo.value = activeInfo.value.map((card, cardIndex) =>
+    cardIndex === index
+      ? {
+          ...card,
+          hidden: !card.hidden
+        }
+      : card
+  )
 }
+
+const getCardVisibilityAria = (item: InfoItem) =>
+  item.hidden ? t('voiceCard.showAria') : t('voiceCard.hideAria')
+
+const isDefaultInfoCard = (index: number | null) =>
+  index !== null && index < defaultInfoCount
 
 const onCardEdit = (index: number | null) => {
   editingIndex.value = index
@@ -236,9 +265,14 @@ const onEditSave = () => {
   }
 
   const nextItem = {
-    label: normalizedLabel,
+    label: isDefaultInfoCard(editingIndex.value) && editingIndex.value !== null
+      ? activeInfo.value[editingIndex.value].label
+      : normalizedLabel,
     value: normalizedValue,
-    toneClass: editingToneClass.value
+    toneClass: editingToneClass.value,
+    hidden: editingIndex.value === null
+      ? false
+      : activeInfo.value[editingIndex.value]?.hidden
   }
 
   if (editingIndex.value === null) {
@@ -279,15 +313,17 @@ onMounted(() => {
             class="grid grid-cols-1 gap-stack-gap w-full gap-2"
           >
             <div
-              v-for="item in group.items"
-              :key="`${item.label}-${activeInfo.indexOf(item)}`"
+              v-for="{ item, index } in group.items"
+              :key="`${item.label}-${index}`"
               class="relative rounded-2xl shadow-ambient min-h-[180px] border-2 border-transparent"
-              :class="item.toneClass"
+              :class="[item.toneClass, item.hidden ? 'opacity-50' : 'opacity-100']"
             >
               <button
                 type="button"
-                :aria-label="getSpokenText(item)"
+                :aria-label="item.value ? `${item.label}: ${item.value}` : item.label"
                 class="w-full h-full min-h-[180px] rounded-2xl flex flex-col items-start justify-center gap-3 p-5 text-left transition-all duration-150 active:scale-95 active:brightness-90 cursor-pointer"
+                :class="item.hidden ? 'cursor-default active:scale-100 active:brightness-100' : ''"
+                :disabled="item.hidden"
                 @click="onCardSelect(item)"
               >
                 <span class="text-xs font-bold uppercase tracking-[0.12em] text-[#24548d] dark:text-[#8ecae6]">
@@ -303,7 +339,7 @@ onMounted(() => {
                 type="button"
                 :aria-label="t('voiceCard.editAria')"
                 class="absolute top-2 left-2 h-9 rounded-full bg-white/90 dark:bg-[#22242b]/90 border border-[#d8dee9] dark:border-[#3f4450] px-3 text-xs font-semibold uppercase tracking-wide text-[#083d7a] dark:text-[#8ecae6] flex items-center justify-center hover:brightness-95 transition"
-                @click.stop="onCardEdit(activeInfo.indexOf(item))"
+                @click.stop="onCardEdit(index)"
               >
                 {{ t('voiceCard.edit') }}
               </button>
@@ -311,9 +347,9 @@ onMounted(() => {
               <button
                 v-if="isDeleteMode"
                 type="button"
-                :aria-label="t('voiceCard.deleteAria')"
+                :aria-label="getCardVisibilityAria(item)"
                 class="absolute top-2 right-2 h-9 w-9 rounded-full bg-white/90 dark:bg-[#22242b]/90 border border-[#d8dee9] dark:border-[#3f4450] text-[#9b1c1c] dark:text-[#fca5a5] text-xl leading-none flex items-center justify-center hover:brightness-95 transition"
-                @click.stop="onCardDelete(activeInfo.indexOf(item))"
+                @click.stop="onCardDelete(index)"
               >
                 ×
               </button>
@@ -361,6 +397,7 @@ onMounted(() => {
               highlight
               size="lg"
               :placeholder="t('information.labelPlaceholder')"
+              :disabled="isDefaultInfoCard(editingIndex)"
               :ui="{ base: 'w-full' }"
               @input="editingError = ''"
             />
