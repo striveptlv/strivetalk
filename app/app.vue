@@ -110,7 +110,7 @@ watch(
 
 <template>
   <UApp class="min-h-screen">
-    <header class="border-b border-[rgba(8,61,122,0.12)] bg-[#f7f4ef]/95 backdrop-blur dark:border-[#1f2937] dark:bg-[#111113]/95">
+    <header class="border-b border-[rgba(46,117,182,0.16)] bg-[#fffaf2]/95 backdrop-blur dark:border-[#1f2937] dark:bg-[#111113]/95">
       <div
         class="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6"
       >

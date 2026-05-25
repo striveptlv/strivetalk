@@ -294,7 +294,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="min-h-screen bg-[#f7f4ef] text-[#0e2f5d] dark:bg-[#111113] dark:text-[#f4f4f5]"
+    class="min-h-screen bg-[#fffaf2] text-[#0e2f5d] dark:bg-[#111113] dark:text-[#f4f4f5]"
   >
     <main class="mx-auto w-full max-w-7xl px-6 py-8 pb-32">
       <template v-if="isStorageReady">
@@ -360,7 +360,7 @@ onMounted(() => {
         <button
           type="button"
           :aria-label="t('information.addCardTitle')"
-          class="rounded-2xl min-h-[150px] w-full flex flex-col items-center justify-center gap-3 p-4 border-4 border-dashed border-[#CBD5E1] dark:border-[#3f4450] text-[#64748B] dark:text-[#6b7280] hover:border-[#94A3B8] dark:hover:border-[#6b7280] hover:bg-[#f0eded] dark:hover:bg-[#1e2028] hover:text-[#475569] dark:hover:text-[#9ca3af] transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#94A3B8]"
+          class="rounded-2xl min-h-[150px] w-full flex flex-col items-center justify-center gap-3 p-4 border-4 border-dashed border-[#b8d7f0] dark:border-[#3f4450] text-[#4f78a3] dark:text-[#6b7280] hover:border-[#7db8e6] dark:hover:border-[#6b7280] hover:bg-[#eef8ff] dark:hover:bg-[#1e2028] hover:text-[#24548d] dark:hover:text-[#9ca3af] transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#7db8e6]"
           @click="onCardEdit(null)"
         >
           <span class="text-5xl leading-none font-light select-none">+</span>
@@ -429,8 +429,8 @@ onMounted(() => {
                 class="inline-flex items-center gap-2 rounded-lg border px-2.5 py-1.5 text-sm cursor-pointer transition-colors"
                 :class="
                   editingToneClass === tone.value
-                    ? 'border-[#94A3B8] dark:border-[#6b7280] bg-[#f8fafc] dark:bg-[#1e2028]'
-                    : 'border-[#e2e8f0] dark:border-[#2d3748] hover:border-[#cbd5e1] dark:hover:border-[#4b5563]'
+                    ? 'border-[#7db8e6] dark:border-[#6b7280] bg-[#eef8ff] dark:bg-[#1e2028]'
+                    : 'border-[#cfe4f7] dark:border-[#2d3748] hover:border-[#9bc9ed] dark:hover:border-[#4b5563]'
                 "
               >
                 <input

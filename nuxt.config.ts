@@ -79,7 +79,7 @@ export default defineNuxtConfig({
       description:
         'AAC communication support with English and Spanish voice output.',
       theme_color: '#083d7a',
-      background_color: '#f7f4ef',
+      background_color: '#fffaf2',
       display: 'standalone',
       scope: baseURL,
       start_url: baseURL,

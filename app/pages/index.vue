@@ -978,7 +978,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="min-h-screen bg-[#f7f4ef] text-[#0e2f5d] dark:bg-[#111113] dark:text-[#f4f4f5]"
+    class="min-h-screen bg-[#fffaf2] text-[#0e2f5d] dark:bg-[#111113] dark:text-[#f4f4f5]"
   >
     <main class="mx-auto w-full max-w-7xl px-6 py-8 pb-32">
       <template v-if="isStorageReady">
@@ -1028,7 +1028,7 @@ onMounted(() => {
 
         <div
           v-if="selectedPhraseStarter"
-          class="sticky top-3 z-40 mb-6 flex items-center justify-between gap-3 rounded-2xl border-2 border-[#083d7a] bg-[#fff9e8] px-4 py-3 shadow-ambient dark:border-[#8ecae6] dark:bg-[#1f2937]"
+          class="sticky top-3 z-40 mb-6 flex items-center justify-between gap-3 rounded-2xl border-2 border-[#083d7a] bg-[#fff2bd] px-4 py-3 shadow-ambient dark:border-[#8ecae6] dark:bg-[#1f2937]"
         >
           <div>
             <p class="text-sm font-semibold uppercase tracking-[0.08em] text-[#48617d] dark:text-[#b8c2cc]">
