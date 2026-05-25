@@ -49,7 +49,8 @@ const englishGroups: InfoGroup[] = [
   { title: 'Emergency Contacts', count: 5 },
   { title: 'Medical Information', count: 7 },
   { title: 'Communication Preferences', count: 5 },
-  { title: 'Personal Context', count: 5 }
+  { title: 'Personal Context', count: 5 },
+  { title: 'Daily Errands & Orders', count: 10 }
 ]
 
 const spanishGroups: InfoGroup[] = [
@@ -57,7 +58,8 @@ const spanishGroups: InfoGroup[] = [
   { title: 'Contactos de emergencia', count: 5 },
   { title: 'Información médica', count: 7 },
   { title: 'Preferencias de comunicación', count: 5 },
-  { title: 'Contexto personal', count: 5 }
+  { title: 'Contexto personal', count: 5 },
+  { title: 'Mandados y pedidos diarios', count: 10 }
 ]
 
 const englishInfoDefaults: InfoItem[] = [
@@ -103,7 +105,17 @@ const englishInfoDefaults: InfoItem[] = [
   { label: 'City originally from', value: 'I am originally from the Midwest.', toneClass: 'bg-pastel-purple' },
   { label: 'Languages spoken', value: 'I speak English.', toneClass: 'bg-pastel-purple' },
   { label: 'Religion / cultural needs', value: 'I am Christian, and prayer is important to me.', toneClass: 'bg-pastel-purple' },
-  { label: 'Living situation', value: 'I live with my wife and have family nearby.', toneClass: 'bg-pastel-purple' }
+  { label: 'Living situation', value: 'I live with my wife and have family nearby.', toneClass: 'bg-pastel-purple' },
+  { label: 'My Coffee Order', value: 'I would like a medium coffee with cream and sugar.', toneClass: 'bg-pastel-blue' },
+  { label: 'My drive-thru breakfast', value: 'I would like a breakfast sandwich and a coffee.', toneClass: 'bg-pastel-yellow' },
+  { label: 'That\'s all I want to order', value: 'That\'s all I want to order, thank you.', toneClass: 'bg-pastel-green' },
+  { label: 'I need a receipt', value: 'Please give me a receipt.', toneClass: 'bg-pastel-purple' },
+  { label: 'Please repeat the total', value: 'Please repeat the total slowly.', toneClass: 'bg-pastel-blue' },
+  { label: 'I am paying with card', value: 'I am paying with a card.', toneClass: 'bg-pastel-green' },
+  { label: 'I need help at the counter', value: 'I need help ordering at the counter.', toneClass: 'bg-pastel-pink' },
+  { label: 'Please speak slowly', value: 'Please speak slowly. I have trouble speaking.', toneClass: 'bg-pastel-green' },
+  { label: 'I need a bag', value: 'Please put that in a bag.', toneClass: 'bg-pastel-yellow' },
+  { label: 'I am ready to check out', value: 'I am ready to check out.', toneClass: 'bg-pastel-purple' }
 ]
 
 const spanishInfoDefaults: InfoItem[] = [
@@ -149,7 +161,17 @@ const spanishInfoDefaults: InfoItem[] = [
   { label: 'Ciudad de origen', value: '', toneClass: 'bg-pastel-purple' },
   { label: 'Idiomas que habla', value: '', toneClass: 'bg-pastel-purple' },
   { label: 'Religión / necesidades culturales', value: '', toneClass: 'bg-pastel-purple' },
-  { label: 'Situación de vivienda', value: '', toneClass: 'bg-pastel-purple' }
+  { label: 'Situación de vivienda', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'Mi pedido de café', value: 'Quiero un café mediano con crema y azúcar.', toneClass: 'bg-pastel-blue' },
+  { label: 'Mi desayuno en drive-thru', value: 'Quiero un sándwich de desayuno y un café.', toneClass: 'bg-pastel-yellow' },
+  { label: 'Eso es todo lo que quiero pedir', value: 'Eso es todo lo que quiero pedir, gracias.', toneClass: 'bg-pastel-green' },
+  { label: 'Necesito recibo', value: 'Por favor deme un recibo.', toneClass: 'bg-pastel-purple' },
+  { label: 'Repita el total', value: 'Por favor repita el total despacio.', toneClass: 'bg-pastel-blue' },
+  { label: 'Pago con tarjeta', value: 'Voy a pagar con tarjeta.', toneClass: 'bg-pastel-green' },
+  { label: 'Necesito ayuda en el mostrador', value: 'Necesito ayuda para pedir en el mostrador.', toneClass: 'bg-pastel-pink' },
+  { label: 'Hable despacio', value: 'Por favor hable despacio. Tengo dificultad para hablar.', toneClass: 'bg-pastel-green' },
+  { label: 'Necesito una bolsa', value: 'Por favor ponga eso en una bolsa.', toneClass: 'bg-pastel-yellow' },
+  { label: 'Estoy listo para pagar', value: 'Estoy listo para pagar.', toneClass: 'bg-pastel-purple' }
 ]
 
 const englishInfo = useLocalStorage<InfoItem[]>('info-en-v1', englishInfoDefaults)
@@ -288,6 +310,20 @@ const onEditSave = () => {
 }
 
 onMounted(() => {
+  if (englishInfo.value.length < englishInfoDefaults.length) {
+    englishInfo.value = [
+      ...englishInfo.value,
+      ...englishInfoDefaults.slice(englishInfo.value.length)
+    ]
+  }
+
+  if (spanishInfo.value.length < spanishInfoDefaults.length) {
+    spanishInfo.value = [
+      ...spanishInfo.value,
+      ...spanishInfoDefaults.slice(spanishInfo.value.length)
+    ]
+  }
+
   isStorageReady.value = true
 })
 </script>
