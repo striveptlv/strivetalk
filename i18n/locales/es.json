@@ -21,7 +21,7 @@
       "github": "GitHub"
     },
     "nav": {
-      "about": "Acerca de",
+      "about": "STRIVE PT",
       "settings": "Ajustes",
       "home": "Inicio",
       "phrases": "Información"
@@ -92,18 +92,18 @@
     }
   },
   "about": {
-    "seoTitle": "Acerca del proyecto",
-    "seoDescription": "Aplicación AAC accesible para comunicación asistida, con soporte PWA, modo offline y síntesis de voz para rehabilitación del habla.",
-    "title": "Acerca del proyecto",
-    "subtitle": "STRIVE Talk - AAC (Comunicación Aumentativa y Alternativa)",
-    "p1": "STRIVE Talk es una aplicación web accesible para apoyar la comunicación de personas con dificultades del habla. Permite seleccionar tarjetas de palabras y frases para expresar necesidades cotidianas mediante síntesis de voz.",
-    "p2": "También funciona como Progressive Web App (PWA), por lo que puede instalarse en móvil y escritorio, trabajar offline y mantenerse actualizada automáticamente tras cada despliegue.",
-    "goalsTitle": "Objetivos clave",
-    "goalsText": "Comunicación inmediata, accesibilidad máxima y disponibilidad total con experiencia instalable y soporte sin conexión.",
-    "featuresTitle": "Características principales",
-    "featuresText": "Tarjetas personalizables, síntesis de voz, colores y emojis por tarjeta, modo eliminar seguro y PWA con auto-update.",
-    "techTitle": "Tecnologías usadas",
-    "techText": "Nuxt 4, Vue 3, Nuxt UI, Tailwind CSS 4, {'@'}vite-pwa/nuxt (Workbox), VueUse, TypeScript, ESLint y Vitest."
+    "seoTitle": "STRIVE Physical Therapy",
+    "seoDescription": "STRIVE Physical Therapy apoya a personas que están recuperando movilidad, confianza, comunicación e independencia diaria.",
+    "title": "STRIVE Physical Therapy",
+    "subtitle": "Rehabilitación neurológica y funcional en Las Vegas",
+    "p1": "STRIVE Physical Therapy ayuda a las personas a moverse, comunicarse y participar en la vida diaria con más confianza. La atención se enfoca en metas prácticas, educación clara y terapia que se adapta a rutinas reales en casa y en la comunidad.",
+    "p2": "STRIVE Talk fue creado como una herramienta AAC de apoyo para personas que necesitan ayuda adicional para expresar necesidades, preferencias, información médica y decisiones cotidianas durante la recuperación o adaptación.",
+    "goalsTitle": "Enfoque de atención",
+    "goalsText": "Rehabilitación personalizada, apoyo práctico de comunicación, educación familiar y progreso hacia actividades diarias significativas.",
+    "featuresTitle": "A quién apoya",
+    "featuresText": "Adultos en recuperación neurológica, cambios en el habla o la comunicación, desafíos de movilidad, equilibrio e independencia en tareas cotidianas.",
+    "techTitle": "STRIVE Talk",
+    "techText": "Esta app es una herramienta complementaria de comunicación de STRIVE Physical Therapy, diseñada para facilitar el acceso a frases clave e información personal."
   },
   "addCard": {
     "add": "Agregar",
