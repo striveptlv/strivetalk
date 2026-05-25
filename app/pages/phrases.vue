@@ -61,27 +61,27 @@ const spanishGroups: InfoGroup[] = [
 ]
 
 const englishInfoDefaults: InfoItem[] = [
-  { label: 'Full name', value: '', toneClass: 'bg-pastel-blue' },
-  { label: 'Preferred name', value: '', toneClass: 'bg-pastel-blue' },
-  { label: 'Date of birth', value: '', toneClass: 'bg-pastel-blue' },
-  { label: 'Home address', value: '', toneClass: 'bg-pastel-blue' },
-  { label: 'Phone number', value: '', toneClass: 'bg-pastel-blue' },
-  { label: 'Primary contact', value: '', toneClass: 'bg-pastel-yellow' },
-  { label: 'Primary contact phone', value: '', toneClass: 'bg-pastel-yellow' },
-  { label: 'Secondary contact', value: '', toneClass: 'bg-pastel-yellow' },
-  { label: 'Primary care doctor', value: '', toneClass: 'bg-pastel-pink' },
-  { label: 'Doctor phone / clinic', value: '', toneClass: 'bg-pastel-pink' },
-  { label: 'Primary diagnosis', value: '', toneClass: 'bg-pastel-pink' },
+  { label: 'Full name', value: 'My name is Jordan Lee.', toneClass: 'bg-pastel-blue' },
+  { label: 'Preferred name', value: 'Please call me Jordan.', toneClass: 'bg-pastel-blue' },
+  { label: 'Date of birth', value: 'I was born in 1974.', toneClass: 'bg-pastel-blue' },
+  { label: 'Home address', value: 'I live in my family home in Las Vegas, Nevada.', toneClass: 'bg-pastel-blue' },
+  { label: 'Phone number', value: 'My phone number is 702-000-0000.', toneClass: 'bg-pastel-blue' },
+  { label: 'Primary contact', value: 'My wife is my main emergency contact.', toneClass: 'bg-pastel-yellow' },
+  { label: 'Primary contact phone', value: 'Please call my wife at 702-000-0001.', toneClass: 'bg-pastel-yellow' },
+  { label: 'Secondary contact', value: 'My adult son is my backup emergency contact. His number is 702-000-0002.', toneClass: 'bg-pastel-yellow' },
+  { label: 'Primary care doctor', value: 'My primary doctor is listed on my medical card.', toneClass: 'bg-pastel-pink' },
+  { label: 'Doctor phone / clinic', value: 'Please call my clinic at 702-000-0003 if medical information is needed.', toneClass: 'bg-pastel-pink' },
+  { label: 'Primary diagnosis', value: 'I am recovering from a stroke and have trouble speaking clearly.', toneClass: 'bg-pastel-pink' },
   {
     label: 'Aphasia statement',
     value: 'I have aphasia. I understand more than I can say.',
     toneClass: 'bg-pastel-yellow'
   },
-  { label: 'Current medications', value: '', toneClass: 'bg-pastel-yellow' },
-  { label: 'Known allergies', value: '', toneClass: 'bg-pastel-pink' },
-  { label: 'Blood type', value: '', toneClass: 'bg-pastel-pink' },
-  { label: 'Insurance provider / ID', value: '', toneClass: 'bg-pastel-purple' },
-  { label: 'Hospital preference', value: '', toneClass: 'bg-pastel-purple' },
+  { label: 'Current medications', value: 'My medication list is in my wallet.', toneClass: 'bg-pastel-yellow' },
+  { label: 'Known allergies', value: 'I do not know of any major allergies.', toneClass: 'bg-pastel-pink' },
+  { label: 'Blood type', value: 'My blood type is listed in my medical records.', toneClass: 'bg-pastel-pink' },
+  { label: 'Insurance provider / ID', value: 'My insurance card is in my wallet.', toneClass: 'bg-pastel-purple' },
+  { label: 'Hospital preference', value: 'If possible, take me to my preferred hospital listed on my card.', toneClass: 'bg-pastel-purple' },
   {
     label: 'Speak slowly',
     value: 'Please speak slowly and use simple sentences.',
@@ -97,13 +97,13 @@ const englishInfoDefaults: InfoItem[] = [
     value: 'Yes/no questions work best for me.',
     toneClass: 'bg-pastel-green'
   },
-  { label: 'Best time to communicate', value: '', toneClass: 'bg-pastel-green' },
-  { label: 'Preferred communication method', value: '', toneClass: 'bg-pastel-green' },
-  { label: 'Occupation / former career', value: '', toneClass: 'bg-pastel-purple' },
-  { label: 'City originally from', value: '', toneClass: 'bg-pastel-purple' },
-  { label: 'Languages spoken', value: '', toneClass: 'bg-pastel-purple' },
-  { label: 'Religion / cultural needs', value: '', toneClass: 'bg-pastel-purple' },
-  { label: 'Living situation', value: '', toneClass: 'bg-pastel-purple' }
+  { label: 'Best time to communicate', value: 'I communicate best in the morning.', toneClass: 'bg-pastel-green' },
+  { label: 'Preferred communication method', value: 'Please let me point, gesture, type, or use this app.', toneClass: 'bg-pastel-green' },
+  { label: 'Occupation / former career', value: 'I worked in maintenance and repair for many years.', toneClass: 'bg-pastel-purple' },
+  { label: 'City originally from', value: 'I am originally from the Midwest.', toneClass: 'bg-pastel-purple' },
+  { label: 'Languages spoken', value: 'I speak English.', toneClass: 'bg-pastel-purple' },
+  { label: 'Religion / cultural needs', value: 'I am Christian, and prayer is important to me.', toneClass: 'bg-pastel-purple' },
+  { label: 'Living situation', value: 'I live with my wife and have family nearby.', toneClass: 'bg-pastel-purple' }
 ]
 
 const spanishInfoDefaults: InfoItem[] = [
