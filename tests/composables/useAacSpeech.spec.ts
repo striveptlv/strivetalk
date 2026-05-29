@@ -6,6 +6,7 @@ class MockSpeechSynthesisUtterance {
   lang = ''
   pitch = 1
   rate = 1
+  voice: SpeechSynthesisVoice | null = null
   text: string
 
   constructor(text: string) {
@@ -13,12 +14,13 @@ class MockSpeechSynthesisUtterance {
   }
 }
 
-function setup() {
+function setup(voices: Partial<SpeechSynthesisVoice>[] = []) {
   const cancel = vi.fn()
   const speak = vi.fn()
-  vi.stubGlobal('speechSynthesis', { cancel, speak })
+  const getVoices = vi.fn(() => voices as SpeechSynthesisVoice[])
+  vi.stubGlobal('speechSynthesis', { cancel, speak, getVoices })
   vi.stubGlobal('SpeechSynthesisUtterance', MockSpeechSynthesisUtterance)
-  return { cancel, speak }
+  return { cancel, getVoices, speak }
 }
 
 describe('useAacSpeech', () => {
@@ -62,6 +64,46 @@ describe('useAacSpeech', () => {
     const utterance = speak.mock.calls[0][0] as MockSpeechSynthesisUtterance
     expect(utterance.pitch).toBe(1.5)
     expect(utterance.rate).toBe(0.8)
+  })
+
+  it('leaves the voice unset when using the device default', () => {
+    const { getVoices, speak } = setup([
+      { name: 'Samantha', lang: 'en-US' },
+      { name: 'Alex', lang: 'en-US' }
+    ])
+
+    const { speak: speakPhrase } = useAacSpeech('en-US', 1, 1, 'auto')
+    speakPhrase('Hello')
+
+    const utterance = speak.mock.calls[0][0] as MockSpeechSynthesisUtterance
+    expect(getVoices).not.toHaveBeenCalled()
+    expect(utterance.voice).toBeNull()
+  })
+
+  it('selects a matching female voice when available', () => {
+    const { speak } = setup([
+      { name: 'Alex', lang: 'en-US' },
+      { name: 'Samantha', lang: 'en-US' }
+    ])
+
+    const { speak: speakPhrase } = useAacSpeech('en-US', 1, 1, 'female')
+    speakPhrase('Hello')
+
+    const utterance = speak.mock.calls[0][0] as MockSpeechSynthesisUtterance
+    expect(utterance.voice?.name).toBe('Samantha')
+  })
+
+  it('selects a matching male voice when available', () => {
+    const { speak } = setup([
+      { name: 'Samantha', lang: 'en-US' },
+      { name: 'Alex', lang: 'en-US' }
+    ])
+
+    const { speak: speakPhrase } = useAacSpeech('en-US', 1, 1, 'male')
+    speakPhrase('Hello')
+
+    const utterance = speak.mock.calls[0][0] as MockSpeechSynthesisUtterance
+    expect(utterance.voice?.name).toBe('Alex')
   })
 
   it('applies a different language', () => {

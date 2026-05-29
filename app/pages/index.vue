@@ -11,7 +11,8 @@ useSeoMeta({
 const userLang = useLocalStorage<string>('speech-lang', 'en-US')
 const pitch = useLocalStorage<number>('speech-pitch', 1)
 const rate = useLocalStorage<number>('speech-rate', 1)
-const { speak } = useAacSpeech(userLang, pitch, rate)
+const voiceGender = useLocalStorage<'auto' | 'female' | 'male'>('speech-voice-gender', 'auto')
+const { speak } = useAacSpeech(userLang, pitch, rate, voiceGender)
 const { isDeleteMode } = useDeleteMode()
 const isStorageReady = ref(false)
 

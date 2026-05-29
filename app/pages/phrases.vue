@@ -9,7 +9,8 @@ useSeoMeta({
 const speechLang = useLocalStorage<string>('speech-lang', 'en-US')
 const pitch = useLocalStorage<number>('speech-pitch', 1)
 const rate = useLocalStorage<number>('speech-rate', 1)
-const { speak } = useAacSpeech(speechLang, pitch, rate)
+const voiceGender = useLocalStorage<'auto' | 'female' | 'male'>('speech-voice-gender', 'auto')
+const { speak } = useAacSpeech(speechLang, pitch, rate, voiceGender)
 const { isDeleteMode } = useDeleteMode()
 const isStorageReady = ref(false)
 const isEditOpen = ref(false)
@@ -286,15 +287,17 @@ const onEditSave = () => {
     return
   }
 
+  const editingItem = editingIndex.value === null ? null : activeInfo.value[editingIndex.value]
+
   const nextItem = {
     label: isDefaultInfoCard(editingIndex.value) && editingIndex.value !== null
-      ? activeInfo.value[editingIndex.value].label
+      ? editingItem?.label ?? normalizedLabel
       : normalizedLabel,
     value: normalizedValue,
     toneClass: editingToneClass.value,
     hidden: editingIndex.value === null
       ? false
-      : activeInfo.value[editingIndex.value]?.hidden
+      : editingItem?.hidden
   }
 
   if (editingIndex.value === null) {

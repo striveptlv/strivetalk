@@ -9,6 +9,7 @@ useSeoMeta({
 const lang = useLocalStorage<string>('speech-lang', 'en-US')
 const pitch = useLocalStorage<number>('speech-pitch', 1)
 const rate = useLocalStorage<number>('speech-rate', 1)
+const voiceGender = useLocalStorage<'auto' | 'female' | 'male'>('speech-voice-gender', 'auto')
 
 const langs = computed(() => [
   { label: t('settings.speechLanguages.esMX'), value: 'es-MX' },
@@ -28,6 +29,12 @@ const langsTest = computed(() => [
   }
 ])
 
+const voiceGenderOptions = computed(() => [
+  { label: t('settings.voiceGenders.auto'), value: 'auto' },
+  { label: t('settings.voiceGenders.female'), value: 'female' },
+  { label: t('settings.voiceGenders.male'), value: 'male' }
+])
+
 // USlider works with 0–100; map to actual speech ranges
 // pitch: 0–2  → slider 0–100
 // rate:  0.5–2 → slider 0–100
@@ -45,11 +52,12 @@ const rateSlider = computed({
   }
 })
 
-const { speak } = useAacSpeech(lang, pitch, rate)
+const { speak } = useAacSpeech(lang, pitch, rate, voiceGender)
 
 const resetDefaults = () => {
   pitch.value = 1
   rate.value = 1
+  voiceGender.value = 'auto'
 }
 
 const currentLangDemo = computed(
@@ -99,6 +107,20 @@ watch(
           <USelect
             v-model="lang"
             :items="langs"
+            value-key="value"
+            label-key="label"
+          />
+        </p>
+      </div>
+
+      <div class="rounded-xl border border-default bg-default p-4">
+        <p class="text-sm font-medium">
+          {{ t("settings.voiceGender") }}
+        </p>
+        <p class="mt-2 text-sm text-[#4b5563] dark:text-[#d1d5db]">
+          <USelect
+            v-model="voiceGender"
+            :items="voiceGenderOptions"
             value-key="value"
             label-key="label"
           />
