@@ -40,23 +40,23 @@ const priorityButtonCount = 2
 const selectedPhraseStarter = ref<PhraseStarter | null>(null)
 
 const englishCategories: Category[] = [
-  { title: 'Social / Conversational', count: 8 },
-  { title: 'Basic Needs & Requests', count: 10 },
-  { title: 'Feelings & Status', count: 6 },
+  { title: 'Social & Conversation Control', count: 11 },
+  { title: 'Basic Needs', count: 7 },
+  { title: 'Feelings & Physical State', count: 10 },
   { title: 'Medical & Safety', count: 6 },
-  { title: 'People & Places', count: 6 },
-  { title: 'Everyday Activities', count: 6 },
-  { title: 'Conversation Repair', count: 6 }
+  { title: 'People & Places', count: 8 },
+  { title: 'Everyday Activities', count: 7 },
+  { title: 'Conversation Repair', count: 10 }
 ]
 
 const spanishCategories: Category[] = [
-  { title: 'Social / Conversación', count: 8 },
-  { title: 'Necesidades básicas y pedidos', count: 10 },
-  { title: 'Sentimientos y estado', count: 6 },
+  { title: 'Social y control de conversación', count: 11 },
+  { title: 'Necesidades básicas', count: 7 },
+  { title: 'Sentimientos y estado físico', count: 10 },
   { title: 'Médico y seguridad', count: 6 },
-  { title: 'Personas y lugares', count: 6 },
-  { title: 'Actividades diarias', count: 6 },
-  { title: 'Reparar la conversación', count: 6 }
+  { title: 'Personas y lugares', count: 8 },
+  { title: 'Actividades diarias', count: 7 },
+  { title: 'Reparar la conversación', count: 10 }
 ]
 
 const englishCoreWords: Word[] = [
@@ -72,7 +72,7 @@ const englishCoreWords: Word[] = [
   },
   {
     text: 'Hello',
-    emoji: '👋',
+    emoji: '✋',
     toneClass: 'bg-pastel-blue'
   },
   {
@@ -111,13 +111,28 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-green'
   },
   {
+    text: 'I need more time',
+    emoji: '⏳',
+    toneClass: 'bg-pastel-yellow'
+  },
+  {
+    text: 'I\'m listening',
+    emoji: '👂',
+    toneClass: 'bg-pastel-blue'
+  },
+  {
+    text: 'I can do it',
+    emoji: '💪',
+    toneClass: 'bg-pastel-green'
+  },
+  {
     text: 'Water',
     emoji: '💧',
     toneClass: 'bg-pastel-blue'
   },
   {
     text: 'Food',
-    emoji: '🍽️',
+    emoji: '🍎',
     toneClass: 'bg-pastel-green'
   },
   {
@@ -126,28 +141,8 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-purple'
   },
   {
-    text: 'I\'m tired',
-    emoji: '😴',
-    toneClass: 'bg-pastel-blue'
-  },
-  {
-    text: 'I\'m cold',
-    emoji: '🥶',
-    toneClass: 'bg-pastel-blue'
-  },
-  {
-    text: 'I\'m hot',
-    emoji: '🥵',
-    toneClass: 'bg-pastel-yellow'
-  },
-  {
     text: 'Medicine',
     emoji: '💊',
-    toneClass: 'bg-pastel-yellow'
-  },
-  {
-    text: 'I feel sick',
-    emoji: '🤢',
     toneClass: 'bg-pastel-yellow'
   },
   {
@@ -161,33 +156,58 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-pink'
   },
   {
-    text: 'I\'m okay',
+    text: 'Blanket',
+    emoji: '🛏️',
+    toneClass: 'bg-pastel-blue'
+  },
+  {
+    text: 'tired',
+    emoji: '😴',
+    toneClass: 'bg-pastel-blue'
+  },
+  {
+    text: 'cold',
+    emoji: '🥶',
+    toneClass: 'bg-pastel-blue'
+  },
+  {
+    text: 'hot',
+    emoji: '🥵',
+    toneClass: 'bg-pastel-yellow'
+  },
+  {
+    text: 'sick',
+    emoji: '🤢',
+    toneClass: 'bg-pastel-yellow'
+  },
+  {
+    text: 'okay',
     emoji: '👌',
     toneClass: 'bg-pastel-green'
   },
   {
-    text: 'Happy',
+    text: 'happy',
     emoji: '😊',
     toneClass: 'bg-pastel-yellow'
   },
   {
-    text: 'Sad',
+    text: 'sad',
     emoji: '😢',
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'Frustrated',
+    text: 'frustrated',
     emoji: '😣',
     toneClass: 'bg-pastel-pink'
   },
   {
-    text: 'Scared',
+    text: 'scared',
     emoji: '😨',
     toneClass: 'bg-pastel-purple'
   },
   {
-    text: 'I\'m in pain',
-    emoji: '🤕',
+    text: 'in pain',
+    emoji: '🩹',
     toneClass: 'bg-pastel-yellow'
   },
   {
@@ -211,13 +231,13 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-yellow'
   },
   {
-    text: 'Doctor',
-    emoji: '🏥',
+    text: 'Nurse',
+    emoji: '👩‍⚕️',
     toneClass: 'bg-pastel-pink'
   },
   {
-    text: 'Pain',
-    emoji: '💊',
+    text: 'That hurts',
+    emoji: '😖',
     toneClass: 'bg-pastel-yellow'
   },
   {
@@ -251,6 +271,16 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-green'
   },
   {
+    text: 'Hospital',
+    emoji: '🏥',
+    toneClass: 'bg-pastel-pink'
+  },
+  {
+    text: 'Physical therapy',
+    emoji: '🏋️',
+    toneClass: 'bg-pastel-green'
+  },
+  {
     text: 'Phone call',
     emoji: '📱',
     toneClass: 'bg-pastel-blue'
@@ -266,18 +296,23 @@ const englishCoreWords: Word[] = [
     toneClass: 'bg-pastel-purple'
   },
   {
-    text: 'Eat',
+    text: 'to eat',
     emoji: '🍽️',
     toneClass: 'bg-pastel-green'
   },
   {
-    text: 'Sleep',
+    text: 'to sleep',
     emoji: '🛌',
     toneClass: 'bg-pastel-blue'
   },
   {
-    text: 'Walk',
+    text: 'to walk',
     emoji: '🚶',
+    toneClass: 'bg-pastel-green'
+  },
+  {
+    text: 'to exercise',
+    emoji: '🏋️',
     toneClass: 'bg-pastel-green'
   },
   {
@@ -309,6 +344,26 @@ const englishCoreWords: Word[] = [
     text: 'Let me try again',
     emoji: '🔄',
     toneClass: 'bg-pastel-green'
+  },
+  {
+    text: 'I don\'t understand',
+    emoji: '🤷',
+    toneClass: 'bg-pastel-yellow'
+  },
+  {
+    text: 'Slow down',
+    emoji: '🐢',
+    toneClass: 'bg-pastel-blue'
+  },
+  {
+    text: 'That\'s not right',
+    emoji: '❌',
+    toneClass: 'bg-pastel-pink'
+  },
+  {
+    text: 'Exactly right',
+    emoji: '🎯',
+    toneClass: 'bg-pastel-green'
   }
 ]
 
@@ -325,7 +380,7 @@ const spanishCoreWords: Word[] = [
   },
   {
     text: 'Hola',
-    emoji: '👋',
+    emoji: '✋',
     toneClass: 'bg-pastel-blue'
   },
   {
@@ -364,13 +419,28 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-green'
   },
   {
+    text: 'Necesito más tiempo',
+    emoji: '⏳',
+    toneClass: 'bg-pastel-yellow'
+  },
+  {
+    text: 'Estoy escuchando',
+    emoji: '👂',
+    toneClass: 'bg-pastel-blue'
+  },
+  {
+    text: 'Puedo hacerlo',
+    emoji: '💪',
+    toneClass: 'bg-pastel-green'
+  },
+  {
     text: 'Agua',
     emoji: '💧',
     toneClass: 'bg-pastel-blue'
   },
   {
     text: 'Comida',
-    emoji: '🍽️',
+    emoji: '🍎',
     toneClass: 'bg-pastel-green'
   },
   {
@@ -379,28 +449,8 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-purple'
   },
   {
-    text: 'Estoy cansado',
-    emoji: '😴',
-    toneClass: 'bg-pastel-blue'
-  },
-  {
-    text: 'Tengo frío',
-    emoji: '🥶',
-    toneClass: 'bg-pastel-blue'
-  },
-  {
-    text: 'Tengo calor',
-    emoji: '🥵',
-    toneClass: 'bg-pastel-yellow'
-  },
-  {
     text: 'Medicina',
     emoji: '💊',
-    toneClass: 'bg-pastel-yellow'
-  },
-  {
-    text: 'Me siento mal',
-    emoji: '🤢',
     toneClass: 'bg-pastel-yellow'
   },
   {
@@ -409,12 +459,37 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-green'
   },
   {
-    text: 'Alto',
+    text: 'Para',
     emoji: '🛑',
     toneClass: 'bg-pastel-pink'
   },
   {
-    text: 'Estoy bien',
+    text: 'Cobija',
+    emoji: '🛏️',
+    toneClass: 'bg-pastel-blue'
+  },
+  {
+    text: 'cansado',
+    emoji: '😴',
+    toneClass: 'bg-pastel-blue'
+  },
+  {
+    text: 'con frío',
+    emoji: '🥶',
+    toneClass: 'bg-pastel-blue'
+  },
+  {
+    text: 'con calor',
+    emoji: '🥵',
+    toneClass: 'bg-pastel-yellow'
+  },
+  {
+    text: 'mal',
+    emoji: '🤢',
+    toneClass: 'bg-pastel-yellow'
+  },
+  {
+    text: 'bien',
     emoji: '👌',
     toneClass: 'bg-pastel-green'
   },
@@ -439,8 +514,8 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-purple'
   },
   {
-    text: 'Tengo dolor',
-    emoji: '🤕',
+    text: 'con dolor',
+    emoji: '🩹',
     toneClass: 'bg-pastel-yellow'
   },
   {
@@ -464,13 +539,13 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-yellow'
   },
   {
-    text: 'Doctor',
-    emoji: '🏥',
+    text: 'Enfermera',
+    emoji: '👩‍⚕️',
     toneClass: 'bg-pastel-pink'
   },
   {
-    text: 'Tomo medicamento',
-    emoji: '💊',
+    text: 'Eso duele',
+    emoji: '😖',
     toneClass: 'bg-pastel-yellow'
   },
   {
@@ -504,6 +579,16 @@ const spanishCoreWords: Word[] = [
     toneClass: 'bg-pastel-green'
   },
   {
+    text: 'Hospital',
+    emoji: '🏥',
+    toneClass: 'bg-pastel-pink'
+  },
+  {
+    text: 'Terapia física',
+    emoji: '🏋️',
+    toneClass: 'bg-pastel-green'
+  },
+  {
     text: 'Llamada telefónica',
     emoji: '📱',
     toneClass: 'bg-pastel-blue'
@@ -531,6 +616,11 @@ const spanishCoreWords: Word[] = [
   {
     text: 'Caminar',
     emoji: '🚶',
+    toneClass: 'bg-pastel-green'
+  },
+  {
+    text: 'Hacer ejercicio',
+    emoji: '🏋️',
     toneClass: 'bg-pastel-green'
   },
   {
@@ -562,6 +652,26 @@ const spanishCoreWords: Word[] = [
     text: 'Déjame intentarlo de nuevo',
     emoji: '🔄',
     toneClass: 'bg-pastel-green'
+  },
+  {
+    text: 'No entiendo',
+    emoji: '🤷',
+    toneClass: 'bg-pastel-yellow'
+  },
+  {
+    text: 'Más despacio',
+    emoji: '🐢',
+    toneClass: 'bg-pastel-blue'
+  },
+  {
+    text: 'Eso no está bien',
+    emoji: '❌',
+    toneClass: 'bg-pastel-pink'
+  },
+  {
+    text: 'Exactamente',
+    emoji: '🎯',
+    toneClass: 'bg-pastel-green'
   }
 ]
 
@@ -577,32 +687,59 @@ const englishWords = useLocalStorage<Word[]>(
 
 const deprecatedDefaultCards = new Set(['I want / I need', 'Quiero / Necesito'])
 
-const defaultCardTextReplacements = new Map([
+const englishDefaultCardTextReplacements = new Map([
   ['Hello / Hi', 'Hello'],
   ['Wait / One moment', 'Wait'],
   ['Water / Drink', 'Water'],
   ['Food / Hungry', 'Food'],
   ['Medicine / Pain', 'Medicine'],
-  ['I take medication', 'Pain'],
+  ['I take medication', 'Medicine'],
   ['Stop / Finished', 'Stop'],
-  ['Frustrated / Upset', 'Frustrated'],
-  ['Doctor / Hospital', 'Doctor'],
+  ['I\'m tired', 'tired'],
+  ['I\'m cold', 'cold'],
+  ['I\'m hot', 'hot'],
+  ['I feel sick', 'sick'],
+  ['I\'m okay', 'okay'],
+  ['Happy', 'happy'],
+  ['Sad', 'sad'],
+  ['Frustrated', 'frustrated'],
+  ['Frustrated / Upset', 'frustrated'],
+  ['Scared', 'scared'],
+  ['I\'m in pain', 'in pain'],
+  ['Pain', 'in pain'],
+  ['Doctor', 'Nurse'],
+  ['Doctor / Hospital', 'Nurse'],
   ['My husband / wife / partner', 'My partner'],
   ['Work / Job', 'Work'],
   ['Outside / Go out', 'Outside'],
   ['TV / Watch something', 'TV'],
-  ['Eat / Restaurant', 'Eat'],
-  ['Sleep / Rest', 'Sleep'],
-  ['Walk / Exercise', 'Walk'],
+  ['Eat', 'to eat'],
+  ['Eat / Restaurant', 'to eat'],
+  ['Sleep', 'to sleep'],
+  ['Sleep / Rest', 'to sleep'],
+  ['Walk', 'to walk'],
+  ['Walk / Exercise', 'to walk'],
   ['Say it again / Repeat', 'Repeat'],
   ['Almost right / Not quite', 'Almost right'],
-  ['Show me / Point to it', 'Show me'],
+  ['Show me / Point to it', 'Show me']
+])
+
+const spanishDefaultCardTextReplacements = new Map([
   ['Espera / Un momento', 'Espera'],
   ['Agua / Bebida', 'Agua'],
   ['Comida / Tengo hambre', 'Comida'],
   ['Medicina / Dolor', 'Medicina'],
-  ['Alto / Terminé', 'Alto'],
+  ['Alto', 'Para'],
+  ['Alto / Terminé', 'Para'],
+  ['Estoy cansado', 'cansado'],
+  ['Tengo frío', 'con frío'],
+  ['Tengo calor', 'con calor'],
+  ['Me siento mal', 'mal'],
+  ['Estoy bien', 'bien'],
   ['Frustrado / Molesto', 'Frustrado'],
+  ['Tengo dolor', 'con dolor'],
+  ['Tomo medicamento', 'Medicina'],
+  ['Doctor', 'Enfermera'],
   ['Mi esposo / esposa / pareja', 'Mi pareja'],
   ['Afuera / Salir', 'Afuera'],
   ['TV / Ver algo', 'TV'],
@@ -611,6 +748,11 @@ const defaultCardTextReplacements = new Map([
   ['Caminar / Ejercicio', 'Caminar'],
   ['Casi correcto / No exactamente', 'Casi correcto'],
   ['Muéstrame / Señálalo', 'Muéstrame']
+])
+
+const defaultCardTexts = new Set([
+  ...englishCoreWords.map(card => card.text),
+  ...spanishCoreWords.map(card => card.text)
 ])
 
 const activeLocale = computed<AppLocale>(() =>
@@ -660,6 +802,19 @@ const requestStarters = computed<PhraseStarter[]>(() =>
           phrase: 'I feel',
           emoji: '💭',
           toneClass: 'bg-pastel-purple'
+        },
+        {
+          text: 'I can\'t',
+          phrase: 'I can\'t',
+          emoji: '🚫',
+          toneClass: 'bg-pastel-pink'
+        },
+        {
+          text: 'Can you',
+          phrase: 'Can you',
+          suffix: '?',
+          emoji: '🤝',
+          toneClass: 'bg-pastel-green'
         }
       ]
     : [
@@ -686,6 +841,19 @@ const requestStarters = computed<PhraseStarter[]>(() =>
           phrase: 'Me siento',
           emoji: '💭',
           toneClass: 'bg-pastel-purple'
+        },
+        {
+          text: 'No puedo',
+          phrase: 'No puedo',
+          emoji: '🚫',
+          toneClass: 'bg-pastel-pink'
+        },
+        {
+          text: 'Puedes',
+          phrase: 'Puedes',
+          suffix: '?',
+          emoji: '🤝',
+          toneClass: 'bg-pastel-green'
         }
       ]
 )
@@ -727,6 +895,13 @@ const questionStarters = computed<PhraseStarter[]>(() =>
           suffix: '?',
           emoji: '🕒',
           toneClass: 'bg-pastel-blue'
+        },
+        {
+          text: 'How',
+          phrase: 'How',
+          suffix: '?',
+          emoji: '⚙️',
+          toneClass: 'bg-pastel-green'
         }
       ]
     : [
@@ -764,6 +939,13 @@ const questionStarters = computed<PhraseStarter[]>(() =>
           suffix: '?',
           emoji: '🕒',
           toneClass: 'bg-pastel-blue'
+        },
+        {
+          text: 'Cómo',
+          phrase: 'Cómo',
+          suffix: '?',
+          emoji: '⚙️',
+          toneClass: 'bg-pastel-green'
         }
       ]
 )
@@ -844,18 +1026,26 @@ const stickyStarterLabel = computed(() =>
   activeLocale.value === 'en' ? 'Selected' : 'Seleccionado'
 )
 
-const normalizeRequestObject = (text: string) => {
+const normalizeRequestObject = (text: string, starter?: PhraseStarter) => {
   const [firstOption = text] = text.split('/')
-  const trimmed = firstOption.trim()
+  let trimmed = firstOption.trim()
   if (!trimmed) {
     return ''
+  }
+
+  if (
+    starter
+    && ['I can\'t', 'Can you'].includes(starter.phrase)
+    && trimmed.toLocaleLowerCase().startsWith('to ')
+  ) {
+    trimmed = trimmed.slice(3)
   }
 
   return trimmed.charAt(0).toLocaleLowerCase() + trimmed.slice(1)
 }
 
 const getPhrase = (starter: PhraseStarter, text: string) => {
-  const phrase = `${starter.phrase} ${normalizeRequestObject(text)}`.trim()
+  const phrase = `${starter.phrase} ${normalizeRequestObject(text, starter)}`.trim()
   return starter.suffix ? `${phrase}${starter.suffix}` : phrase
 }
 
@@ -937,37 +1127,50 @@ const onAdding = (item: string) => {
   ]
 }
 
-const removeDeprecatedDefaultCards = () => {
-  englishWords.value = englishWords.value.filter(
-    card => !deprecatedDefaultCards.has(card.text)
-  )
-  spanishWords.value = spanishWords.value.filter(
-    card => !deprecatedDefaultCards.has(card.text)
-  )
+const reconcileDefaultCards = (
+  currentCards: Word[],
+  defaultCards: Word[],
+  replacements: Map<string, string>
+) => {
+  const byNormalizedText = new Map<string, Word>()
 
-  englishWords.value = englishWords.value.map((card, index) =>
-    index < priorityButtonCount
-      ? {
-          ...card,
-          text: defaultCardTextReplacements.get(card.text) ?? card.text,
-          hidden: false
-        }
-      : {
-          ...card,
-          text: defaultCardTextReplacements.get(card.text) ?? card.text
-        }
+  currentCards.forEach((card) => {
+    const normalizedText = replacements.get(card.text) ?? card.text
+    if (!byNormalizedText.has(normalizedText)) {
+      byNormalizedText.set(normalizedText, card)
+    }
+  })
+
+  const reconciledDefaults = defaultCards.map((defaultCard, index) => {
+    const existingCard = byNormalizedText.get(defaultCard.text)
+    return {
+      ...defaultCard,
+      hidden: index < priorityButtonCount ? false : existingCard?.hidden ?? defaultCard.hidden
+    }
+  })
+
+  const customCards = currentCards.filter((card) => {
+    if (deprecatedDefaultCards.has(card.text)) {
+      return false
+    }
+
+    const normalizedText = replacements.get(card.text) ?? card.text
+    return !defaultCardTexts.has(normalizedText)
+  })
+
+  return [...reconciledDefaults, ...customCards]
+}
+
+const removeDeprecatedDefaultCards = () => {
+  englishWords.value = reconcileDefaultCards(
+    englishWords.value,
+    englishCoreWords,
+    englishDefaultCardTextReplacements
   )
-  spanishWords.value = spanishWords.value.map((card, index) =>
-    index < priorityButtonCount
-      ? {
-          ...card,
-          text: defaultCardTextReplacements.get(card.text) ?? card.text,
-          hidden: false
-        }
-      : {
-          ...card,
-          text: defaultCardTextReplacements.get(card.text) ?? card.text
-        }
+  spanishWords.value = reconcileDefaultCards(
+    spanishWords.value,
+    spanishCoreWords,
+    spanishDefaultCardTextReplacements
   )
 }
 
