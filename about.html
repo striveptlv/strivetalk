@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Our Team | STRIVE Physical Therapy Las Vegas</title>
+  <meta name="description" content="Meet the STRIVE Physical Therapy team in Las Vegas, including Dr. Gabrielle PT DPT and Dr. Joshua Lopez PT DPT, serving stroke, vestibular, and neurological recovery clients.">
+  <link rel="canonical" href="https://striveptlv.com/about.html">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalBusiness",
+    "@id": "https://striveptlv.com/#business",
+    "name": "STRIVE Physical Therapy",
+    "url": "https://striveptlv.com/",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Las Vegas",
+      "addressRegion": "NV",
+      "addressCountry": "US"
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --black:      #f7f4ef;
+      --dark:       #ece6de;
+      --dark2:      #ffffff;
+      --dark3:      #f6f2eb;
+      --dark4:      #ece6de;
+      --lime:       #e68a4d;
+      --lime-pale:  rgba(230,138,77,0.12);
+      --orange:     #8ecae6;
+      --orange-pale:rgba(142,202,230,0.16);
+      --white:      #083d7a;
+      --white-dim:  #3f5a82;
+      --white-faint:rgba(8,61,122,0.08);
+      --border:     rgba(8,61,122,0.1);
+      --border-mid: rgba(8,61,122,0.18);
+      --ink:        #083d7a;
+      --ink-soft:   #24548d;
+      --paper:      #f7f4ef;
+      --panel:      #ffffff;
+      --accent:     #e68a4d;
+      --accent-deep:#8ecae6;
+      --text-mid:   #3f5a82;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--paper);
+      color: var(--white);
+      overflow-x: hidden;
+      padding-top: 70px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(246,245,241,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw; height: 70px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+    .logo-img  { width: 46px; height: 46px; object-fit: contain; }
+    .logo-text { font-family: 'Barlow Condensed', sans-serif; font-size: 27px; font-weight: 700; color: var(--ink); letter-spacing: 2px; line-height: 1; text-transform: uppercase; }
+    .logo-sub  { font-size: 9px; color: #000000; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; margin-top: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 22px; }
+    .nav-links a { color: var(--white-dim); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.7px; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--lime); }
+    .nav-book  { background: var(--ink) !important; color: white !important; padding: 10px 18px; border-radius: 2px; font-weight: 700 !important; letter-spacing: 1px !important; }
+    .nav-book:hover { background: var(--accent-deep) !important; }
+    .nav-dropdown { position: relative; display: flex; align-items: center; justify-content: center; }
+    .nav-dropdown > a { display: flex; align-items: center; gap: 5px; padding: 24px 0; }
+    .nav-dropdown > a::after {
+      content: "";
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid rgba(15,30,46,0.45);
+      transition: transform 0.2s, border-top-color 0.2s;
+    }
+    .nav-dropdown:hover > a::after { transform: rotate(180deg); border-top-color: var(--lime); }
+    .dropdown-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      min-width: 200px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid var(--border-mid);
+      box-shadow: 0 18px 36px rgba(15,30,46,0.08);
+      transform: translateX(-50%);
+      transition: opacity 0.15s;
+    }
+    .nav-dropdown:hover .dropdown-menu { opacity: 1; pointer-events: auto; }
+    .dropdown-menu a {
+      display: block;
+      padding: 11px 18px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      color: var(--white-dim);
+      font-size: 13.5px;
+      text-align: center;
+      text-transform: none;
+      letter-spacing: 0.2px;
+    }
+    .dropdown-menu a:last-child { border-bottom: none; }
+    .dropdown-menu a:hover { background: var(--lime-pale); color: var(--lime); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-toggle span { width: 24px; height: 2px; background: #0f1e2e; }
+    .mobile-menu {
+      display: none; flex-direction: column;
+      position: fixed; top: 70px; left: 0; right: 0; bottom: 0;
+      background: var(--paper); z-index: 199; padding: 32px 6vw; overflow-y: auto;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--white-dim); text-decoration: none; font-size: 19px;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 15px 0; border-bottom: 1px solid var(--border); transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--lime); }
+    .mob-book { background: var(--ink) !important; color: white !important; text-align: center; border-radius: 2px; padding: 15px !important; margin-top: 24px; border: none !important; font-weight: 700 !important; }
+    .mob-dropdown { border-bottom: 1px solid var(--border); }
+    .mob-dropdown-toggle {
+      display: flex; justify-content: space-between; align-items: center;
+      color: var(--white-dim); font-size: 19px;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 15px 0; cursor: pointer;
+    }
+    .mob-arrow {
+      font-size: 22px;
+      color: var(--lime);
+      display: inline-block;
+      transition: transform 0.25s;
+    }
+    .mob-arrow.open { transform: rotate(90deg); }
+    .mob-dropdown-items { display: none; flex-direction: column; padding-left: 16px; }
+    .mob-dropdown-items.open { display: flex; }
+    .mob-dropdown-items a {
+      font-size: 15px !important;
+      padding: 12px 0 !important;
+      border-bottom: 1px solid var(--border) !important;
+      color: rgba(15,30,46,0.68) !important;
+    }
+    .mob-dropdown-items a:last-child { border-bottom: none !important; }
+    .schedule-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 240;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(8,12,14,0.42);
+      backdrop-filter: blur(8px);
+    }
+    .schedule-modal.open { display: flex; }
+    .schedule-dialog {
+      position: relative;
+      width: min(100%, 520px);
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      box-shadow: 0 28px 64px rgba(15,30,46,0.14);
+      padding: 30px 28px 26px;
+    }
+    .schedule-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--white);
+      font: inherit;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .schedule-close:hover { background: var(--lime-pale); }
+    .schedule-kicker {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 12px;
+    }
+    .schedule-dialog h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: clamp(36px, 5vw, 44px);
+      line-height: 0.96;
+      color: var(--white);
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .schedule-dialog p {
+      color: var(--white-dim);
+      font-size: 15px;
+      line-height: 1.75;
+      margin-bottom: 22px;
+      max-width: 420px;
+    }
+    .schedule-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .schedule-option {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+      min-height: 190px;
+      padding: 22px 20px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      background: var(--dark3);
+      transition: border-color 0.2s, transform 0.15s, background 0.2s;
+    }
+    .schedule-option > div {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .schedule-option:hover {
+      border-color: var(--border-mid);
+      background: #ffffff;
+      transform: translateY(-2px);
+    }
+    .schedule-option-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.6px;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+    .schedule-option h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      line-height: 0.98;
+      color: var(--white);
+      margin: 10px 0 8px;
+    }
+    .schedule-option p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--white-dim);
+    }
+    .schedule-option strong {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .schedule-option:hover h3,
+    .schedule-option:hover strong { color: var(--lime); }
+    .schedule-contact {
+      margin-top: -8px;
+      margin-bottom: 22px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: var(--white);
+    }
+
+    /* ── SHARED HELPERS ── */
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      font-weight: 700; color: var(--lime);
+      display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+    }
+    .section-label::before { content: ''; display: block; width: 24px; height: 2px; background: var(--lime); flex-shrink: 0; }
+    .section-h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(38px, 4.5vw, 58px);
+      font-weight: 600;
+      line-height: 0.96; color: var(--ink); letter-spacing: 0.4px;
+      margin-bottom: 14px;
+    }
+    .section-h2 em { color: var(--lime); font-style: normal; }
+    .section-lead { font-size: 15.5px; color: var(--white-dim); line-height: 1.75; max-width: 580px; }
+    .section-inner { max-width: 1080px; margin: 0 auto; }
+    .btn-primary {
+      background: var(--accent); color: var(--ink); border: none;
+      padding: 14px 32px; border-radius: 2px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #f0a26d; transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--ink);
+      border: 1px solid rgba(8,61,122,0.22);
+      padding: 14px 32px; border-radius: 2px;
+      font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink);
+      padding: 108px 5vw 84px;
+      min-height: calc(100svh - 70px);
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .hero::before,
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .hero::before {
+      z-index: 0;
+      background: url('hero-physical-therapy-home.jpg') center right / cover no-repeat;
+    }
+    .hero::after {
+      z-index: 1;
+      background:
+        linear-gradient(90deg, rgba(5, 26, 56, 0.98) 0%, rgba(8, 61, 122, 0.88) 40%, rgba(8, 61, 122, 0.52) 72%, rgba(8, 61, 122, 0.28) 100%),
+        linear-gradient(180deg, rgba(5, 26, 56, 0.34) 0%, rgba(5, 26, 56, 0.2) 46%, rgba(5, 26, 56, 0.66) 100%);
+    }
+    .hero-top-bar { display: none; }
+    .hero-inner {
+      max-width: 1160px;
+      width: 100%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 64px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-copy {
+      max-width: 560px;
+      padding-right: 12px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.82rem;
+      color: white;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--lime); }
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(3rem, 5vw, 4.8rem);
+      font-weight: 600;
+      line-height: 0.98;
+      color: white;
+      letter-spacing: 0.02em;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 0 rgba(5, 26, 56, 0.42), 0 12px 28px rgba(5, 26, 56, 0.3);
+    }
+    .hero h1 em { color: var(--lime); font-style: normal; }
+    .hero-legal {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.42em;
+      line-height: 1.1;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.68);
+    }
+    .hero-desc {
+      font-size: 15.5px;
+      color: rgba(255,255,255,0.76);
+      line-height: 1.78;
+      margin-bottom: 34px;
+      max-width: 560px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      justify-content: flex-start;
+    }
+    .hero-trust { display: none; }
+    .trust-item { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--white-dim); }
+    .trust-dot { width: 4px; height: 4px; background: var(--lime); flex-shrink: 0; }
+
+    /* Hero right — credential panel */
+    .hero-cred-panel {
+      background: rgba(5,26,56,0.54);
+      border: 1px solid rgba(255,255,255,0.16);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.24);
+      backdrop-filter: blur(10px);
+    }
+    .hero-cred-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent), var(--accent-deep));
+    }
+    .hero-cred-head {
+      padding: 34px 34px 12px 40px;
+      background: transparent;
+      border-bottom: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.75rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: white;
+      font-weight: 600;
+      line-height: 1.05;
+    }
+    .cred-row {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 34px 16px 40px; border-bottom: 1px solid var(--border);
+    }
+    .cred-row:last-child { border-bottom: none; }
+    .cred-icon {
+      width: 32px; height: 32px; flex-shrink: 0;
+      border: 1px solid rgba(230,138,77,0.32); background: rgba(230,138,77,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--lime);
+    }
+    .cred-icon svg { display: none; }
+    .cred-text strong { display: block; font-size: 13px; font-weight: 600; color: white; margin-bottom: 2px; }
+    .cred-text span { font-size: 12px; color: rgba(255,255,255,0.68); line-height: 1.5; }
+
+    /* ── PROVIDER SECTION ── */
+    .providers-section {
+      background: var(--paper);
+      padding: 96px 5vw;
+      border-top: 1px solid var(--border);
+    }
+
+    /* PT PROFILE CARD — full-width each */
+    .pt-card {
+      background: var(--dark2);
+      border: 1px solid var(--border-mid);
+      border-left: none;
+      border-top: 4px solid var(--accent-deep);
+      margin-bottom: 28px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 480px;
+      overflow: hidden;
+      box-shadow: 0 16px 34px rgba(8,61,122,0.08);
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    }
+    .pt-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 42px rgba(8,61,122,0.12);
+    }
+    .pt-card:last-child { margin-bottom: 0; }
+    .pt-card.alt { border-top-color: var(--accent); }
+    .provider-break {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 6px 0 20px;
+      color: var(--white-dim);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+    }
+    .provider-break::before,
+    .provider-break::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-mid);
+    }
+    .provider-break strong {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Left column — photo + identity */
+    .pt-left {
+      background: var(--dark3);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+    }
+    .pt-photo-wrap {
+      width: 100%; aspect-ratio: 1/1;
+      background: var(--dark4);
+      position: relative; overflow: hidden;
+      flex-shrink: 0;
+    }
+    .pt-photo-wrap.has-photo .pt-photo-placeholder,
+    .pt-photo-wrap.has-photo .pt-photo-slot { display: none; }
+    .pt-photo-slot {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      border: 1px dashed rgba(8,61,122,0.22);
+      background: rgba(255,255,255,0.34);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px 12px;
+      z-index: 2;
+    }
+    .pt-photo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pt-photo-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px;
+    }
+    .pt-initials {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 64px; letter-spacing: 4px; line-height: 1;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .pt-card.alt .pt-initials { color: var(--ink); }
+    .pt-photo-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--white-dim);
+    }
+    .pt-identity { padding: 24px 22px; flex: 1; }
+    .pt-role-tag {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; padding: 4px 10px;
+      border: 1px solid transparent; border-radius: 1px;
+      margin-bottom: 12px;
+    }
+    .tag-lime { background: var(--orange-pale); color: var(--ink); border-color: rgba(142,202,230,0.35); }
+    .tag-orange { background: var(--lime-pale); color: var(--ink); border-color: rgba(230,138,77,0.28); }
+    .pt-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 31px; letter-spacing: 0.5px; color: var(--ink);
+      line-height: 1; margin-bottom: 4px;
+    }
+    .pt-credential {
+      font-size: 12px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--white-dim); margin-bottom: 18px;
+    }
+    .pt-contact { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+    .pt-contact-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--white-dim); }
+    .pt-contact-row svg { width: 13px; height: 13px; flex-shrink: 0; opacity: 0.6; }
+    .experience-highlight {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 18px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      background: var(--dark2);
+    }
+    .experience-years {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 34px;
+      line-height: 0.95;
+      letter-spacing: 1px;
+      color: var(--white);
+    }
+    .experience-copy {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      color: var(--white-dim);
+    }
+    .pt-card:not(.alt) .experience-years { color: var(--accent); }
+    .pt-card.alt .experience-years { color: var(--ink); }
+
+    /* Right column — bio content */
+    .pt-right { padding: 36px 40px; display: flex; flex-direction: column; gap: 32px; }
+    .pt-bio-block {}
+    .pt-section-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 9px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--lime); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .pt-section-tag::before { content: ''; width: 16px; height: 1px; background: var(--lime); }
+    .pt-card.alt .pt-section-tag { color: var(--accent); }
+    .pt-card.alt .pt-section-tag::before { background: var(--accent); }
+    .pt-bio-text {
+      font-size: 15px; line-height: 1.8; color: var(--white-dim);
+    }
+    .pt-bio-text strong { color: var(--white); font-weight: 600; }
+
+    /* Specialties grid */
+    .spec-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+      background: var(--border);
+    }
+    .spec-item {
+      background: var(--dark3);
+      padding: 14px 16px;
+    }
+    .spec-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 5px;
+    }
+    .pt-card:not(.alt) .spec-label { color: var(--lime); }
+    .pt-card.alt .spec-label { color: var(--accent); }
+    .spec-value { font-size: 13px; font-weight: 500; color: var(--white); line-height: 1.4; }
+
+    /* Education & Credentials list */
+    .cred-list { display: flex; flex-direction: column; gap: 10px; }
+    .cred-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 14px; color: var(--white-dim); line-height: 1.55;
+    }
+    .cred-bullet {
+      width: 5px; height: 5px; flex-shrink: 0; margin-top: 7px;
+      border-radius: 50%;
+    }
+    .bullet-lime { background: var(--lime); }
+    .bullet-orange { background: var(--accent); }
+
+    /* Philosophy pull quote */
+    .pt-quote {
+      background: var(--dark3);
+      border-left: 3px solid var(--lime);
+      padding: 18px 22px;
+    }
+    .pt-card.alt .pt-quote { border-left-color: var(--accent); }
+    .pt-quote p {
+      font-size: 15px; font-style: italic; line-height: 1.72;
+      color: var(--white-dim); font-weight: 300;
+    }
+    .pt-quote cite {
+      display: block; margin-top: 10px;
+      font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--lime); font-style: normal;
+    }
+    .pt-card.alt .pt-quote cite { color: var(--accent); }
+
+    /* ── SERVICES OVERVIEW ── */
+    .services-section {
+      background: white;
+      padding: 88px 5vw;
+      border-top: 1px solid var(--border);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      background: transparent;
+      margin-top: 48px;
+    }
+    .service-card {
+      background: #f6f2eb;
+      padding: 32px 30px;
+      border: 1px solid rgba(8,61,122,0.16);
+      border-top: 3px solid var(--accent);
+      box-shadow: 0 16px 34px rgba(0,0,0,0.08);
+    }
+    .service-kicker {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 12px;
+    }
+    .service-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .service-desc {
+      font-size: 14.5px;
+      line-height: 1.78;
+      color: var(--white-dim);
+      margin-bottom: 18px;
+    }
+    .service-points {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .service-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      line-height: 1.62;
+      color: var(--white-dim);
+    }
+    .service-point::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      flex-shrink: 0;
+      margin-top: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* ── VALUES SECTION ── */
+    .values-section {
+      background: var(--paper);
+      padding: 88px 5vw;
+      border-top: 1px solid var(--border);
+    }
+    .providers-section .values-section {
+      width: 100vw;
+      margin: 56px calc(50% - 50vw) 28px;
+    }
+    .values-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 18px; background: transparent; margin-top: 48px;
+    }
+    .value-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 32px 28px;
+      box-shadow: 0 8px 24px rgba(18,23,21,0.04);
+    }
+    .value-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 48px; color: var(--accent); letter-spacing: 1px; line-height: 1;
+      font-weight: 600;
+      margin-bottom: 12px; opacity: 0.5;
+    }
+    .value-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--white); margin-bottom: 10px;
+    }
+    .value-desc { font-size: 14px; color: var(--white-dim); line-height: 1.72; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--ink);
+      padding: 88px 5vw; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-bg-text {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(80px, 16vw, 180px);
+      color: rgba(255,255,255,0.04); letter-spacing: 8px;
+      white-space: nowrap; pointer-events: none; line-height: 1;
+    }
+    .cta-inner { position: relative; z-index: 2; }
+    .cta-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); font-weight: 700; margin-bottom: 14px;
+    }
+    .cta-section h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: clamp(40px, 5.5vw, 70px);
+      line-height: 0.96; color: #ffffff; letter-spacing: 2px; margin-bottom: 16px;
+    }
+    .cta-section p {
+      color: rgba(255,255,255,0.55); font-size: 15.5px; line-height: 1.75;
+      max-width: 520px; margin: 0 auto 36px;
+    }
+    .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .cta-dark {
+      background: var(--accent); color: var(--ink); border: none;
+      padding: 16px 38px; border-radius: 2px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .cta-dark:hover { background: #f0a26d; transform: translateY(-2px); }
+    .cta-ghost {
+      background: transparent; color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 14px 36px; border-radius: 2px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      cursor: pointer; text-decoration: none; display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .cta-ghost:hover { border-color: rgba(255,255,255,0.6); color: #ffffff; }
+
+    /* ── FOOTER ── */
+    footer { background: #0f1e2e; padding: 64px 5vw 28px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .footer-inner { max-width: 1080px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 52px; padding-bottom: 52px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-brand p { color: rgba(255,255,255,0.38); font-size: 13.5px; line-height: 1.8; margin-top: 16px; max-width: 270px; }
+    footer .logo-text { color: #ffffff; }
+    footer .logo-sub { color: rgba(255,255,255,0.56); }
+    .footer-col h4 { font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; color: var(--accent); margin-bottom: 18px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.4); font-size: 13.5px; text-decoration: none; margin-bottom: 9px; transition: color 0.2s; }
+    .footer-col a:hover { color: #4db8d0; }
+    .footer-bottom { padding-top: 26px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; color: rgba(255,255,255,0.22); font-size: 12px; }
+    .logo-sub-footer { color: #4db8d0 !important; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px);} to {opacity:1;transform:translateY(0);}}
+    .anim { opacity: 0; }
+    .anim.visible { animation: fadeUp 0.6s ease forwards; }
+    .d1 { animation-delay: 0.08s; } .d2 { animation-delay: 0.16s; } .d3 { animation-delay: 0.26s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .hero { padding: 84px 5vw 72px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-cred-panel { display: none; }
+      .hero-copy {
+        max-width: none;
+        padding-right: 0;
+      }
+      .pt-card { grid-template-columns: 1fr; }
+      .pt-left { border-right: none; border-bottom: 1px solid var(--border); }
+      .pt-photo-wrap { max-height: 280px; aspect-ratio: unset; }
+      .services-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .schedule-options { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 640px) {
+      .schedule-modal { padding: 14px; }
+      .schedule-dialog { padding: 26px 20px 20px; }
+      .schedule-option { min-height: 0; }
+      .hero { padding: 72px 5vw 56px; }
+      .providers-section, .services-section, .values-section, .cta-section { padding: 72px 5vw; }
+      .pt-right { padding: 24px 22px; }
+      .spec-grid { grid-template-columns: 1fr 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .hero-actions { margin-bottom: 0; }
+      .hero-actions a { width: 100%; text-align: center; }
+      .hero-cred-head { padding: 28px 22px 10px 26px; font-size: 1.4rem; }
+      .cred-row { padding: 14px 22px 14px 26px; }
+      .cta-actions a { width: 100%; text-align: center; }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.png" alt="STRIVE PT Logo" class="logo-img" onerror="this.style.display='none'">
+    <div>
+      <div class="logo-text">STRIVE</div>
+      <div class="logo-sub">Physical Therapy · Las Vegas</div>
+    </div>
+  </a>
+    <div class="nav-links">
+    <a href="/about.html">About</a>
+    <div class="nav-dropdown">
+      <a href="/#services">Services</a>
+      <div class="dropdown-menu">
+        <a href="/wellness.html">Wellness Classes</a>
+        <a href="/stroke.html">Stroke Rehab</a>
+        <a href="/sci.html">SCI Rehab</a>
+        <a href="/vestibular-rehab.html">Vestibular Rehab</a>
+        <a href="/fnd.html">FND Rehab</a>
+      </div>
+    </div>
+    <a href="/private.html">Why STRIVE?</a>
+    <div class="nav-dropdown">
+      <a href="#">Resources</a>
+      <div class="dropdown-menu">
+        <a href="https://open.spotify.com/show/2nbFBV45QpM37SAdHtobgF?si=Gns3Ft-7SgCNdGbmnOcpag" target="_blank" rel="noopener">Podcast</a>
+        <a href="/insights">Articles</a>
+        <a href="/moneymanagement/">STRIVE Money Rehab</a>
+        <a href="/vo">Vestibular App</a>
+        <a href="/talk">STRIVE TALK</a>
+      </div>
+    </div>
+    <a href="/contact.html">Contact</a>
+    <a href="#scheduling" data-schedule-trigger class="nav-book">Book Now</a>
+  </div><div class="nav-toggle" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/" onclick="toggleMenu(false)">Home</a>
+  <a href="/about.html" onclick="toggleMenu(false)">About</a>
+  <div class="mob-dropdown">
+    <div class="mob-dropdown-toggle" onclick="toggleMobileDropdown('servicesItems', this.querySelector('.mob-arrow'))">
+      Services <span class="mob-arrow">›</span>
+    </div>
+    <div class="mob-dropdown-items" id="servicesItems">
+      <a href="/wellness.html" onclick="toggleMenu(false)">Wellness Classes</a>
+      <a href="/stroke.html" onclick="toggleMenu(false)">Stroke Rehab</a>
+      <a href="/sci.html" onclick="toggleMenu(false)">SCI Rehab</a>
+      <a href="/vestibular-rehab.html" onclick="toggleMenu(false)">Vestibular Rehab</a>
+      <a href="/fnd.html" onclick="toggleMenu(false)">FND Rehab</a>
+    </div>
+  </div>
+  <a href="/private.html" onclick="toggleMenu(false)">Why STRIVE?</a>
+  <div class="mob-dropdown">
+    <div class="mob-dropdown-toggle" onclick="toggleMobileDropdown('patientResourceItems', this.querySelector('.mob-arrow'))">
+      Resources <span class="mob-arrow">›</span>
+    </div>
+    <div class="mob-dropdown-items" id="patientResourceItems">
+      <a href="https://open.spotify.com/show/2nbFBV45QpM37SAdHtobgF?si=Gns3Ft-7SgCNdGbmnOcpag" target="_blank" rel="noopener">Podcast</a>
+      <a href="/insights" onclick="toggleMenu(false)">Articles</a>
+      <a href="/moneymanagement/" onclick="toggleMenu(false)">STRIVE Money Rehab</a>
+      <a href="/vo" onclick="toggleMenu(false)">Vestibular App</a>
+      <a href="/talk" onclick="toggleMenu(false)">STRIVE TALK</a>
+    </div>
+  </div>
+  <a href="/contact.html" onclick="toggleMenu(false)">Contact</a>
+  <a href="#scheduling" data-schedule-trigger class="mob-book" onclick="toggleMenu(false)">Book Now</a>
+</div>
+
+<div class="schedule-modal" id="scheduleModal" aria-hidden="true">
+  <div class="schedule-dialog" role="dialog" aria-modal="true" aria-labelledby="scheduleTitle">
+    <button type="button" class="schedule-close" aria-label="Close scheduling options" data-schedule-close>&times;</button>
+    <div class="schedule-kicker">Scheduling</div>
+    <h2 id="scheduleTitle">Are you a new client or a returning client?</h2>
+    <p>Choose the option that matches where you are in the process, and we’ll send you to the right scheduling page.</p>
+    <div class="schedule-contact">Call/Text: 702 381 4197</div>
+    <div class="schedule-options">
+      <a href="https://calendly.com/dpt-striveptlv/30min" target="_blank" rel="noopener" class="schedule-option">
+        <div>
+          <div class="schedule-option-label">First Visit</div>
+          <h3>New Client</h3>
+          <p>Start with your free consultation so we can learn about your needs and confirm the best next step.</p>
+        </div>
+        <strong>Open Calendly</strong>
+      </a>
+      <a href="https://striveptlv.janeapp.com" target="_blank" rel="noopener" class="schedule-option">
+        <div>
+          <div class="schedule-option-label">Ongoing Care</div>
+          <h3>Returning Client</h3>
+          <p>Use JaneApp if you are already established with STRIVE and need to book a follow-up visit.</p>
+        </div>
+        <strong>Open JaneApp</strong>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-top-bar"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-eyebrow anim">STRIVE Physical Therapy · Las Vegas, NV</div>
+      <h1 class="anim d1">MEET<br><em>THE STRIVE TEAM</em><span class="hero-legal">PHYSICAL THERAPY</span></h1>
+      <p class="hero-desc anim d2">STRIVE is built around two physical therapists with a shared commitment to neurological rehabilitation, individualized clinical reasoning, and meaningful long-term recovery. Gabrielle continues to lead the physical therapy team, with Joshua supporting care across stroke, brain injury, vestibular, and broader neuro rehab needs.</p>
+      <div class="hero-actions anim d2">
+        <a href="https://calendly.com/dpt-striveptlv/30min" target="_blank" rel="noopener" class="btn-primary">Book Free Consultation Now</a>
+      </div>
+    </div>
+
+    <div class="hero-cred-panel anim d2">
+      <div class="hero-cred-head">How The STRIVE Team Practices</div>
+      <div class="cred-row">
+        <div class="cred-icon">1</div>
+        <div class="cred-text">
+          <strong>Doctor of Physical Therapy</strong>
+          <span>Stroke, vestibular, spinal cord injury, and neuro wellness care with individualized clinical focus.</span>
+        </div>
+      </div>
+      <div class="cred-row">
+        <div class="cred-icon">2</div>
+        <div class="cred-text">
+          <strong>In-Home &amp; Small-Group</strong>
+          <span>1-on-1 in-home care and structured small-group neuro wellness classes.</span>
+        </div>
+      </div>
+      <div class="cred-row">
+        <div class="cred-icon">3</div>
+        <div class="cred-text">
+          <strong>Serving Las Vegas, NV</strong>
+          <span>Summerlin, Centennial Hills, Skye Canyon, and surrounding areas.</span>
+        </div>
+      </div>
+      <div class="cred-row">
+        <div class="cred-icon">4</div>
+        <div class="cred-text">
+          <strong>1-on-1 Clinical Care</strong>
+          <span>Thoughtful treatment shaped around your goals, your environment, and your pace of recovery.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROVIDERS -->
+<section class="providers-section" id="providers">
+  <div class="section-inner">
+    <div class="section-label">Our Team</div>
+    <h2 class="section-h2 anim d1">MEET THE<br><em>STRIVE CLINICIANS</em></h2>
+    <p class="section-lead anim d2" style="margin-bottom:52px;">A two-therapist team built around neurological physical therapy, with Gabrielle leading clinical care and Joshua supporting STRIVE's stroke, vestibular, brain injury, and neuro wellness work.</p>
+
+    <!-- PT 1 -->
+    <div class="pt-card anim">
+      <div class="pt-left">
+        <div class="pt-photo-wrap">
+          <img src="gabrielle-lopez.jpg" alt="Dr. Gabrielle PT DPT" onload="this.parentElement.classList.add('has-photo')" onerror="this.remove()">
+          <div class="pt-photo-slot">
+            <div class="pt-photo-label">Add image as gabrielle-lopez.jpg</div>
+          </div>
+          <div class="pt-photo-placeholder">
+            <div class="pt-initials">PT</div>
+            <div class="pt-photo-label">Photo Coming Soon</div>
+          </div>
+        </div>
+        <div class="pt-identity">
+          <div class="pt-role-tag tag-lime">Lead Physical Therapist</div>
+          <div class="pt-name">Dr. Gabrielle PT DPT</div>
+          <div class="pt-credential">Physical Therapist</div>
+          <div class="experience-highlight">
+            <div class="experience-years">10+ Years</div>
+            <div class="experience-copy">Clinical Experience</div>
+          </div>
+          <div class="pt-contact" style="margin-top:16px;">
+            <div class="pt-contact-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Las Vegas, NV
+            </div>
+            <div class="pt-contact-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.83-.83a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg>
+              striveptlv.com
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-right">
+        <div class="pt-bio-block">
+          <div class="pt-section-tag">Background</div>
+          <p class="pt-bio-text">
+            <strong>Dr. Gabrielle PT DPT</strong> is a physical therapist with a passion for restoring function and independence in clients recovering from stroke, spinal cord injury, and other neurological conditions. After earning a Bachelor's in Physical Therapy degree from University of Santo Tomas, she pursued her Doctorate degree in Physical Therapy from Arcadia University, and is a <strong>Certified Stroke Rehab Specialist</strong>.
+            <br><br>
+            Her clinical approach is grounded in evidence-based practice — combining task-specific training, intensive repetition, and a genuine belief that the nervous system retains the capacity to adapt at every stage of recovery. She has special interest in <strong>Spinal Cord Injury rehabilitation</strong>, use of <strong>Pilates-based exercises</strong> in Physical Therapy, and <strong>vestibular rehabilitation</strong>.
+          </p>
+        </div>
+
+        <div class="pt-bio-block">
+          <div class="pt-section-tag">10+ Years of Clinical Experience</div>
+          <div class="spec-grid">
+            <div class="spec-item">
+              <div class="spec-label">Stroke Rehab</div>
+              <div class="spec-value">Acute through chronic recovery</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Neuro Wellness</div>
+              <div class="spec-value">HIIT, agility, S&C programming</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Vestibular</div>
+              <div class="spec-value">BPPV &amp; balance disorders</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Stroke Rehab</div>
+              <div class="spec-value">Certified Stroke Rehab Specialist</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Pilates Background</div>
+              <div class="spec-value">Mat Pilates Certified</div>
+            </div>              
+            <div class="spec-item">
+              <div class="spec-label">Gait Training</div>
+              <div class="spec-value">Community ambulation focus</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-bio-block">
+          <div class="pt-section-tag">Education &amp; Credentials</div>
+          <div class="cred-list">
+            <div class="cred-item"><div class="cred-bullet bullet-lime"></div>Doctor of Physical Therapy (DPT) — Arcadia University</div>
+            <div class="cred-item"><div class="cred-bullet bullet-lime"></div>Certified Stroke Rehab Specialist</div>
+            <div class="cred-item"><div class="cred-bullet bullet-lime"></div>Licensed Physical Therapist — State of Nevada</div>
+          </div>
+        </div>
+
+        <div class="pt-quote">
+          <p>"Recovery is not a destination — it's a daily practice. My job is to build the environment, the structure, and the belief that makes that practice possible for every client I work with."</p>
+          <cite>— Dr. Gabrielle PT DPT</cite>
+        </div>
+      </div>
+    </div>
+
+    <!-- VALUES -->
+    <section class="values-section">
+      <div class="section-inner">
+        <div class="section-label anim">How We Work</div>
+        <h2 class="section-h2 anim d1">WHAT<br><em>DRIVES US</em></h2>
+        <div class="values-grid">
+          <div class="value-card anim">
+            <div class="value-num">01</div>
+            <div class="value-title">Clinical Depth</div>
+            <p class="value-desc">Every session is built on a documented clinical rationale, not a generic protocol. Treatment is delivered 1-on-1 with 50+ minutes of focused care, giving us the time to assess, hypothesize, intervene, and reassess without rushing the session.</p>
+          </div>
+          <div class="value-card anim d1">
+            <div class="value-num">02</div>
+            <div class="value-title">Progressive Intensity</div>
+            <p class="value-desc">We don't believe in staying comfortable. Recovery demands progressive challenge — in load, complexity, and environment. We build that progression deliberately and track it session by session.</p>
+          </div>
+          <div class="value-card anim d2">
+            <div class="value-num">03</div>
+            <div class="value-title">Long-Term Thinking</div>
+            <p class="value-desc">Traditional PT ends at discharge. STRIVE is built for what comes next — ongoing wellness programming, community reintegration, and the strength to keep improving beyond the episode of care.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="provider-break anim d2">Supporting Clinician <strong>Physical Therapist</strong></div>
+
+    <!-- PT 2 -->
+    <div class="pt-card alt anim">
+      <div class="pt-left">
+        <div class="pt-photo-wrap">
+          <img src="joshua-lopez.jpg" alt="Dr. Joshua Lopez PT DPT" onload="this.parentElement.classList.add('has-photo')" onerror="this.remove()">
+          <div class="pt-photo-slot">
+            <div class="pt-photo-label">Add image as joshua-lopez.jpg</div>
+          </div>
+          <div class="pt-photo-placeholder">
+            <div class="pt-initials">PT</div>
+            <div class="pt-photo-label">Photo Coming Soon</div>
+          </div>
+        </div>
+        <div class="pt-identity">
+          <div class="pt-role-tag tag-orange">Physical Therapist</div>
+          <div class="pt-name">Dr. Joshua PT DPT</div>
+          <div class="pt-credential">Physical Therapist</div>
+          <div class="experience-highlight">
+            <div class="experience-years">11 Years</div>
+            <div class="experience-copy">Clinical Experience</div>
+          </div>
+          <div class="pt-contact" style="margin-top:16px;">
+            <div class="pt-contact-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Las Vegas, NV
+            </div>
+            <div class="pt-contact-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.83-.83a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17z"/></svg>
+              striveptlv.com
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-right">
+        <div class="pt-bio-block">
+          <div class="pt-section-tag">Background</div>
+          <p class="pt-bio-text">
+            <strong>Dr. Joshua Lopez PT DPT</strong> is a physical therapist focused on advancing healthcare through neurorehabilitation and practical technology. He works with <strong>NCEP</strong>, a Las Vegas non-profit serving people living with brain injury, and is certified in both <strong>stroke rehabilitation</strong> and <strong>brain injury care</strong>.
+            <br><br>
+            His development work includes <strong>STRIVE TALK</strong> and <strong>STRIVE Money Rehab</strong>, tools designed to support communication, cognitive recovery, and real-world independence for people navigating neurological conditions.
+          </p>
+        </div>
+
+        <div class="pt-bio-block">
+          <div class="pt-section-tag">Clinical Focus</div>
+          <div class="spec-grid">
+            <div class="spec-item">
+              <div class="spec-label">Stroke Rehab</div>
+              <div class="spec-value">HIIT, motor relearning, and functional recovery</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Brain Injury</div>
+              <div class="spec-value">Certified Brain Injury Specialist</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Vestibular</div>
+              <div class="spec-value">Balance, dizziness, and mobility progression</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">SCI Rehab</div>
+              <div class="spec-value">Adaptive training and goal-focused mobility</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Falls</div>
+              <div class="spec-value">Fall prevention and fall recovery practice</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Neuro Wellness</div>
+              <div class="spec-value">Strength and endurance programming</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-bio-block">
+          <div class="pt-section-tag">Education &amp; Credentials</div>
+          <div class="cred-list">
+            <div class="cred-item"><div class="cred-bullet bullet-orange"></div>Doctor of Physical Therapy (DPT) — Arcadia University</div>
+            <div class="cred-item"><div class="cred-bullet bullet-orange"></div>Certified Stroke Rehabilitation Specialist</div>
+            <div class="cred-item"><div class="cred-bullet bullet-orange"></div>Certified Brain Injury Specialist</div>
+            <div class="cred-item"><div class="cred-bullet bullet-orange"></div>Licensed Physical Therapist — State of Nevada</div>
+          </div>
+        </div>
+
+        <div class="pt-quote">
+          <p>"Repetition is what turns progress from something occasional into something dependable. My role is to build the right environment so that work translates into daily life."</p>
+          <cite>— Dr. Joshua Lopez PT DPT</cite>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SERVICES OVERVIEW -->
+<section class="services-section">
+  <div class="section-inner">
+    <div class="section-label anim">What We Provide</div>
+    <h2 class="section-h2 anim d1">CARE OPTIONS<br><em>BUILT AROUND REAL LIFE</em></h2>
+    <p class="section-lead anim d2">STRIVE is designed to meet people in the setting that makes the most sense for their goals, their mobility, and the kind of progress they want to make.</p>
+
+    <div class="services-grid">
+      <div class="service-card anim">
+        <div class="service-kicker">01</div>
+        <h3 class="service-title">In-Home Physical Therapy</h3>
+        <p class="service-desc">One-on-one physical therapy delivered in the home for people working toward more independence in daily life, especially when leaving the home is difficult, exhausting, or impractical.</p>
+        <div class="service-points">
+          <div class="service-point">Focused on transfers, walking, balance, endurance, and day-to-day function where it matters most.</div>
+          <div class="service-point">Ideal for patients who want skilled PT in their own environment without the burden of clinic travel.</div>
+        </div>
+      </div>
+
+      <div class="service-card anim d1">
+        <div class="service-kicker">02</div>
+        <h3 class="service-title">Concierge Physical Therapy</h3>
+        <p class="service-desc">Physical therapy that comes to your preferred setting when your goals extend beyond the home and you want treatment in the environment where you actually live, work, and move.</p>
+        <div class="service-points">
+          <div class="service-point">Sessions can be built around spaces like your workplace, a hiking setting, or your preferred gym.</div>
+          <div class="service-point">Best for patients who want PT integrated into real-world activities, performance goals, or community mobility.</div>
+        </div>
+      </div>
+
+      <div class="service-card anim d2">
+        <div class="service-kicker">03</div>
+        <h3 class="service-title">Gym-Based Physical Therapy</h3>
+        <p class="service-desc">Outpatient-style neuro physical therapy using our own gym space for people who need higher-level movement work, progressive loading, and more room to train complex tasks.</p>
+        <div class="service-points">
+          <div class="service-point">Emphasis on lifting, balance, motor planning, gait progression, and building capacity in a structured rehab setting.</div>
+          <div class="service-point">A strong fit for patients who are ready for a more intensive clinic-style environment.</div>
+        </div>
+      </div>
+
+      <div class="service-card anim d3">
+        <div class="service-kicker">04</div>
+        <h3 class="service-title">Wellness Classes</h3>
+        <p class="service-desc">Structured group classes designed to keep people improving beyond traditional rehab through smart, progressive training in a supportive setting.</p>
+        <div class="service-points">
+          <div class="service-point">Classes focus on strength, agility, endurance, balance, and motor planning.</div>
+          <div class="service-point">Built for people who want consistency, challenge, and community as part of their long-term recovery and wellness plan.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg-text">STRIVE</div>
+  <div class="cta-inner">
+    <div class="cta-eyebrow">STRIVE Physical Therapy · Las Vegas</div>
+    <h2>READY TO WORK<br>WITH STRIVE?</h2>
+    <p>Start with a consultation. We will learn where you are, where you want to go, and build a plan that supports meaningful progress.</p>
+    <div class="cta-actions">
+      <a href="https://calendly.com/dpt-striveptlv/30min" target="_blank" rel="noopener" class="cta-dark">Request a Consultation</a>
+      <a href="/wellness.html" class="cta-ghost">View Neuro Wellness</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="https://striveptlv.com" class="nav-logo">
+          <img src="logo.png" alt="STRIVE PT Logo" class="logo-img" onerror="this.style.display='none'">
+          <div>
+            <div class="logo-text">STRIVE</div>
+            <div class="logo-sub">Physical Therapy · Las Vegas</div>
+          </div>
+        </a>
+        <p>Neurological rehabilitation and wellness services in Las Vegas — delivered with thoughtful, individualized care from a licensed doctor of physical therapy.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Practice</h4>
+        <a href="#values">Our Approach</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="/stroke.html">Stroke Rehab</a>
+        <a href="vestibular-rehab.html">Vestibular Rehab</a>
+        <a href="/wellness.html">Neuro Wellness</a>
+        <a href="index.html#services">All Services</a>
+      </div>
+      <div class="footer-col">
+        <h4>Las Vegas</h4>
+        <a href="https://calendly.com/dpt-striveptlv/30min" target="_blank" rel="noopener">Book a Session</a>
+    <a href="/private.html">Why STRIVE?</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="insights/">Insights</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 STRIVE Physical Therapy &middot; Las Vegas, NV &middot; All rights reserved.</span>
+      <span>Licensed Physical Therapists &middot; State of Nevada</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const scheduleModal = document.getElementById('scheduleModal');
+  const scheduleTriggers = document.querySelectorAll('[data-schedule-trigger]');
+
+  function setScheduleModalState(isOpen) {
+    if (!scheduleModal) return;
+    scheduleModal.classList.toggle('open', isOpen);
+    scheduleModal.setAttribute('aria-hidden', String(!isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+
+  function openScheduleModal(event) {
+    if (event) event.preventDefault();
+    setScheduleModalState(true);
+  }
+
+  function closeScheduleModal() {
+    setScheduleModalState(false);
+  }
+
+  scheduleTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', openScheduleModal);
+  });
+
+  if (scheduleModal) {
+    scheduleModal.addEventListener('click', (event) => {
+      if (event.target === scheduleModal || event.target.hasAttribute('data-schedule-close')) {
+        closeScheduleModal();
+      }
+    });
+  }
+
+  function toggleMenu(forceState) {
+    const menu = document.getElementById('mobileMenu');
+    const shouldOpen = typeof forceState === 'boolean'
+      ? forceState
+      : !menu.classList.contains('open');
+
+    menu.classList.toggle('open', shouldOpen);
+  }
+
+  function toggleMobileDropdown(menuId, arrowEl) {
+    const dropdown = document.getElementById(menuId);
+
+    if (!dropdown || !arrowEl) {
+      return;
+    }
+
+    dropdown.classList.toggle('open');
+    arrowEl.classList.toggle('open');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll('.anim').forEach(el => {
+    if (!el.closest('.hero')) observer.observe(el);
+  });
+  document.querySelectorAll('.hero .anim').forEach(el => {
+    setTimeout(() => el.classList.add('visible'), 100);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      toggleMenu(false);
+      closeScheduleModal();
+    }
+  });
+</script>
+
+</body>
+</html>
