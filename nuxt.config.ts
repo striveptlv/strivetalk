@@ -3,6 +3,7 @@ const isGitHubActions = process.env.GITHUB_ACTIONS === 'true'
 const baseURL = process.env.NUXT_APP_BASE_URL || '/'
 
 export default defineNuxtConfig({
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
@@ -36,6 +37,13 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+  runtimeConfig: {
+    public: {
+      formspreeEndpoint:
+        process.env.NUXT_PUBLIC_FORMSPREE_ENDPOINT
+        || 'https://formspree.io/f/xdajgera'
+    }
+  },
 
   routeRules: {
     '/': { prerender: true }

@@ -27,6 +27,28 @@
       "phrases": "Information"
     }
   },
+  "access": {
+    "title": "Private access",
+    "intro": "Enter your email and temporary access code to use STRIVE Talk.",
+    "email": "Email address",
+    "emailPlaceholder": "name@example.com",
+    "code": "Temporary access code",
+    "codePlaceholder": "Enter code",
+    "agreementTitle": "User Agreement and Terms of Use",
+    "agreementIntro": "Please review the agreement before continuing.",
+    "agreementCheckbox": "I have read and agree to the User Agreement and Terms of Use.",
+    "submit": "Unlock STRIVE Talk",
+    "submitting": "Submitting...",
+    "lock": "Lock access",
+    "expires": "Access expires",
+    "errors": {
+      "email": "Enter a valid email address.",
+      "code": "Enter a valid temporary access code.",
+      "expired": "This access code has expired.",
+      "agreement": "You must accept the user agreement to continue.",
+      "submit": "We could not submit the access form. Please try again."
+    }
+  },
   "index": {
     "seoTitle": "Home",
     "seoDescription": "AAC word cards for fast assisted communication with speech synthesis.",

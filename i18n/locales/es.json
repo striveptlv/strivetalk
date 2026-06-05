@@ -27,6 +27,28 @@
       "phrases": "Información"
     }
   },
+  "access": {
+    "title": "Acceso privado",
+    "intro": "Ingresa tu correo electrónico y código temporal para usar STRIVE Talk.",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "nombre@ejemplo.com",
+    "code": "Código temporal de acceso",
+    "codePlaceholder": "Ingresa el código",
+    "agreementTitle": "Acuerdo de usuario y términos de uso",
+    "agreementIntro": "Revisa el acuerdo antes de continuar.",
+    "agreementCheckbox": "He leído y acepto el Acuerdo de usuario y los Términos de uso.",
+    "submit": "Desbloquear STRIVE Talk",
+    "submitting": "Enviando...",
+    "lock": "Bloquear acceso",
+    "expires": "El acceso vence",
+    "errors": {
+      "email": "Ingresa un correo electrónico válido.",
+      "code": "Ingresa un código temporal válido.",
+      "expired": "Este código de acceso ha vencido.",
+      "agreement": "Debes aceptar el acuerdo de usuario para continuar.",
+      "submit": "No se pudo enviar el formulario de acceso. Inténtalo de nuevo."
+    }
+  },
   "index": {
     "seoTitle": "Inicio",
     "seoDescription": "Tarjetas AAC de palabras para comunicación asistida rápida con síntesis de voz.",

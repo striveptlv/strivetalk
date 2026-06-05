@@ -35,9 +35,16 @@ type PhraseStarter = Word & {
   suffix?: string
 }
 
+type PainScaleOption = {
+  label: string
+  description: string
+  phrase: string
+}
+
 const priorityButtonCount = 2
 
 const selectedPhraseStarter = ref<PhraseStarter | null>(null)
+const isPainScaleOpen = ref(false)
 
 const englishCategories: Category[] = [
   { title: 'Social & Conversation Control', count: 11 },
@@ -956,6 +963,103 @@ const questionEnder = computed<Word>(() => ({
   toneClass: 'bg-pastel-pink'
 }))
 
+const painScaleOptions = computed<PainScaleOption[]>(() =>
+  activeLocale.value === 'en'
+    ? [
+        {
+          label: '0',
+          description: 'No pain',
+          phrase: 'My pain is zero. No pain.'
+        },
+        {
+          label: '1-2',
+          description: 'Mild pain',
+          phrase: 'My pain is one to two. Mild pain.'
+        },
+        {
+          label: '3-4',
+          description: 'Uncomfortable pain',
+          phrase: 'My pain is three to four. Uncomfortable pain.'
+        },
+        {
+          label: '5-6',
+          description: 'Moderate pain',
+          phrase: 'My pain is five to six. Moderate pain.'
+        },
+        {
+          label: '7-8',
+          description: 'Severe pain',
+          phrase: 'My pain is seven to eight. Severe pain.'
+        },
+        {
+          label: '9-10',
+          description: 'Worst pain',
+          phrase: 'My pain is nine to ten. Worst pain.'
+        }
+      ]
+    : [
+        {
+          label: '0',
+          description: 'Sin dolor',
+          phrase: 'Mi dolor es cero. Sin dolor.'
+        },
+        {
+          label: '1-2',
+          description: 'Dolor leve',
+          phrase: 'Mi dolor es uno a dos. Dolor leve.'
+        },
+        {
+          label: '3-4',
+          description: 'Dolor incómodo',
+          phrase: 'Mi dolor es tres a cuatro. Dolor incómodo.'
+        },
+        {
+          label: '5-6',
+          description: 'Dolor moderado',
+          phrase: 'Mi dolor es cinco a seis. Dolor moderado.'
+        },
+        {
+          label: '7-8',
+          description: 'Dolor fuerte',
+          phrase: 'Mi dolor es siete a ocho. Dolor fuerte.'
+        },
+        {
+          label: '9-10',
+          description: 'El peor dolor',
+          phrase: 'Mi dolor es nueve a diez. El peor dolor.'
+        }
+      ]
+)
+
+const painScaleTitle = computed(() =>
+  activeLocale.value === 'en' ? 'Pain scale' : 'Escala de dolor'
+)
+
+const painScaleHelper = computed(() =>
+  activeLocale.value === 'en'
+    ? 'Choose the number that matches the pain right now.'
+    : 'Elige el número que describe el dolor ahora.'
+)
+
+const closePainScaleLabel = computed(() =>
+  activeLocale.value === 'en' ? 'Close pain scale' : 'Cerrar escala de dolor'
+)
+
+const painStatement = computed(() =>
+  activeLocale.value === 'en' ? 'I feel pain.' : 'Siento dolor.'
+)
+
+const isPainCardText = (text: string) =>
+  ['in pain', 'con dolor', 'Pain', 'Dolor'].includes(text)
+
+const getCardTitle = (card: Word) => {
+  if (!isPainCardText(card.text)) {
+    return undefined
+  }
+
+  return activeLocale.value === 'en' ? 'Pain' : 'Dolor'
+}
+
 const shouldShowCard = (card: Word) => isDeleteMode.value || !card.hidden
 
 const priorityWords = computed(() =>
@@ -1074,6 +1178,16 @@ const onStarterClear = () => {
   selectedPhraseStarter.value = null
 }
 
+const onPainScaleClose = () => {
+  isPainScaleOpen.value = false
+}
+
+const onPainScaleSelect = (option: PainScaleOption) => {
+  speak(`${painStatement.value} ${option.phrase}`)
+  isPainScaleOpen.value = false
+  selectedPhraseStarter.value = null
+}
+
 const onQuestionEnderSelect = () => {
   const starter = selectedPhraseStarter.value
   if (!starter) {
@@ -1086,6 +1200,14 @@ const onQuestionEnderSelect = () => {
 }
 
 const onCardSelect = (text: string) => {
+  if (isPainCardText(text)) {
+    speak(painStatement.value)
+    isPainScaleOpen.value = true
+    selectedPhraseStarter.value = null
+    return
+  }
+
+  isPainScaleOpen.value = false
   const starter = selectedPhraseStarter.value
   if (!starter) {
     speak(text)
@@ -1190,11 +1312,12 @@ onMounted(() => {
           <div
             class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
           >
-            <VoiceCard
-              v-for="(card, index) in priorityWords"
-              :key="card.text"
-              :text="card.text"
-              :emoji="card.emoji"
+	            <VoiceCard
+	              v-for="(card, index) in priorityWords"
+	              :key="card.text"
+	              :title="getCardTitle(card)"
+	              :text="card.text"
+	              :emoji="card.emoji"
               :tone-class="getPriorityToneClass(card, index)"
               :hidden="card.hidden"
               :show-delete="false"
@@ -1216,11 +1339,12 @@ onMounted(() => {
           <div
             class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
           >
-            <VoiceCard
-              v-for="card in socialGroup.words"
-              :key="card.text"
-              :text="card.text"
-              :emoji="card.emoji"
+	            <VoiceCard
+	              v-for="card in socialGroup.words"
+	              :key="card.text"
+	              :title="getCardTitle(card)"
+	              :text="card.text"
+	              :emoji="card.emoji"
               :tone-class="card.toneClass"
               :hidden="card.hidden"
               :delete-aria-label="getCardVisibilityAria(card)"
@@ -1230,8 +1354,8 @@ onMounted(() => {
           </div>
         </section>
 
-        <div
-          v-if="selectedPhraseStarter"
+	        <div
+	          v-if="selectedPhraseStarter"
           class="sticky top-3 z-40 mb-6 flex items-center justify-between gap-3 rounded-2xl border-2 border-[#083d7a] bg-[#fff2bd] px-4 py-3 shadow-ambient dark:border-[#8ecae6] dark:bg-[#1f2937]"
         >
           <div>
@@ -1256,9 +1380,51 @@ onMounted(() => {
           >
             Clear
           </button>
-        </div>
+	        </div>
 
-        <section class="mb-8">
+	        <section
+	          v-if="isPainScaleOpen"
+	          class="sticky top-3 z-40 mb-8 rounded-2xl border-2 border-[#9b1c1c]/40 bg-[#fff7ed] p-4 shadow-ambient dark:border-[#fca5a5]/40 dark:bg-[#2b1f1b]"
+	          aria-live="polite"
+	        >
+	          <div class="mb-4 flex items-start justify-between gap-3">
+	            <div>
+	              <h2 class="font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#9b1c1c] dark:text-[#fca5a5]">
+	                {{ painScaleTitle }}
+	              </h2>
+	              <p class="mt-1 text-sm text-[#48617d] dark:text-[#d1d5db]">
+	                {{ painScaleHelper }}
+	              </p>
+	            </div>
+	            <button
+	              type="button"
+	              class="h-10 w-10 rounded-full border border-[#9b1c1c]/30 bg-white text-xl font-semibold leading-none text-[#9b1c1c] transition hover:bg-[#fff1f2] dark:border-[#fca5a5]/40 dark:bg-[#22242b] dark:text-[#fca5a5]"
+	              :aria-label="closePainScaleLabel"
+	              @click="onPainScaleClose"
+	            >
+	              ×
+	            </button>
+	          </div>
+
+	          <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+	            <button
+	              v-for="option in painScaleOptions"
+	              :key="option.label"
+	              type="button"
+	              class="min-h-[112px] rounded-xl border-2 border-[#9b1c1c]/20 bg-white p-3 text-center transition active:scale-95 hover:border-[#9b1c1c]/50 hover:bg-[#fff1f2] dark:bg-[#22242b] dark:hover:bg-[#352722]"
+	              @click="onPainScaleSelect(option)"
+	            >
+	              <span class="block text-2xl font-bold text-[#9b1c1c] dark:text-[#fca5a5]">
+	                {{ option.label }}
+	              </span>
+	              <span class="mt-2 block text-sm font-semibold leading-snug text-[#0e2f5d] dark:text-[#f4f4f5]">
+	                {{ option.description }}
+	              </span>
+	            </button>
+	          </div>
+	        </section>
+
+	        <section class="mb-8">
           <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p class="font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#083d7a] dark:text-[#8ecae6]">
@@ -1341,11 +1507,12 @@ onMounted(() => {
           <div
             class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
           >
-            <VoiceCard
-              v-for="card in group.words"
-              :key="card.text"
-              :text="card.text"
-              :emoji="card.emoji"
+	            <VoiceCard
+	              v-for="card in group.words"
+	              :key="card.text"
+	              :title="getCardTitle(card)"
+	              :text="card.text"
+	              :emoji="card.emoji"
               :tone-class="card.toneClass"
               :hidden="card.hidden"
               :delete-aria-label="getCardVisibilityAria(card)"
