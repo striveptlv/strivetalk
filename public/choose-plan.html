@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Your Plan | STRIVE Talk</title>
+<meta name="description" content="Choose a monthly or yearly STRIVE Talk plan.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#083d7a;
+  --ink:#0e2f5d;
+  --muted:#536174;
+  --orange:#e68a4d;
+  --cream:#fffaf2;
+  --line:rgba(46,117,182,.18);
+  --white:#fff;
+  --blue-soft:#e8f5ff;
+}
+body{
+  min-height:100vh;
+  font-family:"Barlow",sans-serif;
+  color:var(--ink);
+  background:var(--cream);
+  line-height:1.55;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg,rgba(191,234,255,.56),transparent 42%),
+    radial-gradient(circle at 86% 18%,rgba(230,138,77,.18),transparent 26%);
+}
+a{color:inherit;text-decoration:none}
+nav,main,footer{position:relative;z-index:1}
+nav{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 6vw;
+  border-bottom:1px solid var(--line);
+  background:rgba(255,250,242,.92);
+  backdrop-filter:blur(16px);
+}
+.brand{display:flex;align-items:center;gap:12px;color:var(--navy)}
+.brand img{width:44px;height:44px;object-fit:contain}
+.brand-word{
+  display:block;
+  font-family:"Barlow Condensed",sans-serif;
+  font-size:1.35rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  line-height:1;
+  text-transform:uppercase;
+}
+.brand-sub{
+  display:block;
+  margin-top:3px;
+  color:var(--orange);
+  font-size:.6rem;
+  font-weight:800;
+  letter-spacing:.18em;
+  line-height:1;
+  text-transform:uppercase;
+}
+.pricing-section{padding:clamp(2rem,5vw,4.5rem) 6vw}
+.pricing-inner{width:min(1040px,100%);margin:0 auto}
+.section-tag{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--orange);
+  font-size:.74rem;
+  font-weight:800;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.section-tag::before{content:"";width:24px;height:2px;background:var(--orange)}
+h1{
+  max-width:720px;
+  margin-top:12px;
+  color:var(--navy);
+  font-family:"Barlow Condensed",sans-serif;
+  font-size:clamp(3.2rem,7vw,5.6rem);
+  font-weight:700;
+  line-height:.9;
+  letter-spacing:0;
+  text-transform:uppercase;
+}
+.intro{
+  max-width:640px;
+  margin-top:18px;
+  color:var(--muted);
+  font-size:1.08rem;
+  font-weight:600;
+}
+.checkout-status,.account-check{
+  margin-top:22px;
+  padding:14px 16px;
+  border-radius:9px;
+  border:1px solid rgba(230,138,77,.28);
+  background:rgba(255,255,255,.78);
+  color:var(--muted);
+  font-weight:700;
+}
+.checkout-status{display:none}
+.checkout-status.show{display:block}
+.account-check.hide{display:none}
+.plan-grid{
+  display:none;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  margin-top:28px;
+}
+.plan-grid.ready{display:grid}
+.plan-card{
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(46,117,182,.18);
+  border-radius:14px;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 22px 58px rgba(8,61,122,.12);
+  padding:clamp(1.35rem,3vw,2rem);
+}
+.plan-card.featured{
+  border-color:rgba(230,138,77,.38);
+  background:linear-gradient(145deg,#fff,#eef8ff);
+}
+.badge{
+  width:max-content;
+  border-radius:999px;
+  background:rgba(230,138,77,.15);
+  color:#9a4b00;
+  font-size:.66rem;
+  font-weight:900;
+  letter-spacing:.16em;
+  padding:6px 10px;
+  text-transform:uppercase;
+}
+.plan-name{
+  margin-top:18px;
+  color:var(--navy);
+  font-family:"Barlow Condensed",sans-serif;
+  font-size:2.1rem;
+  font-weight:700;
+  line-height:1;
+  text-transform:uppercase;
+}
+.plan-copy{margin-top:8px;color:var(--muted);font-weight:600}
+.price{
+  margin-top:18px;
+  color:var(--navy);
+  font-size:clamp(3.2rem,6vw,4.8rem);
+  font-weight:800;
+  line-height:.85;
+}
+.price small{font-size:1rem;color:var(--muted);font-weight:700}
+.divider{height:1px;background:var(--line);margin:20px 0}
+.features{
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  gap:9px;
+  list-style:none;
+}
+.features li{
+  display:flex;
+  gap:10px;
+  color:var(--muted);
+  font-weight:600;
+}
+.check{
+  width:18px;
+  height:18px;
+  flex:0 0 18px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:2px;
+  border-radius:50%;
+  background:rgba(230,138,77,.16);
+  color:var(--orange);
+  font-size:.7rem;
+  font-weight:900;
+}
+.cta{
+  width:100%;
+  min-height:50px;
+  margin-top:22px;
+  border:0;
+  border-radius:7px;
+  cursor:pointer;
+  font:inherit;
+  font-size:.8rem;
+  font-weight:900;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.cta.primary{background:var(--orange);color:#10233c;box-shadow:0 14px 34px rgba(230,138,77,.24)}
+.cta.secondary{background:var(--blue-soft);color:var(--navy);border:1px solid rgba(8,61,122,.12)}
+footer{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+  border-top:1px solid var(--line);
+  padding:24px 6vw;
+  color:var(--muted);
+  font-size:.86rem;
+}
+footer a{color:var(--navy);font-weight:800}
+@media(max-width:760px){
+  nav{min-height:64px;padding:11px 18px}
+  .brand img{width:38px;height:38px}
+  .brand-word{font-size:1.12rem}
+  .brand-sub{font-size:.5rem}
+  .pricing-section{padding:32px 18px 44px}
+  .plan-grid.ready{grid-template-columns:1fr}
+  h1{font-size:3.25rem}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="/" aria-label="STRIVE Talk home">
+    <img src="/strive-talk-logo.png" alt="">
+    <span>
+      <span class="brand-word">STRIVE Talk</span>
+      <span class="brand-sub">AAC on the Go</span>
+    </span>
+  </a>
+</nav>
+
+<main>
+  <section class="pricing-section">
+    <div class="pricing-inner">
+      <div class="section-tag">Plans &amp; Pricing</div>
+      <h1>Choose STRIVE Talk Access</h1>
+      <p class="intro">Keep STRIVE Talk available for AAC cards, personal information, voice output, and daily communication support.</p>
+
+      <div class="checkout-status" id="checkoutStatus" role="status" aria-live="polite">
+        Checkout was cancelled. Choose a plan when you are ready.
+      </div>
+
+      <div class="account-check" id="accountCheck">Checking your account...</div>
+
+      <div class="plan-grid" id="planGrid">
+        <article class="plan-card">
+          <div class="badge">Monthly</div>
+          <h2 class="plan-name">Monthly</h2>
+          <p class="plan-copy">Flexible access for one STRIVE Talk user.</p>
+          <div class="price">$8.99 <small>/ month</small></div>
+          <div class="divider"></div>
+          <ul class="features">
+            <li><span class="check">✓</span>Full STRIVE Talk access</li>
+            <li><span class="check">✓</span>Custom word and information cards</li>
+            <li><span class="check">✓</span>English and Spanish voice support</li>
+            <li><span class="check">✓</span>Cancel anytime</li>
+          </ul>
+          <button class="cta secondary" type="button" onclick="startCheckout('talk_monthly')">Choose Monthly</button>
+        </article>
+
+        <article class="plan-card featured">
+          <div class="badge">Best value</div>
+          <h2 class="plan-name">Yearly</h2>
+          <p class="plan-copy">A full year of STRIVE Talk access at a lower annual price.</p>
+          <div class="price">$60 <small>/ year</small></div>
+          <div class="divider"></div>
+          <ul class="features">
+            <li><span class="check">✓</span>Everything in monthly</li>
+            <li><span class="check">✓</span>Annual access for one user</li>
+            <li><span class="check">✓</span>Lower cost over the year</li>
+            <li><span class="check">✓</span>Best option for ongoing support</li>
+          </ul>
+          <button class="cta primary" type="button" onclick="startCheckout('talk_yearly')">Choose Yearly</button>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>STRIVE Talk · Plan selection</span>
+  <a href="/">Return to STRIVE Talk</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://ccfpdgmmwkghjszkbnzs.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_7Je2n19DYuDUUR-l9DQPCQ_ui1S17Ui";
+const CHECKOUT_FUNCTION_URL =
+  "https://ccfpdgmmwkghjszkbnzs.supabase.co/functions/v1/create-checkout-session";
+const AUTH_PAGE = "auth.html";
+const TALK_PAGE = "/";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+const accountCheck = document.getElementById("accountCheck");
+const planGrid = document.getElementById("planGrid");
+const checkoutStatus = document.getElementById("checkoutStatus");
+const pageParams = new URLSearchParams(window.location.search);
+
+if (pageParams.get("checkout") === "cancelled" && checkoutStatus) {
+  checkoutStatus.classList.add("show");
+}
+
+function showPlans() {
+  if (accountCheck) accountCheck.classList.add("hide");
+  if (planGrid) planGrid.classList.add("ready");
+}
+
+function showAccountMessage(message) {
+  if (accountCheck) {
+    accountCheck.textContent = message;
+    accountCheck.classList.remove("hide");
+  }
+  if (planGrid) planGrid.classList.remove("ready");
+}
+
+function hasActiveTalkAccess(access) {
+  if (!access) return false;
+
+  const now = new Date();
+  const trialActive =
+    access.access_type === "trial" &&
+    access.trial_ends_at &&
+    new Date(access.trial_ends_at) > now;
+  const paidActive =
+    access.access_type === "paid" &&
+    access.has_access === true &&
+    access.subscription_status !== "canceled";
+  const betaActive =
+    access.access_type === "beta" &&
+    access.has_access === true;
+  const teamActive =
+    access.access_type === "team" &&
+    access.has_access === true;
+
+  return trialActive || paidActive || betaActive || teamActive;
+}
+
+function shouldShowTalkPricing(access) {
+  if (!access) return false;
+
+  const expiredTrial =
+    access.access_type === "trial" &&
+    access.trial_ends_at &&
+    new Date(access.trial_ends_at) <= new Date();
+  const inactivePaid =
+    access.access_type === "paid" &&
+    (access.has_access !== true || access.subscription_status === "canceled");
+
+  return expiredTrial || inactivePaid;
+}
+
+async function checkAccount() {
+  const {
+    data: { user },
+    error: userError
+  } = await supabaseClient.auth.getUser();
+
+  if (userError) {
+    showAccountMessage("Could not check your account: " + userError.message);
+    return null;
+  }
+
+  if (!user) {
+    window.location.href = AUTH_PAGE;
+    return null;
+  }
+
+  const { data: access, error: accessError } = await supabaseClient
+    .from("product_access")
+    .select("has_access, access_type, trial_ends_at, subscription_status")
+    .eq("user_id", user.id)
+    .eq("product", "talk")
+    .maybeSingle();
+
+  if (accessError) {
+    showAccountMessage("Could not check STRIVE Talk access: " + accessError.message);
+    return null;
+  }
+
+  if (hasActiveTalkAccess(access)) {
+    window.location.href = TALK_PAGE;
+    return null;
+  }
+
+  if (!shouldShowTalkPricing(access)) {
+    window.location.href = AUTH_PAGE + "?panel=createTalk";
+    return null;
+  }
+
+  return user;
+}
+
+async function initChoosePlan() {
+  const user = await checkAccount();
+  if (user) showPlans();
+}
+
+async function startCheckout(plan) {
+  const user = await checkAccount();
+  if (!user) return;
+
+  const { data, error } = await supabaseClient.auth.getSession();
+
+  if (error || !data.session) {
+    alert("Please sign in first.");
+    window.location.href = AUTH_PAGE;
+    return;
+  }
+
+  try {
+    const response = await fetch(CHECKOUT_FUNCTION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${data.session.access_token}`
+      },
+      body: JSON.stringify({
+        product: "talk",
+        plan
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.url) {
+      window.location.href = result.url;
+      return;
+    }
+
+    alert("Checkout failed: " + JSON.stringify(result));
+  } catch (error) {
+    console.error("Checkout error:", error);
+    alert("Could not reach checkout. Please try again.");
+  }
+}
+
+initChoosePlan();
+</script>
+</body>
+</html>
