@@ -31,7 +31,7 @@
     "title": "Private access",
     "intro": "Enter your email and temporary access code to use STRIVE Talk.",
     "email": "Email address",
-    "emailPlaceholder": "name@example.com",
+    "emailPlaceholder": "name{'@'}example.com",
     "code": "Temporary access code",
     "codePlaceholder": "Enter code",
     "agreementTitle": "User Agreement and Terms of Use",
