@@ -1,116 +1,139 @@
-# 🗣️ Stroke Speech
+# STRIVE Talk
 
-<p align="center">
-  <img src="public/pwa-icon.svg" alt="Stroke Speech Logo" width="140" height="140" />
-</p>
+STRIVE Talk is an AAC communication support app from STRIVE Physical Therapy. It helps users quickly access customizable word cards, personal information cards, and speech output for everyday communication needs.
 
-<p align="center">
-  <a href="https://macarthuror.github.io/stroke-speach/"><img src="https://img.shields.io/badge/Status-Live-brightgreen?style=flat-square" alt="Status Live"></a>
-  <img src="https://img.shields.io/badge/PWA-Ready-blue?style=flat-square&logo=pwa" alt="PWA Ready">
-  <img src="https://img.shields.io/badge/Framework-Nuxt_4-00DC82?style=flat-square&logo=nuxt.js" alt="Nuxt 4">
-  <img src="https://img.shields.io/badge/i18n-ES_%7C_EN-blue?style=flat-square" alt="i18n ES | EN">
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="License MIT">
-</p>
+The app is built as a Nuxt 4 PWA with English and Spanish support, local card/settings persistence, and Supabase-backed account access for STRIVE Talk only.
 
-> **Aplicación web AAC (Augmentative and Alternative Communication)** enfocada en personas con dificultades del habla, especialmente diseñada para facilitar el proceso de recuperación post-ictus (derrame cerebral).
+## Features
 
----
+- Customizable AAC word and information cards
+- Browser speech output with English and Spanish voice settings
+- Voice pitch, speed, and voice-type settings
+- Light/dark theme support
+- Safe delete mode for card management
+- PWA install support
+- Supabase account access check for the `talk` product
+- STRIVE Talk-only auth page
+- 60-day STRIVE Talk trial flow
+- STRIVE Talk-only pricing page with monthly and yearly plans
 
-## 🌍 Abstract (English)
+## Routes
 
-**Stroke Speech** is an accessible, Progressive Web App (PWA) designed to provide Augmentative and Alternative Communication (AAC) for stroke survivors and individuals with speech impairments. By utilizing the Web Speech API (Text-to-Speech), it allows users to quickly select customizable word and phrase cards to communicate their daily needs. The app is fully internationalized (Spanish & English UI) and lets users configure the speech voice language, pitch, and rate. With a simple, high-contrast UI and full offline support, Stroke Speech aims to bridge the communication gap during rehabilitation, ensuring users have a voice anywhere, anytime.
+| Route | Description |
+| --- | --- |
+| `/` | Main AAC word-card screen |
+| `/phrases` | Information/personal detail cards |
+| `/settings` | Voice and app settings |
+| `/about` | STRIVE Physical Therapy information |
+| `/auth.html` | STRIVE Talk-only sign in, account creation, and password reset |
+| `/choose-plan.html?product=talk` | STRIVE Talk pricing after trial expiration |
 
----
+## Access Flow
 
-## 🎯 Descripción y Objetivos
+STRIVE Talk checks access on app load with `checkTalkAccess()`.
 
-**Stroke Speech** permite crear, personalizar y reproducir tarjetas de comunicación por voz para necesidades rápidas de uso diario.
+- Not logged in: redirects to `/auth.html`
+- Logged in with no Talk access row: redirects to `/auth.html?panel=createTalk`
+- New Talk account: creates a 60-day trial in `product_access`
+- Existing logged-in user with no Talk row: gets a 60-day Talk trial on login
+- Active trial, paid, beta, or team access: opens STRIVE Talk
+- Expired trial: redirects to `/choose-plan.html?product=talk`
 
-**Objetivos clave:**
+The pricing page only shows after the 60-day trial is expired or paid access is inactive/canceled.
 
-- **Comunicación inmediata:** Facilitar la expresión mediante tarjetas de palabras y frases preconfiguradas.
-- **Accesibilidad máxima:** Interfaz simple, clara, de alto contraste y con áreas táctiles grandes.
-- **Disponibilidad total:** Funcionar como PWA instalable con soporte 100% offline.
-- **Personalización de voz:** Control completo del idioma, tono (pitch) y velocidad (rate) de la síntesis de voz.
+## Pricing Page
 
----
+`public/choose-plan.html` includes two STRIVE Talk plans:
 
-## ✨ Características Principales
+- Monthly: `$8.99 / month`, checkout plan id `talk_monthly`
+- Yearly: `$60 / year`, checkout plan id `talk_yearly`
 
-- 🗂️ **Tarjetas Personalizables:** Crea y organiza tarjetas de palabras y frases.
-- 🔊 **Síntesis de Voz (TTS):** Reproducción mediante `SpeechSynthesis` con soporte para 13 idiomas/variantes.
-- 🎛️ **Ajustes de Voz:** Elige idioma de voz, tono (pitch) y velocidad (rate) persistidos en `localStorage`.
-- 🌐 **Interfaz Bilingüe (i18n):** UI completa en Español e Inglés, con selector de idioma en el header.
-- 🎨 **Identificación Visual:** Selector de color y soporte de emojis por tarjeta.
-- 🗑️ **Gestión Segura:** Modo "eliminar" controlado desde el header para evitar toques accidentales.
-- 📱 **Experiencia Nativa (PWA):** Instalable en escritorio (Chrome/Edge) y móvil (Android/iOS mediante A2HS).
-- 📶 **Modo Offline:** Soporte sin conexión a internet garantizado por Service Workers.
-- 🔄 **Auto-Update:** Actualización automática de la PWA tras nuevos despliegues.
+Checkout requests send:
 
----
+```js
+{
+  product: 'talk',
+  plan
+}
+```
 
-## 🏗️ Arquitectura y Rutas
+## Supabase
 
-La aplicación está diseñada con una navegación plana para evitar que el usuario se pierda:
+The app uses Supabase Auth and a `product_access` table. The access check expects rows like:
 
-| Ruta        | Descripción                                              |
-| ----------- | -------------------------------------------------------- |
-| `/`         | Tarjetas de palabras (Inicio)                            |
-| `/phrases`  | Tarjetas de frases complejas                             |
-| `/settings` | Ajustes de voz: idioma, pitch, rate y botón de restaurar |
-| `/about`    | Información del proyecto                                 |
+```text
+user_id
+product
+has_access
+access_type
+trial_started_at
+trial_ends_at
+subscription_status
+```
 
----
+For STRIVE Talk, `product` must be:
 
-## 🗣️ Idiomas de Voz Soportados
+```text
+talk
+```
 
-La configuración de voz admite las siguientes voces TTS (dependiendo del navegador/SO):
+Recommended access types currently handled:
 
-`es-MX` · `es-ES` · `en-US` · `en-GB` · `zh-CN` · `hi-IN` · `fr-FR` · `ar-SA` · `pt-BR` · `ru-RU` · `de-DE` · `ja-JP` · `id-ID`
+- `trial`
+- `paid`
+- `beta`
+- `team`
 
----
+Make sure Supabase Row Level Security policies only allow users to read/update appropriate rows for their own account, and keep privileged checkout/subscription writes behind trusted server or Edge Function logic.
 
-## 💻 Tecnologías Usadas
+## Environment Variables
 
-Este proyecto está construido con un stack moderno y enfocado en el máximo rendimiento:
-
-**Framework y UI:**
-
-- [Nuxt 4](https://nuxt.com/) & [Vue 3](https://vuejs.org/)
-- [Nuxt UI](https://ui.nuxt.com/) & [Tailwind CSS 4](https://tailwindcss.com/)
-
-**Internacionalización:**
-
-- [`@nuxtjs/i18n`](https://i18n.nuxtjs.org/) — Español (`es`) e Inglés (`en`)
-
-**PWA y Rendimiento:**
-
-- `@vite-pwa/nuxt` & [Workbox](https://developer.chrome.com/docs/workbox/)
-
-**Utilidades:**
-
-- [VueUse](https://vueuse.org/) (`@vueuse/core`, `@vueuse/nuxt`) — `useLocalStorage` para persistencia de ajustes
-- `vue3-emoji-picker`
-
-**Calidad y Testing:**
-
-- TypeScript, ESLint, Vitest, Vue Test Utils
-
----
-
-## 🚀 Instalación y Desarrollo Local
-
-**Requisitos previos:**
-
-- [Node.js](https://nodejs.org/) 22+
-- [pnpm](https://pnpm.io/) 10+
-
-**Pasos de instalación:**
+The Nuxt app reads these public environment variables:
 
 ```bash
-# 1. Instalar dependencias
-pnpm install
-
-# 2. Iniciar servidor de desarrollo
-pnpm dev
+NUXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NUXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NUXT_PUBLIC_FORMSPREE_ENDPOINT=optional_formspree_endpoint
 ```
+
+`nuxt.config.ts` currently includes default Supabase public values for local/static builds. Replace those with deployment environment variables when moving this repo to its own deployment.
+
+## Local Development
+
+Requirements:
+
+- Node.js 22+
+- pnpm 10+
+
+Install and run:
+
+```bash
+corepack pnpm install
+corepack pnpm dev
+```
+
+Useful checks:
+
+```bash
+corepack pnpm typecheck
+corepack pnpm test
+corepack pnpm lint
+```
+
+## Build
+
+```bash
+corepack pnpm build
+```
+
+For static generation:
+
+```bash
+corepack pnpm generate
+```
+
+## Notes
+
+- `public/auth.html` and `public/choose-plan.html` are standalone static pages that live alongside the Nuxt app.
+- `app/utils/talkAccess.ts` controls the STRIVE Talk app gate.
+- The older casual access-code files may still exist from earlier testing, but the active access flow is Supabase-based.

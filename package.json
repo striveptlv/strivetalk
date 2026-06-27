@@ -20,6 +20,7 @@
     "@nuxt/hints": "1.0.3",
     "@nuxt/ui": "^4.7.0",
     "@nuxtjs/i18n": "10.3.0",
+    "@supabase/supabase-js": "^2.108.2",
     "@vite-pwa/nuxt": "1.1.1",
     "@vueuse/core": "^14.2.1",
     "@vueuse/nuxt": "^14.2.1",

@@ -39,6 +39,12 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {
+      supabaseUrl:
+        process.env.NUXT_PUBLIC_SUPABASE_URL
+        || 'https://ccfpdgmmwkghjszkbnzs.supabase.co',
+      supabaseAnonKey:
+        process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY
+        || 'sb_publishable_7Je2n19DYuDUUR-l9DQPCQ_ui1S17Ui',
       formspreeEndpoint:
         process.env.NUXT_PUBLIC_FORMSPREE_ENDPOINT
         || 'https://formspree.io/f/xdajgera'
