@@ -73,16 +73,16 @@ nav{
 .hero{
   min-height:calc(100vh - 76px);
   display:grid;
-  grid-template-columns:.88fr 1.12fr;
+  grid-template-columns:1fr 1.08fr;
   gap:44px;
   align-items:center;
   padding:52px 0;
 }
 h1{
-  max-width:520px;
+  max-width:620px;
   color:var(--navy);
   font-family:"Barlow Condensed",sans-serif;
-  font-size:clamp(3.2rem,6vw,5.4rem);
+  font-size:clamp(4.25rem,8vw,7.4rem);
   font-weight:700;
   line-height:.9;
   letter-spacing:0;
@@ -122,6 +122,7 @@ h1 em{color:var(--orange);font-style:normal}
   line-height:1;
   text-transform:uppercase;
 }
+.title-accent{color:var(--orange)}
 .card-copy{margin-top:10px;color:var(--muted);font-weight:600}
 .auth-form{display:none;margin-top:22px;gap:15px}
 .auth-form.active{display:grid}
@@ -207,7 +208,7 @@ footer a{color:var(--navy);font-weight:800;text-decoration:none}
   .brand-sub{font-size:.5rem}
   .shell{width:min(100% - 32px,1120px)}
   .hero{grid-template-columns:1fr;gap:22px;align-content:start;padding:30px 0 38px}
-  h1{font-size:3.15rem}
+  h1{font-size:clamp(3.6rem,16vw,5.25rem)}
   .hero-copy{font-size:1rem}
   .auth-card{justify-self:stretch}
   .button-row{flex-direction:column}
@@ -255,10 +256,14 @@ footer a{color:var(--navy);font-weight:800;text-decoration:none}
         <button class="link-button" type="button" data-panel="forgot">Forgot your password?</button>
       </form>
 
-      <form class="auth-form" id="createTalkForm" data-title="Start STRIVE Talk Trial" data-copy="Create a Talk-only account and begin a 60-day trial." onsubmit="handleAuthSubmit(event,'createTalk')">
+      <form class="auth-form" id="createTalkForm" data-title="Start STRIVE Talk Trial" data-title-highlight="STRIVE Talk" data-copy="Create a Talk-only account and begin a 60-day trial." onsubmit="handleAuthSubmit(event,'createTalk')">
         <div class="field">
-          <label for="talkFullName">Full Name</label>
-          <input id="talkFullName" name="full_name" type="text" placeholder="Jane Smith" autocomplete="name" required>
+          <label for="talkFirstName">First Name</label>
+          <input id="talkFirstName" name="first_name" type="text" placeholder="Jane" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="talkLastName">Last Name</label>
+          <input id="talkLastName" name="last_name" type="text" placeholder="Smith" autocomplete="family-name" required>
         </div>
         <div class="field">
           <label for="talkEmail">Email</label>
@@ -272,7 +277,6 @@ footer a{color:var(--navy);font-weight:800;text-decoration:none}
           <label for="talkPasswordConfirm">Confirm Password</label>
           <input id="talkPasswordConfirm" name="password_confirm" type="password" placeholder="Retype password" autocomplete="new-password" minlength="8" required>
         </div>
-        <p class="small-note">This creates access for STRIVE Talk only.</p>
         <div class="button-row">
           <button class="primary" type="submit">Create Talk Account</button>
           <button class="secondary" type="button" data-panel="login">Back To Sign In</button>
@@ -322,10 +326,27 @@ function showPanel(panelName) {
     form.classList.toggle("active", name === panelName);
   });
   const activeForm = forms[panelName];
-  formTitle.textContent = activeForm.dataset.title;
+  renderFormTitle(activeForm.dataset.title, activeForm.dataset.titleHighlight);
   formCopy.textContent = activeForm.dataset.copy;
   statusBox.className = "status";
   statusBox.textContent = "";
+}
+
+function renderFormTitle(title, highlight) {
+  formTitle.textContent = "";
+
+  if (!highlight || !title.includes(highlight)) {
+    formTitle.textContent = title;
+    return;
+  }
+
+  const [before, after] = title.split(highlight);
+  formTitle.append(document.createTextNode(before));
+
+  const accent = document.createElement("span");
+  accent.className = "title-accent";
+  accent.textContent = highlight;
+  formTitle.append(accent, document.createTextNode(after));
 }
 
 function showStatus(type, message) {
@@ -334,7 +355,11 @@ function showStatus(type, message) {
 }
 
 function getFormData(form) {
-  return Object.fromEntries(new FormData(form).entries());
+  const data = Object.fromEntries(new FormData(form).entries());
+  if (data.first_name || data.last_name) {
+    data.full_name = [data.first_name, data.last_name].filter(Boolean).join(" ").trim();
+  }
+  return data;
 }
 
 function passwordsMatch(data) {
