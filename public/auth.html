@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Account Access | STRIVE Talk</title>
-<meta name="description" content="Create or access your STRIVE Talk account.">
+<title>STRIVE Talk Account | STRIVE Talk</title>
+<meta name="description" content="Sign in or create your STRIVE Talk account.">
 <meta name="robots" content="noindex,nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -219,7 +219,7 @@ footer a{color:var(--navy);font-weight:800;text-decoration:none}
 </head>
 <body>
 <nav>
-  <a class="brand" href="/" aria-label="STRIVE Talk home">
+  <a class="brand" href="https://www.striveptlv.com/talk" aria-label="STRIVE Talk home">
     <img src="/strive-talk-logo.png" alt="">
     <span>
       <span class="brand-word">STRIVE Talk</span>
@@ -232,15 +232,15 @@ footer a{color:var(--navy);font-weight:800;text-decoration:none}
   <section class="hero shell">
     <div>
       <h1><span>STRIVE</span> <em>Talk</em></h1>
-      <p class="hero-copy">Private access for STRIVE Talk, an AAC communication support app for everyday needs, personal information, and assisted speech.</p>
+      <p class="hero-copy">Sign in or create an account for STRIVE Talk, an AAC communication support app for everyday needs, personal information, and assisted speech.</p>
     </div>
 
     <div class="auth-card">
-      <div class="kicker">Talk account</div>
-      <h2 class="card-title" id="formTitle">Access STRIVE Talk</h2>
+      <div class="kicker">STRIVE Talk account</div>
+      <h2 class="card-title" id="formTitle">Sign In to STRIVE Talk</h2>
       <p class="card-copy" id="formCopy">Sign in to continue to STRIVE Talk.</p>
 
-      <form class="auth-form active" id="loginForm" data-title="Access STRIVE Talk" data-copy="Sign in to continue to STRIVE Talk." onsubmit="handleAuthSubmit(event,'login')">
+      <form class="auth-form active" id="loginForm" data-title="Sign In to STRIVE Talk" data-copy="Sign in to continue to STRIVE Talk." onsubmit="handleAuthSubmit(event,'login')">
         <div class="field">
           <label for="loginEmail">Email</label>
           <input id="loginEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
@@ -251,12 +251,12 @@ footer a{color:var(--navy);font-weight:800;text-decoration:none}
         </div>
         <div class="button-row">
           <button class="primary" type="submit">Sign In</button>
-          <button class="secondary" type="button" data-panel="createTalk">Start Talk Trial</button>
+          <button class="secondary" type="button" data-panel="createTalk">Start Free Trial</button>
         </div>
         <button class="link-button" type="button" data-panel="forgot">Forgot your password?</button>
       </form>
 
-      <form class="auth-form" id="createTalkForm" data-title="Start STRIVE Talk Trial" data-title-highlight="STRIVE Talk" data-copy="Create a Talk-only account and begin a 60-day trial." onsubmit="handleAuthSubmit(event,'createTalk')">
+      <form class="auth-form" id="createTalkForm" data-title="Start Your STRIVE Talk Trial" data-title-highlight="STRIVE Talk" data-copy="Create your account to begin a 60-day STRIVE Talk trial." onsubmit="handleAuthSubmit(event,'createTalk')">
         <div class="field">
           <label for="talkFirstName">First Name</label>
           <input id="talkFirstName" name="first_name" type="text" placeholder="Jane" autocomplete="given-name" required>
@@ -278,7 +278,7 @@ footer a{color:var(--navy);font-weight:800;text-decoration:none}
           <input id="talkPasswordConfirm" name="password_confirm" type="password" placeholder="Retype password" autocomplete="new-password" minlength="8" required>
         </div>
         <div class="button-row">
-          <button class="primary" type="submit">Create Talk Account</button>
+          <button class="primary" type="submit">Create Account</button>
           <button class="secondary" type="button" data-panel="login">Back To Sign In</button>
         </div>
       </form>
@@ -300,8 +300,8 @@ footer a{color:var(--navy);font-weight:800;text-decoration:none}
 </main>
 
 <footer>
-  <span>STRIVE Talk · Account access</span>
-  <a href="/">Return to STRIVE Talk</a>
+  <span>STRIVE Talk · Account</span>
+  <a href="https://www.striveptlv.com/talk">Return to STRIVE Talk</a>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -314,7 +314,8 @@ const forms = {
 const formTitle = document.getElementById("formTitle");
 const formCopy = document.getElementById("formCopy");
 const statusBox = document.getElementById("authStatus");
-const TALK_PAGE = "/";
+const AUTH_PAGE = "https://talk.striveptlv.com/auth.html";
+const TALK_PAGE = "https://talk.striveptlv.com/";
 const SUPABASE_URL = "https://ccfpdgmmwkghjszkbnzs.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_7Je2n19DYuDUUR-l9DQPCQ_ui1S17Ui";
 const supabaseClient = SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase
@@ -380,6 +381,10 @@ document.querySelectorAll("[data-panel]").forEach(trigger => {
 const initialPanel = new URLSearchParams(window.location.search).get("panel");
 if (initialPanel && forms[initialPanel]) {
   showPanel(initialPanel);
+}
+
+if (window.location.protocol === "file:") {
+  showStatus("warn", "Open this page at https://talk.striveptlv.com/auth.html to create accounts and stay signed in.");
 }
 
 async function ensureTalkTrialAccess(userId) {
@@ -559,7 +564,10 @@ async function handleAuthSubmit(event, type) {
         email: data.email,
         password: data.password,
         options: {
+          emailRedirectTo: AUTH_PAGE,
           data: {
+            first_name: data.first_name,
+            last_name: data.last_name,
             full_name: data.full_name,
             product: "talk"
           }
@@ -571,11 +579,17 @@ async function handleAuthSubmit(event, type) {
         return;
       }
 
+      if (!signupData.session) {
+        showPanel("login");
+        showStatus("warn", "Account created. Please check your email to confirm your account, then sign in to start your trial.");
+        return;
+      }
+
       const user = signupData.user || await waitForUser();
 
       if (!user) {
-        showStatus("warn", "Account created. Please check your email to confirm your account, then sign in.");
         showPanel("login");
+        showStatus("warn", "Account created. Please check your email to confirm your account, then sign in.");
         return;
       }
 
@@ -591,7 +605,7 @@ async function handleAuthSubmit(event, type) {
       showStatus("warn", "Sending password reset email...");
 
       const { error } = await supabaseClient.auth.resetPasswordForEmail(data.email, {
-        redirectTo: window.location.origin + "/auth.html"
+        redirectTo: AUTH_PAGE
       });
 
       if (error) {

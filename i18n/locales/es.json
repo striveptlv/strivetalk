@@ -29,7 +29,7 @@
     }
   },
   "access": {
-    "title": "Acceso privado",
+    "title": "Acceso a la cuenta",
     "intro": "Ingresa tu correo electrónico y código temporal para usar STRIVE Talk.",
     "email": "Correo electrónico",
     "emailPlaceholder": "nombre{'@'}ejemplo.com",

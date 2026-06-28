@@ -29,7 +29,7 @@
     }
   },
   "access": {
-    "title": "Private access",
+    "title": "Account access",
     "intro": "Enter your email and temporary access code to use STRIVE Talk.",
     "email": "Email address",
     "emailPlaceholder": "name{'@'}example.com",
