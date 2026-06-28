@@ -20,9 +20,16 @@ type AppLocale = 'en' | 'es'
 
 type Word = {
   text: string
+  speakText?: string
   emoji: string
   toneClass: string
   hidden?: boolean
+  grammar?: {
+    kind: 'noun' | 'verb' | 'adjective' | 'place' | 'person' | 'fullPhrase'
+    article?: 'a' | 'an' | 'the' | 'my' | 'some' | 'none'
+    requestObject?: string
+    questionObject?: string
+  }
 }
 
 type Category = {
@@ -1130,28 +1137,248 @@ const stickyStarterLabel = computed(() =>
   activeLocale.value === 'en' ? 'Selected' : 'Seleccionado'
 )
 
-const normalizeRequestObject = (text: string, starter?: PhraseStarter) => {
+const getPrimaryText = (text: string) => {
   const [firstOption = text] = text.split('/')
-  let trimmed = firstOption.trim()
-  if (!trimmed) {
+  return firstOption.trim()
+}
+
+const lowercaseFirst = (text: string) => {
+  if (!text) {
     return ''
   }
 
-  if (
-    starter
-    && ['I can\'t', 'Can you'].includes(starter.phrase)
-    && trimmed.toLocaleLowerCase().startsWith('to ')
-  ) {
-    trimmed = trimmed.slice(3)
+  return text.charAt(0).toLocaleLowerCase() + text.slice(1)
+}
+
+const englishGrammarOverrides = new Map<string, NonNullable<Word['grammar']>>([
+  ['Water', { kind: 'noun', article: 'some' }],
+  ['Food', { kind: 'noun', article: 'some' }],
+  ['Bathroom', { kind: 'place', requestObject: 'to use the bathroom', questionObject: 'the bathroom' }],
+  ['Medicine', { kind: 'noun', article: 'my' }],
+  ['More', { kind: 'noun', requestObject: 'more' }],
+  ['Blanket', { kind: 'noun', article: 'a' }],
+  ['tired', { kind: 'adjective' }],
+  ['cold', { kind: 'adjective' }],
+  ['hot', { kind: 'adjective' }],
+  ['sick', { kind: 'adjective' }],
+  ['okay', { kind: 'adjective' }],
+  ['happy', { kind: 'adjective' }],
+  ['sad', { kind: 'adjective' }],
+  ['frustrated', { kind: 'adjective' }],
+  ['scared', { kind: 'adjective' }],
+  ['in pain', { kind: 'adjective' }],
+  ['Nurse', { kind: 'person', article: 'the' }],
+  ['Home', { kind: 'place', requestObject: 'to go home', questionObject: 'home' }],
+  ['My partner', { kind: 'person', article: 'none' }],
+  ['My family', { kind: 'person', article: 'none' }],
+  ['My doctor', { kind: 'person', article: 'none' }],
+  ['Work', { kind: 'place', requestObject: 'to go to work', questionObject: 'work' }],
+  ['Outside', { kind: 'place', requestObject: 'to go outside', questionObject: 'outside' }],
+  ['Hospital', { kind: 'place', requestObject: 'to go to the hospital', questionObject: 'the hospital' }],
+  ['Physical therapy', { kind: 'place', requestObject: 'to go to physical therapy', questionObject: 'physical therapy' }],
+  ['Phone call', { kind: 'noun', article: 'a' }],
+  ['TV', { kind: 'noun', article: 'the' }],
+  ['Music', { kind: 'noun', article: 'some' }],
+  ['to eat', { kind: 'verb', requestObject: 'to eat' }],
+  ['to sleep', { kind: 'verb', requestObject: 'to sleep' }],
+  ['to walk', { kind: 'verb', requestObject: 'to walk' }],
+  ['to exercise', { kind: 'verb', requestObject: 'to exercise' }],
+  ['Repeat', { kind: 'verb', requestObject: 'to repeat that' }],
+  ['Write it down', { kind: 'verb', requestObject: 'to write it down' }],
+  ['Show me', { kind: 'verb', requestObject: 'to show me' }],
+  ['Help me', { kind: 'verb', requestObject: 'to help me' }]
+])
+
+const spanishGrammarOverrides = new Map<string, NonNullable<Word['grammar']>>([
+  ['Agua', { kind: 'noun', article: 'none' }],
+  ['Comida', { kind: 'noun', article: 'none' }],
+  ['Baño', { kind: 'place', requestObject: 'ir al baño', questionObject: 'el baño' }],
+  ['Medicina', { kind: 'noun', article: 'none' }],
+  ['Cobija', { kind: 'noun', article: 'none' }],
+  ['cansado', { kind: 'adjective' }],
+  ['con frío', { kind: 'adjective' }],
+  ['con calor', { kind: 'adjective' }],
+  ['mal', { kind: 'adjective' }],
+  ['bien', { kind: 'adjective' }],
+  ['Feliz', { kind: 'adjective' }],
+  ['Triste', { kind: 'adjective' }],
+  ['Frustrado', { kind: 'adjective' }],
+  ['Asustado', { kind: 'adjective' }],
+  ['con dolor', { kind: 'adjective' }],
+  ['Casa', { kind: 'place', requestObject: 'ir a casa', questionObject: 'casa' }],
+  ['Trabajo', { kind: 'place', requestObject: 'ir al trabajo', questionObject: 'el trabajo' }],
+  ['Afuera', { kind: 'place', requestObject: 'ir afuera', questionObject: 'afuera' }],
+  ['Hospital', { kind: 'place', requestObject: 'ir al hospital', questionObject: 'el hospital' }],
+  ['Terapia física', { kind: 'place', requestObject: 'ir a terapia física', questionObject: 'terapia física' }],
+  ['Comer', { kind: 'verb', requestObject: 'comer' }],
+  ['Dormir', { kind: 'verb', requestObject: 'dormir' }],
+  ['Caminar', { kind: 'verb', requestObject: 'caminar' }],
+  ['Hacer ejercicio', { kind: 'verb', requestObject: 'hacer ejercicio' }],
+  ['Repítelo', { kind: 'verb', requestObject: 'que lo repitas' }],
+  ['Escríbelo', { kind: 'verb', requestObject: 'que lo escribas' }],
+  ['Muéstrame', { kind: 'verb', requestObject: 'que me muestres' }]
+])
+
+const getGrammar = (card: Word) =>
+  card.grammar
+  ?? (activeLocale.value === 'en'
+    ? englishGrammarOverrides.get(card.text)
+    : spanishGrammarOverrides.get(card.text))
+
+const getCardSpeechText = (card: Word) =>
+  getPrimaryText(card.speakText ?? card.text)
+
+const isCompletePhrase = (text: string) =>
+  /^(i|i'm|i’ve|i can|i need|i want|can you|please|call|help|wait|thank|show|let|that|that's|no|yes|you|we)\b/i.test(text)
+
+const withEnglishArticle = (text: string, grammar?: NonNullable<Word['grammar']>) => {
+  const lower = lowercaseFirst(text)
+  if (!grammar || grammar.article === 'none') {
+    return lower
   }
 
-  return trimmed.charAt(0).toLocaleLowerCase() + trimmed.slice(1)
+  if (grammar.requestObject) {
+    return grammar.requestObject
+  }
+
+  if (grammar.article) {
+    return `${grammar.article} ${lower}`
+  }
+
+  return lower
 }
 
-const getPhrase = (starter: PhraseStarter, text: string) => {
-  const phrase = `${starter.phrase} ${normalizeRequestObject(text, starter)}`.trim()
+const normalizeEnglishRequestObject = (card: Word, starter: PhraseStarter) => {
+  const text = getCardSpeechText(card)
+  const grammar = getGrammar(card)
+  const lower = lowercaseFirst(text)
+
+  if (!text) {
+    return ''
+  }
+
+  if (grammar?.kind === 'fullPhrase' || isCompletePhrase(text)) {
+    return lower
+  }
+
+  if (starter.phrase === 'I am' || starter.phrase === 'I feel') {
+    return lower.replace(/^to\s+/i, '')
+  }
+
+  if (starter.phrase === 'I can\'t') {
+    return (grammar?.requestObject ?? lower).replace(/^to\s+/i, '')
+  }
+
+  if (starter.phrase === 'Can you') {
+    if (grammar?.kind === 'noun') {
+      return `get me ${withEnglishArticle(text, grammar)}`
+    }
+
+    if (grammar?.kind === 'place') {
+      return `help me ${grammar.requestObject ?? `go to ${withEnglishArticle(text, grammar)}`}`.replace('help me to ', 'help me ')
+    }
+
+    if (grammar?.kind === 'person') {
+      return `call ${withEnglishArticle(text, grammar)}`
+    }
+
+    return (grammar?.requestObject ?? lower).replace(/^to\s+/i, '')
+  }
+
+  return withEnglishArticle(text, grammar)
+}
+
+const normalizeSpanishRequestObject = (card: Word, starter: PhraseStarter) => {
+  const text = getCardSpeechText(card)
+  const grammar = getGrammar(card)
+  const lower = lowercaseFirst(text)
+
+  if (!text) {
+    return ''
+  }
+
+  if (grammar?.kind === 'fullPhrase' || isCompletePhrase(text)) {
+    return lower
+  }
+
+  if (starter.phrase === 'No puedo') {
+    return grammar?.requestObject ?? lower
+  }
+
+  if (starter.phrase === 'Puedes') {
+    if (grammar?.kind === 'noun') {
+      return `traerme ${lower}`
+    }
+
+    if (grammar?.kind === 'place') {
+      return `ayudarme a ${grammar.requestObject ?? lower}`
+    }
+
+    return grammar?.requestObject ?? lower
+  }
+
+  return grammar?.requestObject ?? lower
+}
+
+const getEnglishQuestion = (starter: PhraseStarter, card: Word) => {
+  const text = getCardSpeechText(card)
+  const grammar = getGrammar(card)
+  const object = grammar?.questionObject ?? withEnglishArticle(text, grammar)
+
+  if (starter.phrase === 'Where') {
+    return `Where is ${object}?`
+  }
+
+  if (starter.phrase === 'Who') {
+    return `Who is ${object}?`
+  }
+
+  if (starter.phrase === 'What' && grammar?.kind === 'noun') {
+    return `What ${object} do I need?`
+  }
+
+  if (starter.phrase === 'How' && grammar?.kind === 'verb') {
+    return `How do I ${object.replace(/^to\s+/i, '')}?`
+  }
+
+  return `${starter.phrase} ${lowercaseFirst(text)}?`
+}
+
+const getSpanishQuestion = (starter: PhraseStarter, card: Word) => {
+  const text = getCardSpeechText(card)
+  const grammar = getGrammar(card)
+  const object = grammar?.questionObject ?? lowercaseFirst(text)
+
+  if (starter.phrase === 'Dónde') {
+    return `Dónde está ${object}?`
+  }
+
+  if (starter.phrase === 'Quién') {
+    return `Quién es ${object}?`
+  }
+
+  return `${starter.phrase} ${lowercaseFirst(text)}?`
+}
+
+const getPhrase = (starter: PhraseStarter, card: Word) => {
+  const isRequestQuestion = ['Can you', 'Puedes'].includes(starter.phrase)
+
+  if (starter.suffix === '?' && !isRequestQuestion) {
+    return activeLocale.value === 'en'
+      ? getEnglishQuestion(starter, card)
+      : getSpanishQuestion(starter, card)
+  }
+
+  const object = activeLocale.value === 'en'
+    ? normalizeEnglishRequestObject(card, starter)
+    : normalizeSpanishRequestObject(card, starter)
+
+  const phrase = `${starter.phrase} ${object}`.trim()
   return starter.suffix ? `${phrase}${starter.suffix}` : phrase
 }
+
+const getStarterSpeechText = (starter: PhraseStarter) =>
+  getCardSpeechText(starter)
 
 const getStarterToneClass = (starter: PhraseStarter) =>
   selectedPhraseStarter.value?.phrase === starter.phrase
@@ -1172,6 +1399,7 @@ const getPriorityToneClass = (card: Word, index: number) => {
 
 const onStarterSelect = (starter: PhraseStarter) => {
   selectedPhraseStarter.value = starter
+  speak(getStarterSpeechText(starter))
 }
 
 const onStarterClear = () => {
@@ -1199,7 +1427,8 @@ const onQuestionEnderSelect = () => {
   selectedPhraseStarter.value = null
 }
 
-const onCardSelect = (text: string) => {
+const onCardSelect = (card: Word) => {
+  const text = card.text
   if (isPainCardText(text)) {
     speak(painStatement.value)
     isPainScaleOpen.value = true
@@ -1210,11 +1439,11 @@ const onCardSelect = (text: string) => {
   isPainScaleOpen.value = false
   const starter = selectedPhraseStarter.value
   if (!starter) {
-    speak(text)
+    speak(getCardSpeechText(card))
     return
   }
 
-  speak(getPhrase(starter, text))
+  speak(getPhrase(starter, card))
   selectedPhraseStarter.value = null
 }
 
@@ -1312,16 +1541,16 @@ onMounted(() => {
           <div
             class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
           >
-	            <VoiceCard
-	              v-for="(card, index) in priorityWords"
-	              :key="card.text"
-	              :title="getCardTitle(card)"
-	              :text="card.text"
-	              :emoji="card.emoji"
+            <VoiceCard
+              v-for="(card, index) in priorityWords"
+              :key="card.text"
+              :title="getCardTitle(card)"
+              :text="card.text"
+              :emoji="card.emoji"
               :tone-class="getPriorityToneClass(card, index)"
               :hidden="card.hidden"
               :show-delete="false"
-              @select="onCardSelect"
+              @select="onCardSelect(card)"
             />
           </div>
         </section>
@@ -1339,23 +1568,23 @@ onMounted(() => {
           <div
             class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
           >
-	            <VoiceCard
-	              v-for="card in socialGroup.words"
-	              :key="card.text"
-	              :title="getCardTitle(card)"
-	              :text="card.text"
-	              :emoji="card.emoji"
+            <VoiceCard
+              v-for="card in socialGroup.words"
+              :key="card.text"
+              :title="getCardTitle(card)"
+              :text="card.text"
+              :emoji="card.emoji"
               :tone-class="card.toneClass"
               :hidden="card.hidden"
               :delete-aria-label="getCardVisibilityAria(card)"
-              @select="onCardSelect"
+              @select="onCardSelect(card)"
               @delete="onCardDelete(activeWords.indexOf(card))"
             />
           </div>
         </section>
 
-	        <div
-	          v-if="selectedPhraseStarter"
+        <div
+          v-if="selectedPhraseStarter"
           class="sticky top-3 z-40 mb-6 flex items-center justify-between gap-3 rounded-2xl border-2 border-[#083d7a] bg-[#fff2bd] px-4 py-3 shadow-ambient dark:border-[#8ecae6] dark:bg-[#1f2937]"
         >
           <div>
@@ -1380,51 +1609,51 @@ onMounted(() => {
           >
             Clear
           </button>
-	        </div>
+        </div>
 
-	        <section
-	          v-if="isPainScaleOpen"
-	          class="sticky top-3 z-40 mb-8 rounded-2xl border-2 border-[#9b1c1c]/40 bg-[#fff7ed] p-4 shadow-ambient dark:border-[#fca5a5]/40 dark:bg-[#2b1f1b]"
-	          aria-live="polite"
-	        >
-	          <div class="mb-4 flex items-start justify-between gap-3">
-	            <div>
-	              <h2 class="font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#9b1c1c] dark:text-[#fca5a5]">
-	                {{ painScaleTitle }}
-	              </h2>
-	              <p class="mt-1 text-sm text-[#48617d] dark:text-[#d1d5db]">
-	                {{ painScaleHelper }}
-	              </p>
-	            </div>
-	            <button
-	              type="button"
-	              class="h-10 w-10 rounded-full border border-[#9b1c1c]/30 bg-white text-xl font-semibold leading-none text-[#9b1c1c] transition hover:bg-[#fff1f2] dark:border-[#fca5a5]/40 dark:bg-[#22242b] dark:text-[#fca5a5]"
-	              :aria-label="closePainScaleLabel"
-	              @click="onPainScaleClose"
-	            >
-	              ×
-	            </button>
-	          </div>
+        <section
+          v-if="isPainScaleOpen"
+          class="sticky top-3 z-40 mb-8 rounded-2xl border-2 border-[#9b1c1c]/40 bg-[#fff7ed] p-4 shadow-ambient dark:border-[#fca5a5]/40 dark:bg-[#2b1f1b]"
+          aria-live="polite"
+        >
+          <div class="mb-4 flex items-start justify-between gap-3">
+            <div>
+              <h2 class="font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#9b1c1c] dark:text-[#fca5a5]">
+                {{ painScaleTitle }}
+              </h2>
+              <p class="mt-1 text-sm text-[#48617d] dark:text-[#d1d5db]">
+                {{ painScaleHelper }}
+              </p>
+            </div>
+            <button
+              type="button"
+              class="h-10 w-10 rounded-full border border-[#9b1c1c]/30 bg-white text-xl font-semibold leading-none text-[#9b1c1c] transition hover:bg-[#fff1f2] dark:border-[#fca5a5]/40 dark:bg-[#22242b] dark:text-[#fca5a5]"
+              :aria-label="closePainScaleLabel"
+              @click="onPainScaleClose"
+            >
+              ×
+            </button>
+          </div>
 
-	          <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
-	            <button
-	              v-for="option in painScaleOptions"
-	              :key="option.label"
-	              type="button"
-	              class="min-h-[112px] rounded-xl border-2 border-[#9b1c1c]/20 bg-white p-3 text-center transition active:scale-95 hover:border-[#9b1c1c]/50 hover:bg-[#fff1f2] dark:bg-[#22242b] dark:hover:bg-[#352722]"
-	              @click="onPainScaleSelect(option)"
-	            >
-	              <span class="block text-2xl font-bold text-[#9b1c1c] dark:text-[#fca5a5]">
-	                {{ option.label }}
-	              </span>
-	              <span class="mt-2 block text-sm font-semibold leading-snug text-[#0e2f5d] dark:text-[#f4f4f5]">
-	                {{ option.description }}
-	              </span>
-	            </button>
-	          </div>
-	        </section>
+          <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+            <button
+              v-for="option in painScaleOptions"
+              :key="option.label"
+              type="button"
+              class="min-h-[112px] rounded-xl border-2 border-[#9b1c1c]/20 bg-white p-3 text-center transition active:scale-95 hover:border-[#9b1c1c]/50 hover:bg-[#fff1f2] dark:bg-[#22242b] dark:hover:bg-[#352722]"
+              @click="onPainScaleSelect(option)"
+            >
+              <span class="block text-2xl font-bold text-[#9b1c1c] dark:text-[#fca5a5]">
+                {{ option.label }}
+              </span>
+              <span class="mt-2 block text-sm font-semibold leading-snug text-[#0e2f5d] dark:text-[#f4f4f5]">
+                {{ option.description }}
+              </span>
+            </button>
+          </div>
+        </section>
 
-	        <section class="mb-8">
+        <section class="mb-8">
           <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p class="font-brand-heading text-xl font-semibold uppercase tracking-[0.08em] text-[#083d7a] dark:text-[#8ecae6]">
@@ -1507,16 +1736,16 @@ onMounted(() => {
           <div
             class="grid grid-cols-2 gap-stack-gap w-full gap-2 sm:grid-cols-[repeat(auto-fit,minmax(180px,1fr))]"
           >
-	            <VoiceCard
-	              v-for="card in group.words"
-	              :key="card.text"
-	              :title="getCardTitle(card)"
-	              :text="card.text"
-	              :emoji="card.emoji"
+            <VoiceCard
+              v-for="card in group.words"
+              :key="card.text"
+              :title="getCardTitle(card)"
+              :text="card.text"
+              :emoji="card.emoji"
               :tone-class="card.toneClass"
               :hidden="card.hidden"
               :delete-aria-label="getCardVisibilityAria(card)"
-              @select="onCardSelect"
+              @select="onCardSelect(card)"
               @delete="onCardDelete(activeWords.indexOf(card))"
             />
           </div>
