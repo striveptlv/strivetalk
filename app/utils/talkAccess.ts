@@ -117,3 +117,19 @@ export async function checkTalkAccess() {
   console.log('STRIVE Talk access approved')
   return true
 }
+
+export async function signOutTalkUser() {
+  const supabase = getSupabaseClient()
+
+  if (!supabase) {
+    return
+  }
+
+  const { error } = await supabase.auth.signOut()
+
+  if (error) {
+    throw error
+  }
+
+  redirectTo('auth')
+}

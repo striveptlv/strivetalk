@@ -95,11 +95,25 @@ const colorMode = useColorMode()
 const { isDeleteMode, toggleDeleteMode, disableDeleteMode } = useDeleteMode()
 const hasTalkAccess = ref(false)
 const isCheckingTalkAccess = ref(true)
+const isSigningOut = ref(false)
 
 const isDark = computed(() => colorMode.value === 'dark')
 
 function toggleTheme() {
   colorMode.preference = isDark.value ? 'light' : 'dark'
+}
+
+async function handleSignOut() {
+  if (isSigningOut.value) return
+
+  isSigningOut.value = true
+
+  try {
+    await signOutTalkUser()
+  } catch (error) {
+    console.error('Sign out failed:', error)
+    isSigningOut.value = false
+  }
 }
 
 watch(
@@ -190,6 +204,16 @@ onMounted(async () => {
               variant="ghost"
               :aria-label="t('app.aria.changeTheme')"
               @click="toggleTheme"
+            />
+
+            <UButton
+              icon="i-lucide-log-out"
+              color="neutral"
+              variant="ghost"
+              :aria-label="t('app.aria.signOut')"
+              :loading="isSigningOut"
+              :disabled="isSigningOut"
+              @click="handleSignOut"
             />
           </div>
         </div>

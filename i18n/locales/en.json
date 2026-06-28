@@ -18,6 +18,7 @@
       "deleteModeOn": "Enable delete mode",
       "deleteModeOff": "Disable delete mode",
       "changeTheme": "Toggle theme",
+      "signOut": "Sign out",
       "github": "GitHub"
     },
     "nav": {
